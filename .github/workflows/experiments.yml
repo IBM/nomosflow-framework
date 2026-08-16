@@ -1,0 +1,44 @@
+name: Experiment invariants
+
+on:
+  push:
+    branches: ["main", "dev/*"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  run-experiments:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run all experiments (fully simulated — no API keys needed)
+        run: python experiments/run_all.py
+        env:
+          LLM_VALIDATION_ENABLED: "false"
+          BENCHMARK_SCALES: "100,1000"   # fast CI scale; paper uses 100,1000,10000
+          RESULTS_DIR: "experiments/results"
+
+      - name: Check paper invariants
+        run: python experiments/compare_results.py
+
+      - name: Upload experiment results artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: experiment-results-py${{ matrix.python-version }}
+          path: experiments/results/
+          retention-days: 30
