@@ -1,0 +1,106 @@
+{
+  "experiment": "exp2_resolution",
+  "N": 2000,
+  "apl_available": true,
+  "cmf_available": true,
+  "resolved_at_tier": {
+    "T1_APL": {
+      "count": 629,
+      "fraction": 0.3145,
+      "mean_resolving_ms": 0.006257462543279927
+    },
+    "T1_ATTEST": {
+      "count": 0,
+      "fraction": 0.0,
+      "mean_resolving_ms": 0.0
+    },
+    "T2_CMF": {
+      "count": 0,
+      "fraction": 0.0,
+      "mean_resolving_ms": 0.0
+    },
+    "T3_OPA": {
+      "count": 813,
+      "fraction": 0.4065,
+      "mean_resolving_ms": 2.921870503895933
+    },
+    "T4_RATE": {
+      "count": 0,
+      "fraction": 0.0,
+      "mean_resolving_ms": 0.0
+    },
+    "T5_LLM": {
+      "count": 1,
+      "fraction": 0.0005,
+      "mean_resolving_ms": 98.62218140437234
+    },
+    "APPROVED": {
+      "count": 557,
+      "fraction": 0.2785,
+      "mean_resolving_ms": 0.0
+    }
+  },
+  "p_i": {
+    "T1_APL": 1.0,
+    "T1_ATTEST": 0.0,
+    "T2_CMF": 0.6855,
+    "T3_OPA": 0.6855,
+    "T4_RATE": 0.279,
+    "T5_LLM": 0.0025,
+    "APPROVED": 0.0
+  },
+  "c_i": {
+    "T1_APL": 0.004678962810430676,
+    "T1_ATTEST": 0.0,
+    "T2_CMF": 0.02472091675583167,
+    "T3_OPA": 2.9029855324192493,
+    "T4_RATE": 0.05347445017981372,
+    "T5_LLM": 92.82143100052848,
+    "APPROVED": 0.0
+  },
+  "cost_ratio": {
+    "T1_APL": Infinity,
+    "T1_ATTEST": 0.0,
+    "T2_CMF": 0.07860386885797034,
+    "T3_OPA": 9.230478640442763,
+    "T4_RATE": 0.07416705988878464,
+    "T5_LLM": 93.05406616594333
+  },
+  "deployed_order": [
+    "T1_APL",
+    "T1_ATTEST",
+    "T2_CMF",
+    "T3_OPA",
+    "T4_RATE",
+    "T5_LLM"
+  ],
+  "optimal_order": [
+    "T1_ATTEST",
+    "T4_RATE",
+    "T2_CMF",
+    "T3_OPA",
+    "T5_LLM",
+    "T1_APL"
+  ],
+  "ablation": {
+    "ladder_mean_ms": 2.2585946828214376,
+    "forced_mean_ms": 3.5263350390012773,
+    "reduction_pct": 35.95064967334717,
+    "ladder_stats": {
+      "count": 2000,
+      "mean": 2.2585946828214376,
+      "p50": 2.5883529742714018,
+      "p95": 3.904362751106657,
+      "p99": 5.769986745435742,
+      "max": 101.51059428035221
+    },
+    "forced_stats": {
+      "count": 2000,
+      "mean": 3.5263350390012773,
+      "p50": 2.210136154564694,
+      "p95": 3.8765229587422425,
+      "p99": 74.58431525515266,
+      "max": 162.24231432374947
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "redaction_cases": [
+    {
+      "case": "ssn_in_data",
+      "pii_removed": true,
+      "structural_ok": true,
+      "unmutated": true,
+      "ok": true
+    },
+    {
+      "case": "email_in_metadata",
+      "pii_removed": true,
+      "structural_ok": true,
+      "unmutated": true,
+      "ok": true
+    },
+    {
+      "case": "credit_card_in_notes",
+      "pii_removed": true,
+      "structural_ok": true,
+      "unmutated": true,
+      "ok": true
+    },
+    {
+      "case": "nested_pii_in_list",
+      "pii_removed": true,
+      "structural_ok": true,
+      "unmutated": true,
+      "ok": true
+    },
+    {
+      "case": "structural_fields_preserved",
+      "pii_removed": true,
+      "structural_ok": true,
+      "unmutated": true,
+      "ok": true
+    }
+  ],
+  "pii_patterns": [
+    "ssn",
+    "email",
+    "phone",
+    "credit_card"
+  ],
+  "call_sites_total": 4,
+  "call_sites_unguarded": 0,
+  "compose_local_model": "ollama/granite3.2:2b",
+  "compose_redact_flag": true,
+  "compose_no_cloud_keys": true,
+  "llm_override_redact": true
+}

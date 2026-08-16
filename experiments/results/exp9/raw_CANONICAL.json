@@ -1,0 +1,306 @@
+{
+  "exp_id": "exp9",
+  "repo_root": "/Users/rsinha/agentic-dataops/compliance-mvp/event-driven-compliance-sidecar-podman-sandbox",
+  "script": "paper_experiments/exp9_rb_stream/run.py",
+  "runtime_ms": 328.05329200346023,
+  "call_sites_found": 1,
+  "sites_gated_by_approved": 1,
+  "sites_not_gated": 0,
+  "call_sites": [
+    {
+      "file": "src/core/sidecar_optimized.py",
+      "call_site_line": 2046,
+      "gated_by_approved": true,
+      "context": [
+        "        requests_total.labels(agent_id=agent_id, action=action, decision=decision).inc()",
+        "        ",
+        "        # Determine which tier approved/denied the request",
+        "        # If we got here, it means APL and OPA approved, so check if LLM was involved",
+        "        tier = \"LLM\" if (llm_validator and llm_validator.enabled) else \"OPA\"",
+        "        ",
+        "        if decision == \"APPROVED\":",
+        "            print(f\"\ud83d\udfe2 APPROVED request {request_id} - action: {event.get('action')}, resource: {event.get('resource')}\")",
+        "            if event.get('action') == \"READ\":",
+        "                print(f\"\ud83d\udcd6 Fetching data for READ request {request_id}...\")",
+        "                raw_data = fetch_real_data(event.get('resource'))",
+        "                print(f\"\u2705 Data fetched for {request_id}, scrubbing PII...\")",
+        "                clean_data = scrub_pii(raw_data)",
+        "                response = {",
+        "                    \"request_id\": request_id,",
+        "                    \"decision\": \"APPROVED\",",
+        "                    \"status\": \"SUCCESS\",",
+        "                    \"data\": clean_data,",
+        "                    \"audit_id\": audit_id,",
+        "                    \"tier\": tier",
+        "                }"
+      ]
+    }
+  ],
+  "data_path_findings": [
+    {
+      "file": "src/storage/data_lake_reader.py",
+      "method": "read_parquet",
+      "uses_yield": false,
+      "notes": "no yield keyword in file"
+    },
+    {
+      "file": "src/storage/data_lake_reader.py",
+      "method": "read_avro",
+      "uses_yield": false,
+      "notes": "no yield keyword in file"
+    },
+    {
+      "file": "src/storage/data_lake_reader.py",
+      "method": "read_orc",
+      "uses_yield": false,
+      "notes": "no yield keyword in file"
+    },
+    {
+      "file": "src/storage/data_lake_reader.py",
+      "method": "read_delta",
+      "uses_yield": false,
+      "notes": "no yield keyword in file"
+    },
+    {
+      "file": "src/storage/data_lake_reader.py",
+      "method": "read_data_lake_file",
+      "uses_yield": false,
+      "notes": "no yield keyword in file"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@135",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@224",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@232",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@244",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@252",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@259",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@269",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@350",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@360",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@367",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@377",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@403",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@461",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@475",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@486",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@495",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@502",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@512",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@541",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@606",
+      "uses_yield": false,
+      "notes": "gated by APPROVED"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@620",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@630",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@687",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@698",
+      "uses_yield": false,
+      "notes": "gated by APPROVED"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@711",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@721",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@769",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@779",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@811",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@852",
+      "uses_yield": false,
+      "notes": "gated by APPROVED"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@863",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@873",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@940",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@949",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@958",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@966",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@975",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    },
+    {
+      "file": "src/interceptors/compliance_proxy_server.py",
+      "method": "return@985",
+      "uses_yield": false,
+      "notes": "not approval-gated in local context"
+    }
+  ],
+  "runtime_verification": {
+    "mode": "live_opa",
+    "approved": 36,
+    "approved_with_data": 36,
+    "denied": 50,
+    "denied_with_data": 0
+  }
+}

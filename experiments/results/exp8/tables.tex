@@ -1,0 +1,37 @@
+% Auto-generated LaTeX for EXP-8  Policy scale + hot-reload correctness
+% 2026-08-14T05:23:43.860019+00:00
+
+\begin{table}[t]
+  \centering
+  \caption{Latency vs. rule count}
+  \label{tab:exp8_0}
+  \begin{tabular}{lrrr}
+    \toprule
+    \textbf{Rule_count} & \textbf{Mean_ms} & \textbf{P99_ms} & \textbf{Simulated} \\
+    \midrule
+    10 & 2.19 & 3.50 & no \\
+    100 & 2.75 & 5.40 & no \\
+    1000 & 2.74 & 7.89 & no \\
+    5000 & 1.96 & 3.60 & no \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \caption{Hot-reload correctness}
+  \label{tab:exp8_1}
+  \begin{tabular}{lr}
+    \toprule
+    \textbf{Metric} & \textbf{Value} \\
+    \midrule
+    OPA_live & True \\
+    reload_ok & True \\
+    reload_latency_ms & 4.11 \\
+    propagation_latency_ms & 0.05 \\
+    stale_allow_count & 0 \\
+    post_requests & 317 \\
+    post_junior_read_denied & 141 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

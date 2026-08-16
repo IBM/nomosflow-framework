@@ -1,0 +1,20 @@
+# NomosFlow — Python dependencies
+# All experiments run in fully simulated mode with these packages alone.
+# LLM packages (openai / anthropic) are optional extras for live T5 tier.
+
+# HTTP client (OPA calls, LLM API)
+requests>=2.31.0
+
+# Process/resource metrics for EXP-12
+psutil>=5.9.0
+
+# Kafka producer/consumer for streaming experiments
+kafka-python>=2.0.0
+
+# Prometheus metrics exposure (sidecar)
+prometheus-client>=0.16.0
+
+# ── Optional: live LLM tier (T5) ────────────────────────────────────────────
+# Uncomment to enable EXP-3 live T5 and EXP-6 LLM_TIMEOUT_LIVE scenarios:
+# openai>=1.0.0
+# anthropic>=0.20.0

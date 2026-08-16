@@ -1,0 +1,69 @@
+# Prometheus Configuration for Compliance Sidecar Monitoring
+
+global:
+  scrape_interval: 15s      # Scrape metrics every 15 seconds
+  evaluation_interval: 15s  # Evaluate rules every 15 seconds
+  external_labels:
+    cluster: 'compliance-sidecar'
+    environment: 'development'
+
+# Alertmanager configuration (optional - uncomment if using Alertmanager)
+# alerting:
+#   alertmanagers:
+#     - static_configs:
+#         - targets:
+#           - localhost:9093
+
+# Load rules once and periodically evaluate them
+rule_files:
+  # - "alerts.yml"
+
+# Scrape configurations
+scrape_configs:
+  # Compliance Sidecar metrics
+  - job_name: 'compliance-sidecar'
+    static_configs:
+      - targets: ['localhost:8000']
+        labels:
+          service: 'compliance-sidecar'
+          component: 'policy-enforcement'
+    
+    # Scrape more frequently for real-time compliance monitoring
+    scrape_interval: 10s
+    scrape_timeout: 5s
+    
+    # Relabel to add more context
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'sidecar-primary'
+
+  # Tier Performance Benchmark metrics (emitted during benchmark runs)
+  # benchmark runs on the Mac host; use host.containers.internal so Prometheus
+  # (inside the Podman VM) can reach it across the hypervisor boundary.
+  - job_name: 'tier-benchmark'
+    static_configs:
+      - targets: ['host.containers.internal:8001']
+        labels:
+          service: 'tier-benchmark'
+          component: 'performance-testing'
+    scrape_interval: 5s
+    scrape_timeout: 4s
+
+  # Optional: Add Redpanda/Kafka metrics if JMX exporter is configured
+  # - job_name: 'redpanda'
+  #   static_configs:
+  #     - targets: ['localhost:9644']
+  #       labels:
+  #         service: 'redpanda'
+  #         component: 'message-broker'
+
+  # Optional: Add OPA metrics if configured
+  # - job_name: 'opa'
+  #   static_configs:
+  #     - targets: ['localhost:8181']
+  #       labels:
+  #         service: 'opa'
+  #         component: 'policy-engine'
+
+# Made with Bob

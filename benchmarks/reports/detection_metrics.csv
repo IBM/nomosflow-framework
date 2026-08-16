@@ -1,0 +1,4 @@
+Validator,Precision,Recall,F1_Score,Accuracy,Mean_Latency_ms,P95_Latency_ms
+static,75.00,60.00,66.67,67.00,0.01,0.01
+llm,89.47,68.00,77.27,78.00,0.01,0.02
+hybrid,83.33,100.00,90.91,89.00,0.02,0.03

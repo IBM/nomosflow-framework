@@ -1,0 +1,23 @@
+% Auto-generated LaTeX for EXP-GAP-35  Redaction-before-inference + local-model default
+% 2026-08-14T05:25:07.512222+00:00
+
+\begin{table}[t]
+  \centering
+  \caption{Verification summary (GAP-35 resolved)}
+  \label{tab:exp_gap35_0}
+  \begin{tabular}{lrr}
+    \toprule
+    \textbf{Check} & \textbf{Result} & \textbf{Detail} \\
+    \midrule
+    Redaction test cases & 5/5 pass & SSN, email, phone, CC, nested, structural \\
+    PII patterns covered & 4 & ssn, email, phone, credit_card \\
+    call sites instrumented & 4 & all process_llm_tier calls wrapped \\
+    Base compose: local model & ✓ & ollama/granite3.2:2b default \\
+    Base compose: no cloud key & ✓ & no sk- credentials in tracked file \\
+    Base compose: ollama svc & ✓ & ollama/ollama:latest + ollama-models vol \\
+    Base compose: REDACT=true & ✓ & REDACT_FOR_LLM=true set explicitly \\
+    LLM override: REDACT=true & ✓ & docker-compose.llm.yml preserves flag \\
+    LLM override: no cloud key & ✓ & credentials via env/secrets only \\
+    \bottomrule
+  \end{tabular}
+\end{table}

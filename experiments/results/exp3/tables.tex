@@ -1,0 +1,107 @@
+% Auto-generated LaTeX for EXP-3 — NomosFlow Detection Efficacy
+% 2026-08-15T03:16:44.914403+00:00
+
+\begin{table}[t]
+  \centering
+  \caption{Detection Metrics — HEADLINE: FPR on benign traffic}
+  \label{tab:exp3_0}
+  \begin{tabular}{lrrrrrrrr}
+    \toprule
+    \textbf{Mode} & \textbf{TP} & \textbf{FP} & \textbf{TN} & \textbf{FN} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} & \textbf{FPR (headline)} \\
+    \midrule
+    STATIC & 39 & 0 & 87 & 74 & 100.0% & 34.5% & 51.3% & 0.0% \\
+    POLICY & 52 & 0 & 87 & 61 & 100.0% & 46.0% & 63.0% & 0.0% \\
+    FULL & 94 & 0 & 87 & 19 & 100.0% & 83.2% & 90.8% & 0.0% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \caption{Per-class attribution}
+  \label{tab:exp3_1}
+  \begin{tabular}{lrrrrr}
+    \toprule
+    \textbf{Class} & \textbf{Count} & \textbf{STATIC_caught} & \textbf{POLICY_caught} & \textbf{FULL_caught} & \textbf{Deciding_tier} \\
+    \midrule
+    static_regex & 40 & 25 & 10 & 31 & T1 \\
+    policy_rule & 40 & 10 & 34 & 34 & T3 \\
+    semantic & 20 & 0 & 0 & 19 & T5 \\
+    benign_normal & 50 & 0 FP & 0 FP & 0 FP & any \\
+    benign_suspicious & 25 & 0 FP & 0 FP & 0 FP & any \\
+    edge_case & 25 & 0 FP & 0 FP & 0 FP & any \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \caption{Overlap analysis (200-case EXP-3 corpus)}
+  \label{tab:exp3_2}
+  \begin{tabular}{lr}
+    \toprule
+    \textbf{Metric} & \textbf{Value} \\
+    \midrule
+    STATIC detected (n) & 39 \\
+    POLICY detected (n) & 52 \\
+    FULL detected (n) & 94 \\
+    STATIC ∩ POLICY (n) & 18 \\
+    STATIC ∪ POLICY (n) & 73 \\
+    Overlap rate (∩/∪) & 24.7% \\
+    Static-only detections (n) & 21 \\
+    Policy-only detections (n) & 34 \\
+    FULL addl over STATIC∪POLICY & 21 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \caption{Ground-truth corpus description}
+  \label{tab:exp3_3}
+  \begin{tabular}{lrrr}
+    \toprule
+    \textbf{Class} & \textbf{Count} & \textbf{Label} & \textbf{Expected_tier} \\
+    \midrule
+    static_regex & 40 & violation & T1 \\
+    policy_rule & 40 & violation & T3 \\
+    semantic & 20 & violation & T5 \\
+    benign_normal & 50 & benign & any \\
+    benign_suspicious & 25 & benign & any \\
+    edge_case & 25 & mixed & T1/T3/any \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \caption{Live 500-case detection efficacy (benchmarks/reports/detection_metrics.csv)}
+  \label{tab:exp3_4}
+  \begin{tabular}{lrrrr}
+    \toprule
+    \textbf{Validator} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} & \textbf{Accuracy} \\
+    \midrule
+    STATIC & 75.0% & 60.0% & 66.7% & 67.0% \\
+    LLM & 89.5% & 68.0% & 77.3% & 78.0% \\
+    HYBRID & 83.3% & 100.0% & 90.9% & 89.0% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \caption{Live overlap analysis — static vs. LLM (500-case run)}
+  \label{tab:exp3_5}
+  \begin{tabular}{lr}
+    \toprule
+    \textbf{Detection Category} & \textbf{Count} \\
+    \midrule
+    Both Static and LLM & 99 \\
+    Static Only & 121 \\
+    LLM Only & 110 \\
+    Neither & 470 \\
+    **Overlap rate** & 30.0% \\
+    **Complementary rate** & 70.0% \\
+    \bottomrule
+  \end{tabular}
+\end{table}

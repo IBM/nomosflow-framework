@@ -1,0 +1,140 @@
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background":         "#ffffff",
+    "primaryColor":       "#f7f8fa",
+    "primaryBorderColor": "#1f2328",
+    "primaryTextColor":   "#1f2328",
+    "secondaryColor":     "#f7f8fa",
+    "tertiaryColor":      "#ffffff",
+    "lineColor":          "#1f2328",
+    "edgeLabelBackground":"#ffffff",
+    "fontFamily":         "system-ui, sans-serif",
+    "fontSize":           "13px",
+    "clusterBkg":         "#f7f8fa",
+    "clusterBorder":      "#1f2328"
+  }
+}}%%
+
+flowchart TD
+
+  subgraph AGENTS["Agent Layer"]
+    direction LR
+    A1["Analytics Agent\nlive_agent.py"]
+    A2["Research Agent\nriip_agent.py"]
+    A3["ADK Agent\ngoogle_adk_agent.py"]
+  end
+
+  subgraph KAFKA["Kafka Message Bus  (localhost:9092)"]
+    direction LR
+    KIN["agent.requests\n(inbound)"]
+    KOUT1["read.responses\n(approved reads)"]
+    KOUT2["analytical.lake\n(approved writes)"]
+    KAUDIT["audit.log\n(all decisions)"]
+  end
+
+  subgraph SIDECAR["Compliance Sidecar  (sidecar_optimized.py)"]
+    direction TB
+
+    subgraph T1["Tier 1 — APL  (P50 < 0.01 ms)"]
+      direction LR
+      APL["APL Validator\nToken · Path-traversal\nDanger-pattern regex"]
+      ATTEST["Attestation Check\nSkill registry lookup"]
+    end
+
+    subgraph T2["Tier 2 — CMF  (P50 ≈ 0.03 ms)"]
+      CMF["CMF Context Enricher\nPII detection · metadata enrichment"]
+    end
+
+    subgraph T3["Tier 3 — OPA  (P50 ≈ 2–5 ms)"]
+      OPA["OPA Policy Engine\nRego · RBAC · Purpose · Region\nbank.authz"]
+      CACHE["Decision Cache\n5-min TTL bucket"]
+      OPA <--> CACHE
+    end
+
+    subgraph T4["Tier 4 — Rate Limiter  (P50 < 0.01 ms)"]
+      RL["Per-principal Token-bucket\nrate_limits dict"]
+    end
+
+    subgraph T5["Tier 5 — LLM  (P50 ≈ 5–12 s @ 1%)"]
+      LLM["LLM Validator\nHallucination detection\nSemantic compliance\naws/claude-sonnet-4-5"]
+      CB["Circuit Breaker\n3 slow calls → OPEN"]
+      LLM --- CB
+    end
+
+    ESC["Escalation Router\nCMF→LLM · OPA→LLM\nStateful · Human delegation"]
+
+    T1 -->|"DENY: short-circuit"| DECISION
+    T1 -->|"PASS"| T2
+    T2 -->|"DENY / escalate"| ESC
+    T2 -->|"PASS"| T3
+    T3 -->|"DENY / escalate"| ESC
+    T3 -->|"PASS"| T4
+    T4 -->|"THROTTLE"| DECISION
+    T4 -->|"PASS"| ESC
+    ESC -->|"route ≈1%"| T5
+    ESC -->|"skip LLM"| DECISION
+    T5 --> DECISION
+
+    DECISION{"Verdict\nAPPROVED / DENIED / THROTTLED"}
+  end
+
+  subgraph GOV["Policy and Governance"]
+    REGO["policy.rego\nRBAC · Purpose · Region · hot-reload"]
+    OSCAL["OSCAL Assessment Results writer"]
+    TRESTLE["Trestle Validator\nCompliance framework mapping"]
+    SKILLREG["Skill Registry\nAllowed skill·version pairs"]
+  end
+
+  subgraph DATASRC["External Data Sources  (domain-whitelisted)"]
+    FRED["FRED API\nstlouisfed.org"]
+    EDGAR["SEC EDGAR\ndata.sec.gov"]
+    LAKE["Data Lake\nParquet · Avro · ORC · Delta"]
+  end
+
+  subgraph STORAGE["Audit and Storage"]
+    SQLITE["SQLite  audit.db\nbatch-write 50 msgs / 0.5 s"]
+    S3["S3 / LocalStack\nAudit archive  50 recs / 5 s"]
+    REVIEWQ["Human Review Queue\nlow-confidence verdicts"]
+  end
+
+  subgraph OBS["Observability  (port 8000)"]
+    PROM["Prometheus\ncounters · histograms · latency · violations"]
+    OTEL["OpenTelemetry\ntrace spans"]
+    GRAFANA["Grafana\nCompliance KPI dashboards"]
+    PROM --> GRAFANA
+  end
+
+  A1 & A2 & A3 -->|"JSON access request"| KIN
+  KIN --> SIDECAR
+  SIDECAR -->|"fetch resource (APPROVED only)"| DATASRC
+  DATASRC -->|"data payload"| SIDECAR
+  DECISION -->|"APPROVED read"| KOUT1
+  DECISION -->|"APPROVED write"| KOUT2
+  DECISION -->|"all decisions"| KAUDIT
+  KOUT1 & KOUT2 --> A1 & A2 & A3
+  OPA <-->|"GET/PUT hot-reload"| REGO
+  SIDECAR -->|"OSCAL evidence"| OSCAL
+  SIDECAR -->|"skill lookup"| SKILLREG
+  SKILLREG --> TRESTLE
+  SIDECAR -->|"audit record (batch queue)"| SQLITE
+  SIDECAR -->|"S3 batch"| S3
+  DECISION -->|"low-confidence LLM verdict"| REVIEWQ
+  SIDECAR -->|"metrics"| PROM
+  SIDECAR -->|"trace spans"| OTEL
+
+  classDef tier     fill:#f7f8fa,stroke:#1f2328,stroke-width:1.5px,color:#1f2328
+  classDef decision fill:#ffffff,stroke:#1f2328,stroke-width:2px,color:#1f2328
+  classDef kafka    fill:#ffffff,stroke:#1f2328,stroke-width:1px,color:#1f2328
+  classDef agent    fill:#f7f8fa,stroke:#1f2328,stroke-width:1px,color:#1f2328
+  classDef store    fill:#ffffff,stroke:#1f2328,stroke-width:1px,color:#1f2328
+  classDef gov      fill:#f7f8fa,stroke:#1f2328,stroke-width:1px,color:#1f2328
+  classDef obs      fill:#f7f8fa,stroke:#1f2328,stroke-width:1px,color:#1f2328
+
+  class APL,ATTEST,CMF,OPA,CACHE,RL,LLM,CB,ESC tier
+  class KIN,KOUT1,KOUT2,KAUDIT kafka
+  class A1,A2,A3 agent
+  class SQLITE,S3,REVIEWQ store
+  class REGO,OSCAL,TRESTLE,SKILLREG gov
+  class PROM,OTEL,GRAFANA obs
+  class DECISION decision

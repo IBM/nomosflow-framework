@@ -1,0 +1,89 @@
+% Detection Efficacy Experiment - LaTeX Tables
+% Generated: 2026-05-03T19:37:08.265251
+
+
+\begin{table}[h]
+\centering
+\caption{Detection Efficacy Comparison Across Validation Strategies}
+\label{tab:detection-efficacy}
+\begin{tabular}{lrrr}
+\hline
+\textbf{Metric} & \textbf{Static-Only} & \textbf{LLM-Only} & \textbf{Hybrid} \\
+\hline
+Precision (\%) & 75.0 & 89.5 & 83.3 \\
+Recall (\%)    & 60.0 & 68.0 & 100.0 \\
+F1 Score (\%)  & 66.7 & 77.3 & 90.9 \\
+Accuracy (\%)  & 67.0 & 78.0 & 89.0 \\
+\hline
+Avg Latency (ms) & 0.0 & 0.0 & 0.0 \\
+P95 Latency (ms) & 0.0 & 0.0 & 0.0 \\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[h]
+\centering
+\caption{Overlap Analysis: Static vs. LLM Detection}
+\label{tab:overlap-analysis}
+\begin{tabular}{lr}
+\hline
+\textbf{Detection Category} & \textbf{Count} \\
+\hline
+Both Static and LLM & 99 \\
+Static Only & 121 \\
+LLM Only & 110 \\
+Neither & 470 \\
+\hline
+\textbf{Overlap Rate} & \textbf{30.0\%} \\
+\textbf{Complementary Rate} & \textbf{70.0\%} \\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[h]
+\centering
+\caption{Confusion Matrix: Static Validator}
+\label{tab:confusion-static}
+\begin{tabular}{lcc}
+\hline
+ & \textbf{Predicted Positive} & \textbf{Predicted Negative} \\
+\hline
+\textbf{Actual Positive} & 165 (TP) & 110 (FN) \\
+\textbf{Actual Negative} & 55 (FP) & 170 (TN) \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[h]
+\centering
+\caption{Confusion Matrix: Llm Validator}
+\label{tab:confusion-llm}
+\begin{tabular}{lcc}
+\hline
+ & \textbf{Predicted Positive} & \textbf{Predicted Negative} \\
+\hline
+\textbf{Actual Positive} & 187 (TP) & 88 (FN) \\
+\textbf{Actual Negative} & 22 (FP) & 203 (TN) \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[h]
+\centering
+\caption{Confusion Matrix: Hybrid Validator}
+\label{tab:confusion-hybrid}
+\begin{tabular}{lcc}
+\hline
+ & \textbf{Predicted Positive} & \textbf{Predicted Negative} \\
+\hline
+\textbf{Actual Positive} & 275 (TP) & 0 (FN) \\
+\textbf{Actual Negative} & 55 (FP) & 170 (TN) \\
+\hline
+\end{tabular}
+\end{table}

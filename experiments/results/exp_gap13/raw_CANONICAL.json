@@ -1,0 +1,61 @@
+{
+  "exp_id": "exp_gap13",
+  "repo_root": "/Users/rsinha/agentic-dataops/compliance-mvp/event-driven-compliance-sidecar-podman-sandbox",
+  "runtime_ms": 73.06316698668525,
+  "n_interceptors": 3,
+  "n_import_ok": 3,
+  "n_hooks_ok": 3,
+  "interceptors": [
+    {
+      "name": "compliance_interceptor",
+      "import_ok": true,
+      "import_error": null,
+      "hooks_found": [
+        "attach",
+        "detach"
+      ],
+      "hooks_missing": [],
+      "all_hooks_ok": true,
+      "module_file": "src/interceptors/compliance_interceptor.py",
+      "type": "RIIP",
+      "transport": "in-process",
+      "description": "Patches Python builtins and stdlib I/O to intercept all file/network/database access for compliance checks.",
+      "patches": [
+        "builtins.open",
+        "urllib.request.urlopen",
+        "boto3.make_request",
+        "sqlite3.connect"
+      ]
+    },
+    {
+      "name": "mcp_interceptor",
+      "import_ok": true,
+      "import_error": null,
+      "hooks_found": [
+        "handle_request"
+      ],
+      "hooks_missing": [],
+      "all_hooks_ok": true,
+      "module_file": "src/interceptors/mcp_interceptor.py",
+      "type": "PROXY",
+      "transport": "stdio / SSE",
+      "description": "MCP JSON-RPC proxy that wraps tool calls and resources before forwarding to the upstream MCP server.",
+      "patches": []
+    },
+    {
+      "name": "compliance_proxy_server",
+      "import_ok": true,
+      "import_error": null,
+      "hooks_found": [
+        "create_app"
+      ],
+      "hooks_missing": [],
+      "all_hooks_ok": true,
+      "module_file": "src/interceptors/compliance_proxy_server.py",
+      "type": "PROXY",
+      "transport": "HTTP (Flask)",
+      "description": "Flask HTTP reverse proxy that applies compliance checks to all inbound requests before forwarding downstream.",
+      "patches": []
+    }
+  ]
+}

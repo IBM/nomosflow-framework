@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="340" viewBox="0 0 560 340">
+<style>
+  text { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; }
+  .axis { stroke: #1f2328; stroke-width: 1.5; fill: none; }
+  .gridline { stroke: #e5e7eb; stroke-width: 1; }
+  .bar { fill: #3b82d4; }
+  .bar-llm { fill: #7c5cd8; }
+  .label { font-size: 12px; fill: #1f2328; }
+  .value { font-size: 11px; fill: #57606a; }
+  .title { font-size: 13px; font-weight: 600; fill: #1f2328; }
+  .subtitle { font-size: 11px; fill: #57606a; }
+  .dot-nomosflow { fill: #3b82d4; }
+  .dot-opa { fill: #57606a; }
+  .dot-envoy { fill: #7c5cd8; }
+  .dot-app { fill: #d97706; }
+  .dot-none { fill: #e5e7eb; stroke: #57606a; stroke-width: 1; }
+  .frontier { stroke: #3b82d4; stroke-width: 1.5;               stroke-dasharray: 4 3; fill: none; }
+</style>
+<line class="gridline" x1="80" y1="270.0" x2="530" y2="270.0"/>
+<text class="value" x="74" y="274.0" text-anchor="end">0</text>
+<line class="gridline" x1="80" y1="226.0" x2="530" y2="226.0"/>
+<text class="value" x="74" y="230.0" text-anchor="end">162</text>
+<line class="gridline" x1="80" y1="182.0" x2="530" y2="182.0"/>
+<text class="value" x="74" y="186.0" text-anchor="end">325</text>
+<line class="gridline" x1="80" y1="138.0" x2="530" y2="138.0"/>
+<text class="value" x="74" y="142.0" text-anchor="end">487</text>
+<line class="gridline" x1="80" y1="94.0" x2="530" y2="94.0"/>
+<text class="value" x="74" y="98.0" text-anchor="end">650</text>
+<line class="gridline" x1="80" y1="50.0" x2="530" y2="50.0"/>
+<text class="value" x="74" y="54.0" text-anchor="end">813</text>
+<line class="axis" x1="80" y1="50" x2="80" y2="270"/>
+<line class="axis" x1="80" y1="270" x2="530" y2="270"/>
+<rect class="bar" x="102.5" y="99.8" width="67.5" height="170.2"/>
+<text class="value" x="136.2" y="95.8" text-anchor="middle">629</text>
+<text class="label" x="136.2" y="288.0" text-anchor="middle">T1 APL</text>
+<text class="value" x="136.2" y="303.0" text-anchor="middle" fill="#3b82d4">31.5%</text>
+<rect class="bar" x="215.0" y="50.0" width="67.5" height="220.0"/>
+<text class="value" x="248.8" y="46.0" text-anchor="middle">813</text>
+<text class="label" x="248.8" y="288.0" text-anchor="middle">T3 OPA</text>
+<text class="value" x="248.8" y="303.0" text-anchor="middle" fill="#3b82d4">40.6%</text>
+<rect class="bar-llm" x="327.5" y="269.7" width="67.5" height="0.3"/>
+<text class="value" x="361.2" y="265.7" text-anchor="middle">1</text>
+<text class="label" x="361.2" y="288.0" text-anchor="middle">T5 LLM</text>
+<text class="value" x="361.2" y="303.0" text-anchor="middle" fill="#3b82d4">0.1%</text>
+<rect class="bar" x="440.0" y="119.3" width="67.5" height="150.7"/>
+<text class="value" x="473.8" y="115.3" text-anchor="middle">557</text>
+<text class="label" x="473.8" y="288.0" text-anchor="middle">APPROVED</text>
+<text class="value" x="473.8" y="303.0" text-anchor="middle" fill="#3b82d4">27.9%</text>
+<text class="title" x="280" y="22" text-anchor="middle">Requests resolved at each compliance tier (N=2,000)</text>
+<text class="subtitle" x="280" y="37" text-anchor="middle">Percentage = fraction of all requests resolved here</text>
+<text class="label" x="14" y="160" text-anchor="middle" transform="rotate(-90 14 160)">Requests resolved</text>
+</svg>

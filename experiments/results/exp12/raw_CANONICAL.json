@@ -1,0 +1,121 @@
+{
+  "experiment": "exp12",
+  "psutil_available": true,
+  "n_requests_per_workload_call": 1000,
+  "sample_duration_s": 10.0,
+  "sample_interval_s": 0.5,
+  "configurations": {
+    "no_enforcement": {
+      "mean_cpu_pct": 99.82,
+      "peak_cpu_pct": 100.6,
+      "mean_rss_mb": 236.1,
+      "peak_rss_mb": 241.05,
+      "n_cpu_samples": 19,
+      "n_rss_samples": 19
+    },
+    "apl_only": {
+      "mean_cpu_pct": 99.76,
+      "peak_cpu_pct": 100.2,
+      "mean_rss_mb": 210.5,
+      "peak_rss_mb": 228.0,
+      "n_cpu_samples": 19,
+      "n_rss_samples": 19
+    },
+    "opa_only": {
+      "mean_cpu_pct": 39.18,
+      "peak_cpu_pct": 45.0,
+      "mean_rss_mb": 134.75,
+      "peak_rss_mb": 135.03,
+      "n_cpu_samples": 23,
+      "n_rss_samples": 23
+    },
+    "full_stack": {
+      "mean_cpu_pct": 39.84,
+      "peak_cpu_pct": 45.4,
+      "mean_rss_mb": 121.08,
+      "peak_rss_mb": 133.36,
+      "n_cpu_samples": 20,
+      "n_rss_samples": 20
+    }
+  },
+  "overhead_full_vs_baseline": {
+    "mean_cpu_pct": {
+      "delta": "-59.98",
+      "delta_pct": "-60.1%"
+    },
+    "peak_cpu_pct": {
+      "delta": "-55.20",
+      "delta_pct": "-54.9%"
+    },
+    "mean_rss_mb": {
+      "delta": "-115.02",
+      "delta_pct": "-48.7%"
+    },
+    "peak_rss_mb": {
+      "delta": "-107.69",
+      "delta_pct": "-44.7%"
+    }
+  },
+  "podman_stats": {
+    "containers": [
+      {
+        "name": "opa-engine",
+        "rss_mb": 105.3,
+        "mem_usage": "105.3MB / 3.787GB"
+      },
+      {
+        "name": "gallant_margulis",
+        "rss_mb": 6.9,
+        "mem_usage": "6.902MB / 3.787GB"
+      },
+      {
+        "name": "romantic_jones",
+        "rss_mb": 6.43,
+        "mem_usage": "6.435MB / 3.787GB"
+      }
+    ],
+    "total_rss_mb": 118.63,
+    "opa_rss_mb": 105.3,
+    "raw": [
+      {
+        "id": "8c506608c31f",
+        "name": "opa-engine",
+        "cpu_time": "11m56.441726s",
+        "cpu_percent": "0.19%",
+        "avg_cpu": "0.19%",
+        "mem_usage": "105.3MB / 3.787GB",
+        "mem_percent": "2.78%",
+        "net_io": "1.443GB / 954.2MB",
+        "block_io": "59.24MB / 0B",
+        "pids": "13"
+      },
+      {
+        "id": "cd3c03dae6ae",
+        "name": "gallant_margulis",
+        "cpu_time": "462.057ms",
+        "cpu_percent": "0.01%",
+        "avg_cpu": "0.01%",
+        "mem_usage": "6.902MB / 3.787GB",
+        "mem_percent": "0.18%",
+        "net_io": "9.081kB / 4.039kB",
+        "block_io": "241.7kB / 0B",
+        "pids": "12"
+      },
+      {
+        "id": "5c7d145cbf5c",
+        "name": "romantic_jones",
+        "cpu_time": "500.088ms",
+        "cpu_percent": "0.01%",
+        "avg_cpu": "0.01%",
+        "mem_usage": "6.435MB / 3.787GB",
+        "mem_percent": "0.17%",
+        "net_io": "2.944kB / 1.258kB",
+        "block_io": "131.1kB / 0B",
+        "pids": "11"
+      }
+    ],
+    "podman_live": true,
+    "error": null
+  },
+  "live_benchmark_source": "benchmarks/tier_benchmark_20260710_021432.json"
+}

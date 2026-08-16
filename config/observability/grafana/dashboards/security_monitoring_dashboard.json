@@ -1,0 +1,324 @@
+{
+  "title": "Security Hardening Monitoring Dashboard",
+  "description": "Monitors JWKS, mTLS, and Certificate Renewal plugins following OASIS WS4 secure design principles",
+  "tags": ["security", "jwks", "mtls", "compliance", "oasis-ws4"],
+  "timezone": "browser",
+  "panels": [
+      {
+        "id": 1,
+        "title": "JWKS Token Validation Rate",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(plugin_success_total{plugin_name=\"jwks_fetcher\"}[5m])",
+            "legendFormat": "Successful Validations",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(plugin_failure_total{plugin_name=\"jwks_fetcher\"}[5m])",
+            "legendFormat": "Failed Validations",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"format": "ops", "label": "Validations/sec"},
+          {"format": "short"}
+        ],
+        "alert": {
+          "name": "High JWKS Validation Failure Rate",
+          "conditions": [
+            {
+              "evaluator": {"type": "gt", "params": [0.01]},
+              "operator": {"type": "and"},
+              "query": {"params": ["B", "5m", "now"]},
+              "reducer": {"type": "avg"}
+            }
+          ],
+          "frequency": "1m",
+          "handler": 1,
+          "message": "JWKS validation failure rate exceeds 1%",
+          "noDataState": "no_data",
+          "executionErrorState": "alerting"
+        }
+      },
+      {
+        "id": 2,
+        "title": "JWKS Cache Hit Ratio",
+        "type": "stat",
+        "gridPos": {"x": 12, "y": 0, "w": 6, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(jwks_cache_hits_total[5m]) / (rate(jwks_cache_hits_total[5m]) + rate(jwks_cache_misses_total[5m]))",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percentunit",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 0.90, "color": "yellow"},
+                {"value": 0.95, "color": "green"}
+              ]
+            }
+          }
+        },
+        "options": {
+          "reduceOptions": {"values": false, "calcs": ["lastNotNull"]},
+          "orientation": "auto",
+          "textMode": "value_and_name",
+          "colorMode": "value"
+        }
+      },
+      {
+        "id": 3,
+        "title": "Token Validation Latency",
+        "type": "graph",
+        "gridPos": {"x": 18, "y": 0, "w": 6, "h": 8},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, rate(jwks_validation_duration_seconds_bucket[5m]))",
+            "legendFormat": "p50",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(jwks_validation_duration_seconds_bucket[5m]))",
+            "legendFormat": "p95",
+            "refId": "B"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(jwks_validation_duration_seconds_bucket[5m]))",
+            "legendFormat": "p99",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "s", "label": "Latency"},
+          {"format": "short"}
+        ],
+        "alert": {
+          "name": "High Token Validation Latency",
+          "conditions": [
+            {
+              "evaluator": {"type": "gt", "params": [0.05]},
+              "operator": {"type": "and"},
+              "query": {"params": ["B", "5m", "now"]},
+              "reducer": {"type": "avg"}
+            }
+          ],
+          "frequency": "1m",
+          "message": "Token validation p95 latency exceeds 50ms"
+        }
+      },
+      {
+        "id": 4,
+        "title": "Certificate Expiry Countdown",
+        "type": "gauge",
+        "gridPos": {"x": 0, "y": 8, "w": 8, "h": 8},
+        "targets": [
+          {
+            "expr": "certificate_days_until_expiry",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "days",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 7, "color": "orange"},
+                {"value": 30, "color": "yellow"},
+                {"value": 60, "color": "green"}
+              ]
+            },
+            "min": 0,
+            "max": 90
+          }
+        },
+        "alert": {
+          "name": "Certificate Expiring Soon",
+          "conditions": [
+            {
+              "evaluator": {"type": "lt", "params": [30]},
+              "operator": {"type": "and"},
+              "query": {"params": ["A", "5m", "now"]},
+              "reducer": {"type": "last"}
+            }
+          ],
+          "frequency": "1h",
+          "message": "Certificate expires in less than 30 days"
+        }
+      },
+      {
+        "id": 5,
+        "title": "Security Plugin Errors",
+        "type": "graph",
+        "gridPos": {"x": 8, "y": 8, "w": 8, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(security_plugin_errors_total[5m])",
+            "legendFormat": "{{plugin}} - {{error_type}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "ops", "label": "Errors/sec"},
+          {"format": "short"}
+        ],
+        "alert": {
+          "name": "Security Plugin Errors",
+          "conditions": [
+            {
+              "evaluator": {"type": "gt", "params": [0]},
+              "operator": {"type": "and"},
+              "query": {"params": ["A", "5m", "now"]},
+              "reducer": {"type": "avg"}
+            }
+          ],
+          "frequency": "1m",
+          "message": "Security plugin errors detected"
+        }
+      },
+      {
+        "id": 6,
+        "title": "Compliance Request Decision Rate",
+        "type": "graph",
+        "gridPos": {"x": 16, "y": 8, "w": 8, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(compliance_requests_total{decision=\"APPROVED\"}[5m])",
+            "legendFormat": "Approved",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(compliance_requests_total{decision=\"DENIED\"}[5m])",
+            "legendFormat": "Denied",
+            "refId": "B"
+          },
+          {
+            "expr": "rate(compliance_requests_total{decision=\"ERROR\"}[5m])",
+            "legendFormat": "Errors",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "ops", "label": "Requests/sec"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Plugin Execution Time",
+        "type": "heatmap",
+        "gridPos": {"x": 0, "y": 16, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(plugin_execution_time_seconds_bucket[5m])",
+            "legendFormat": "{{plugin_name}} - {{operation}}",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "calculate": true,
+          "calculation": {},
+          "cellGap": 2,
+          "cellRadius": 0,
+          "color": {
+            "exponent": 0.5,
+            "fill": "dark-orange",
+            "mode": "scheme",
+            "reverse": false,
+            "scale": "exponential",
+            "scheme": "Spectral",
+            "steps": 128
+          },
+          "exemplars": {"color": "rgba(255,0,255,0.7)"},
+          "filterValues": {"le": 1e-9},
+          "legend": {"show": true},
+          "rowsFrame": {"layout": "auto"},
+          "tooltip": {"show": true, "yHistogram": false},
+          "yAxis": {
+            "axisPlacement": "left",
+            "reverse": false,
+            "unit": "s"
+          }
+        }
+      },
+      {
+        "id": 8,
+        "title": "mTLS Connection Status",
+        "type": "stat",
+        "gridPos": {"x": 12, "y": 16, "w": 6, "h": 8},
+        "targets": [
+          {
+            "expr": "kafka_active_connections",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "none",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 1, "color": "green"}
+              ]
+            }
+          }
+        },
+        "options": {
+          "reduceOptions": {"values": false, "calcs": ["lastNotNull"]},
+          "orientation": "auto",
+          "textMode": "value_and_name",
+          "colorMode": "value"
+        }
+      },
+      {
+        "id": 9,
+        "title": "OPA Policy Evaluation Latency",
+        "type": "graph",
+        "gridPos": {"x": 18, "y": 16, "w": 6, "h": 8},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(opa_policy_evaluation_seconds_bucket[5m]))",
+            "legendFormat": "p95",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(opa_policy_evaluation_seconds_bucket[5m]))",
+            "legendFormat": "p99",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"format": "s", "label": "Latency"},
+          {"format": "short"}
+        ]
+      }
+    ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "refresh": "10s",
+  "schemaVersion": 27,
+  "style": "dark",
+  "time": {"from": "now-1h", "to": "now"},
+  "timepicker": {},
+  "version": 1
+}

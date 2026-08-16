@@ -1,0 +1,45 @@
+# EXP-11 multi-agent scalability
+
+*Generated: 2026-08-14T05:24:25.486550+00:00*
+
+## Throughput scaling (thread + process)
+| Agents | Total_RPS | Per_agent_RPS | P99_ms | Mode |
+| ------ | --------- | ------------- | ------ | ---- |
+| 1 | 324.8 | 324.8 | 11.84 | thread |
+| 5 | 1560.0 | 312.0 | 4.83 | thread |
+| 10 | 1645.8 | 164.6 | 9.32 | thread |
+| 25 | 1655.2 | 66.2 | 24.53 | thread |
+| 50 | 1234.4 | 24.7 | 72.72 | thread |
+| 100 | 927.8 | 9.3 | 207.57 | thread |
+| 1 | 270.7 | 270.7 | 4.04 | process |
+| 5 | 1483.7 | 296.7 | 5.61 | process |
+| 10 | 2008.3 | 200.8 | 10.22 | process |
+| 25 | 1347.5 | 53.9 | 34.21 | process |
+
+## Per-agent resource growth
+| Agents | Mode | Peak_RSS_MB | Per_agent_RSS_KB |
+| ------ | ---- | ----------- | ---------------- |
+| 1 | thread | -9.36 | -9584.00 |
+| 5 | thread | 0.22 | 44.80 |
+| 10 | thread | -3.09 | -316.80 |
+| 25 | thread | -0.69 | -28.16 |
+| 50 | thread | 11.06 | 226.56 |
+| 100 | thread | -49.73 | -509.28 |
+| 1 | process | 2.17 | 2224.00 |
+| 5 | process | -0.12 | -25.60 |
+| 10 | process | -1.39 | -142.40 |
+| 25 | process | -33.84 | -1386.24 |
+
+## Amortised vs. per-agent components
+| Component | Growth_model | Notes |
+| --------- | ------------ | ----- |
+| OPA process | amortised/shared | single shared policy engine (thread); isolated per worker (process) |
+| APL validator instance | amortised/shared | single instance reused across agents (thread); per-worker (process) |
+| CMF enricher | amortised/shared | conceptually shared service, not separately exercised here |
+| rate_limits dict entry | O(N_agents) | ~200 bytes per principal |
+| per-principal history | O(N_agents * H) | H = rate_limits update count |
+
+## Paper §5 gap disclosures
+- Thread mode: agents share OPA client and Python GIL — RSS isolation approximate; throughput is GIL-limited above ~10 agents.
+- Process mode: true OS process isolation (ProcessPoolExecutor); each worker has independent OPA HTTP client and APLValidator instance. Run with MP_AGENT_COUNTS env var to control which counts are tested (default: 1,5,10,25).
+- Per-principal history H is the rate_limits dict; full sequence_state (sidecar_optimized.py) not exercised in this benchmark.

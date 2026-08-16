@@ -1,0 +1,1737 @@
+{
+  "metadata": {
+    "experiment_name": "Detection Efficacy Experiment",
+    "timestamp": "2026-05-04T02:38:55.581075+00:00",
+    "test_cases_count": 50,
+    "violations_count": 25,
+    "clean_operations_count": 25,
+    "simulate_latency": false
+  },
+  "validators": {
+    "static": {
+      "results": [
+        {
+          "test_case_id": 1,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.8649826049804688,
+          "violations_found": [
+            "SSN"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 2,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.015020370483398438,
+          "violations_found": [
+            "CREDIT_CARD"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 3,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.010013580322265625,
+          "violations_found": [
+            "DANGEROUS_RM"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 4,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.008106231689453125,
+          "violations_found": [
+            "RESTRICTED_PATH"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 5,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.007152557373046875,
+          "violations_found": [
+            "RESTRICTED_PATH",
+            "PROHIBITED_TOOL"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 6,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.009059906005859375,
+          "violations_found": [
+            "EMAIL"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 7,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.009059906005859375,
+          "violations_found": [
+            "PHONE"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 8,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.010967254638671875,
+          "violations_found": [
+            "API_KEY"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 9,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.010013580322265625,
+          "violations_found": [
+            "PASSWORD"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 10,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.009059906005859375,
+          "violations_found": [
+            "CURL_PIPE"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 11,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.008821487426757812,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 12,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.009775161743164062,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 13,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.010013580322265625,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 14,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.012874603271484375,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 15,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.010013580322265625,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 16,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.010251998901367188,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 17,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.008106231689453125,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 18,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.010013580322265625,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 19,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.011205673217773438,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 20,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.010251998901367188,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 21,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.011920928955078125,
+          "violations_found": [
+            "SSN"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 22,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.010013580322265625,
+          "violations_found": [
+            "EMAIL"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 23,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.012159347534179688,
+          "violations_found": [
+            "PHONE"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 24,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.010967254638671875,
+          "violations_found": [
+            "DANGEROUS_RM"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 25,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.008821487426757812,
+          "violations_found": [
+            "EMAIL",
+            "PASSWORD"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 26,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.011205673217773438,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 27,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.009775161743164062,
+          "violations_found": [
+            "SSN"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 28,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.008821487426757812,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 29,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.010013580322265625,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 30,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.010013580322265625,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 31,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.0069141387939453125,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 32,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.008344650268554688,
+          "violations_found": [
+            "DANGEROUS_RM"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 33,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.010967254638671875,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 34,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.008344650268554688,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 35,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.009298324584960938,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 36,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.008821487426757812,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 37,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.010013580322265625,
+          "violations_found": [
+            "SSN"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 38,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.010013580322265625,
+          "violations_found": [
+            "CREDIT_CARD"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 39,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.009059906005859375,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 40,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.009059906005859375,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 41,
+          "validator_type": "static",
+          "detected": true,
+          "detection_time_ms": 0.0069141387939453125,
+          "violations_found": [
+            "PROHIBITED_TOOL"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 42,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.0069141387939453125,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 43,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.008106231689453125,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 44,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.0069141387939453125,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 45,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.007867813110351562,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 46,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.009059906005859375,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 47,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.007867813110351562,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 48,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.0069141387939453125,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 49,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.007152557373046875,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 50,
+          "validator_type": "static",
+          "detected": false,
+          "detection_time_ms": 0.009059906005859375,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        }
+      ],
+      "metrics": {
+        "confusion_matrix": {
+          "true_positives": 15,
+          "false_positives": 5,
+          "true_negatives": 20,
+          "false_negatives": 10
+        },
+        "metrics": {
+          "precision": 0.75,
+          "recall": 0.6,
+          "f1_score": 0.6666666666666665,
+          "accuracy": 0.7
+        },
+        "performance": {
+          "mean_detection_time_ms": 0.026521682739257812,
+          "median_detection_time_ms": 0.009179115295410156,
+          "p95_detection_time_ms": 0.012874603271484375
+        },
+        "violations_by_category": {
+          "static_detectable": 10,
+          "both_detectable": 5,
+          "false_positive_trap": 2,
+          "edge_case": 3
+        }
+      }
+    },
+    "llm": {
+      "results": [
+        {
+          "test_case_id": 1,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.6132125854492188,
+          "violations_found": [
+            "EXPLICIT_SSN"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 2,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.022172927856445312,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 3,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.013113021850585938,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 4,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.010967254638671875,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 5,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.009775161743164062,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 6,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.012636184692382812,
+          "violations_found": [
+            "EXPLICIT_EMAIL"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 7,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.011920928955078125,
+          "violations_found": [
+            "EXPLICIT_PHONE"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 8,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.012874603271484375,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 9,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.011920928955078125,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 10,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.012159347534179688,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 11,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.011205673217773438,
+          "violations_found": [
+            "SEMANTIC_INDIRECT_PII"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 12,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.010013580322265625,
+          "violations_found": [
+            "SEMANTIC_INDIRECT_PII",
+            "SEMANTIC_PRIVACY_VIOLATION"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 13,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.010967254638671875,
+          "violations_found": [
+            "SEMANTIC_PRIVACY_VIOLATION",
+            "SEMANTIC_DATA_EXFILTRATION"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 14,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.015020370483398438,
+          "violations_found": [
+            "SEMANTIC_INDIRECT_PII",
+            "SEMANTIC_IMPLICIT_AUTHORIZATION"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 15,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.010967254638671875,
+          "violations_found": [
+            "SEMANTIC_PRIVACY_VIOLATION",
+            "SEMANTIC_IMPLICIT_AUTHORIZATION"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 16,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.011920928955078125,
+          "violations_found": [
+            "SEMANTIC_PURPOSE_VIOLATION"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 17,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.010967254638671875,
+          "violations_found": [
+            "SEMANTIC_PURPOSE_VIOLATION"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 18,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.013113021850585938,
+          "violations_found": [
+            "SEMANTIC_INDIRECT_PII"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 19,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.014066696166992188,
+          "violations_found": [
+            "SEMANTIC_INDIRECT_PII"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 20,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.012874603271484375,
+          "violations_found": [
+            "SEMANTIC_INDIRECT_PII"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 21,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.013113021850585938,
+          "violations_found": [
+            "SEMANTIC_PRIVACY_VIOLATION",
+            "EXPLICIT_SSN"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 22,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.010967254638671875,
+          "violations_found": [
+            "SEMANTIC_PRIVACY_VIOLATION",
+            "SEMANTIC_DATA_EXFILTRATION",
+            "EXPLICIT_EMAIL"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 23,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.012159347534179688,
+          "violations_found": [
+            "SEMANTIC_PRIVACY_VIOLATION",
+            "EXPLICIT_PHONE"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 24,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.012874603271484375,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 25,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.013113021850585938,
+          "violations_found": [
+            "EXPLICIT_EMAIL"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 26,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.012636184692382812,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 27,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.011920928955078125,
+          "violations_found": [
+            "EXPLICIT_SSN"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 28,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.011920928955078125,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 29,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.012159347534179688,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 30,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.012159347534179688,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 31,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.010967254638671875,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 32,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.010967254638671875,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 33,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.012874603271484375,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 34,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.012159347534179688,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 35,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.012874603271484375,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 36,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.012159347534179688,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 37,
+          "validator_type": "llm",
+          "detected": true,
+          "detection_time_ms": 0.012159347534179688,
+          "violations_found": [
+            "EXPLICIT_SSN"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 38,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.013113021850585938,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 39,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.011920928955078125,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 40,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.011920928955078125,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 41,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.010967254638671875,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 42,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.011920928955078125,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 43,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.010967254638671875,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 44,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.010967254638671875,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 45,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.010967254638671875,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 46,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.011920928955078125,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 47,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.011920928955078125,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 48,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.010013580322265625,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 49,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.010967254638671875,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 50,
+          "validator_type": "llm",
+          "detected": false,
+          "detection_time_ms": 0.012874603271484375,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        }
+      ],
+      "metrics": {
+        "confusion_matrix": {
+          "true_positives": 17,
+          "false_positives": 2,
+          "true_negatives": 23,
+          "false_negatives": 8
+        },
+        "metrics": {
+          "precision": 0.8947368421052632,
+          "recall": 0.68,
+          "f1_score": 0.7727272727272727,
+          "accuracy": 0.8
+        },
+        "performance": {
+          "mean_detection_time_ms": 0.02418994903564453,
+          "median_detection_time_ms": 0.011920928955078125,
+          "p95_detection_time_ms": 0.015020370483398438
+        },
+        "violations_by_category": {
+          "static_detectable": 3,
+          "llm_detectable": 10,
+          "both_detectable": 4,
+          "false_positive_trap": 1,
+          "edge_case": 1
+        }
+      }
+    },
+    "hybrid": {
+      "results": [
+        {
+          "test_case_id": 1,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.026702880859375,
+          "violations_found": [
+            "EXPLICIT_SSN",
+            "SSN"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 2,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.030040740966796875,
+          "violations_found": [
+            "CREDIT_CARD"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 3,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.0209808349609375,
+          "violations_found": [
+            "DANGEROUS_RM"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 4,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.017881393432617188,
+          "violations_found": [
+            "RESTRICTED_PATH"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 5,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.0171661376953125,
+          "violations_found": [
+            "RESTRICTED_PATH",
+            "PROHIBITED_TOOL"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 6,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.02574920654296875,
+          "violations_found": [
+            "EXPLICIT_EMAIL",
+            "EMAIL"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 7,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.024080276489257812,
+          "violations_found": [
+            "PHONE",
+            "EXPLICIT_PHONE"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 8,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.0247955322265625,
+          "violations_found": [
+            "API_KEY"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 9,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.022172927856445312,
+          "violations_found": [
+            "PASSWORD"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 10,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.028848648071289062,
+          "violations_found": [
+            "CURL_PIPE"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 11,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.02384185791015625,
+          "violations_found": [
+            "SEMANTIC_INDIRECT_PII"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 12,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.025033950805664062,
+          "violations_found": [
+            "SEMANTIC_INDIRECT_PII",
+            "SEMANTIC_PRIVACY_VIOLATION"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 13,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.0247955322265625,
+          "violations_found": [
+            "SEMANTIC_DATA_EXFILTRATION",
+            "SEMANTIC_PRIVACY_VIOLATION"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 14,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.03314018249511719,
+          "violations_found": [
+            "SEMANTIC_INDIRECT_PII",
+            "SEMANTIC_IMPLICIT_AUTHORIZATION"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 15,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.04410743713378906,
+          "violations_found": [
+            "SEMANTIC_IMPLICIT_AUTHORIZATION",
+            "SEMANTIC_PRIVACY_VIOLATION"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 16,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.052928924560546875,
+          "violations_found": [
+            "SEMANTIC_PURPOSE_VIOLATION"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 17,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.029087066650390625,
+          "violations_found": [
+            "SEMANTIC_PURPOSE_VIOLATION"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 18,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.030040740966796875,
+          "violations_found": [
+            "SEMANTIC_INDIRECT_PII"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 19,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.030040740966796875,
+          "violations_found": [
+            "SEMANTIC_INDIRECT_PII"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 20,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.028848648071289062,
+          "violations_found": [
+            "SEMANTIC_INDIRECT_PII"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 21,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.033855438232421875,
+          "violations_found": [
+            "EXPLICIT_SSN",
+            "SSN",
+            "SEMANTIC_PRIVACY_VIOLATION"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 22,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.029087066650390625,
+          "violations_found": [
+            "SEMANTIC_DATA_EXFILTRATION",
+            "EXPLICIT_EMAIL",
+            "SEMANTIC_PRIVACY_VIOLATION",
+            "EMAIL"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 23,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.030994415283203125,
+          "violations_found": [
+            "PHONE",
+            "EXPLICIT_PHONE",
+            "SEMANTIC_PRIVACY_VIOLATION"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 24,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.02574920654296875,
+          "violations_found": [
+            "DANGEROUS_RM"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 25,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.027894973754882812,
+          "violations_found": [
+            "EXPLICIT_EMAIL",
+            "PASSWORD",
+            "EMAIL"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 26,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.024080276489257812,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 27,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.027179718017578125,
+          "violations_found": [
+            "EXPLICIT_SSN",
+            "SSN"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 28,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.02193450927734375,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 29,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.02288818359375,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 30,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.023126602172851562,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 31,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.019073486328125,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 32,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.02002716064453125,
+          "violations_found": [
+            "DANGEROUS_RM"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 33,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.024080276489257812,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 34,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.0209808349609375,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 35,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.02193450927734375,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 36,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.021696090698242188,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 37,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.027179718017578125,
+          "violations_found": [
+            "EXPLICIT_SSN",
+            "SSN"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 38,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.024080276489257812,
+          "violations_found": [
+            "CREDIT_CARD"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 39,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.0209808349609375,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 40,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.0247955322265625,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 41,
+          "validator_type": "hybrid",
+          "detected": true,
+          "detection_time_ms": 0.018835067749023438,
+          "violations_found": [
+            "PROHIBITED_TOOL"
+          ],
+          "confidence": 1.0,
+          "error": null
+        },
+        {
+          "test_case_id": 42,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.02002716064453125,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 43,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.01811981201171875,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 44,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.018835067749023438,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 45,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.019073486328125,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 46,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.022172927856445312,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 47,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.0209808349609375,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 48,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.017881393432617188,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 49,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.016927719116210938,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        },
+        {
+          "test_case_id": 50,
+          "validator_type": "hybrid",
+          "detected": false,
+          "detection_time_ms": 0.022172927856445312,
+          "violations_found": [],
+          "confidence": 0.0,
+          "error": null
+        }
+      ],
+      "metrics": {
+        "confusion_matrix": {
+          "true_positives": 25,
+          "false_positives": 5,
+          "true_negatives": 20,
+          "false_negatives": 0
+        },
+        "metrics": {
+          "precision": 0.8333333333333334,
+          "recall": 1.0,
+          "f1_score": 0.9090909090909091,
+          "accuracy": 0.9
+        },
+        "performance": {
+          "mean_detection_time_ms": 0.024938583374023438,
+          "median_detection_time_ms": 0.024080276489257812,
+          "p95_detection_time_ms": 0.033855438232421875
+        },
+        "violations_by_category": {
+          "static_detectable": 10,
+          "llm_detectable": 10,
+          "both_detectable": 5,
+          "false_positive_trap": 2,
+          "edge_case": 3
+        }
+      }
+    }
+  },
+  "overlap_analysis": {
+    "overlap_statistics": {
+      "both_detected": 9,
+      "static_only": 11,
+      "llm_only": 10,
+      "neither_detected": 20,
+      "overlap_rate": 0.3,
+      "complementary_rate": 0.7
+    },
+    "static_only_violations": [
+      {
+        "id": 2,
+        "type": "credit_card",
+        "category": "static_detectable"
+      },
+      {
+        "id": 3,
+        "type": "dangerous_command",
+        "category": "static_detectable"
+      },
+      {
+        "id": 4,
+        "type": "restricted_path",
+        "category": "static_detectable"
+      },
+      {
+        "id": 5,
+        "type": "prohibited_tool",
+        "category": "static_detectable"
+      },
+      {
+        "id": 8,
+        "type": "api_key",
+        "category": "static_detectable"
+      },
+      {
+        "id": 9,
+        "type": "password",
+        "category": "static_detectable"
+      },
+      {
+        "id": 10,
+        "type": "curl_pipe_bash",
+        "category": "static_detectable"
+      },
+      {
+        "id": 24,
+        "type": "dangerous_command_with_data",
+        "category": "both_detectable"
+      },
+      {
+        "id": 32,
+        "type": "none",
+        "category": "false_positive_trap"
+      },
+      {
+        "id": 38,
+        "type": "none",
+        "category": "edge_case"
+      },
+      {
+        "id": 41,
+        "type": "none",
+        "category": "edge_case"
+      }
+    ],
+    "llm_only_violations": [
+      {
+        "id": 11,
+        "type": "indirect_pii_reference",
+        "category": "llm_detectable"
+      },
+      {
+        "id": 12,
+        "type": "semantic_privacy_violation",
+        "category": "llm_detectable"
+      },
+      {
+        "id": 13,
+        "type": "contextual_violation",
+        "category": "llm_detectable"
+      },
+      {
+        "id": 14,
+        "type": "obfuscated_intent",
+        "category": "llm_detectable"
+      },
+      {
+        "id": 15,
+        "type": "implicit_authorization",
+        "category": "llm_detectable"
+      },
+      {
+        "id": 16,
+        "type": "data_aggregation",
+        "category": "llm_detectable"
+      },
+      {
+        "id": 17,
+        "type": "purpose_violation",
+        "category": "llm_detectable"
+      },
+      {
+        "id": 18,
+        "type": "indirect_identifier",
+        "category": "llm_detectable"
+      },
+      {
+        "id": 19,
+        "type": "temporal_correlation",
+        "category": "llm_detectable"
+      },
+      {
+        "id": 20,
+        "type": "relationship_inference",
+        "category": "llm_detectable"
+      }
+    ]
+  }
+}

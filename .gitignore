@@ -1,0 +1,67 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+env/
+
+# Secrets — NEVER commit these
+.env.local
+.env.*.local
+*.key
+*.pem
+*.crt
+secrets/
+credentials/
+
+# Databases (regenerated at runtime)
+*.db
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build / packaging
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Test/coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Fresh experiment runs — reviewers use the checked-in raw_CANONICAL.json snapshots
+experiments/results/*/raw_*.json
+!experiments/results/*/raw_CANONICAL.json
+
+# Intermediate benchmark timestamp dumps (only the canonical file is tracked)
+benchmarks/results/baseline_*.json
+benchmarks/results/full-stack_*.json
+benchmarks/results/llm-only_*.json
+benchmarks/results/phase_timings_*.json
+benchmarks/results/five-tier_small_*.json
+
+# Logs & temp
+*.log
+*.tmp
+*.bak
+logs/
+.env.local
+experiments/results/exp3/iaa_blind_raw.json

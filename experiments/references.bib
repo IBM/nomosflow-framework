@@ -1,0 +1,176 @@
+% =====================================================================
+% references.bib -- "Enforcing Enterprise Compliance" (ACM CSUR draft)
+%
+% VERIFICATION POLICY: Foundational papers and standards carry full,
+% well-known bibliographic details. For recent (2024-2026) preprints and
+% industry sources, fragile fields (pages, arXiv IDs) are OMITTED where
+% not confirmed, and entries are marked "note = {Verify before
+% submission}". Do not trust any entry blindly; run a full pass against
+% DBLP / publisher pages before submitting.
+% =====================================================================
+
+% ------------------- Regulation, law, GRC frameworks -----------------
+@misc{sox2002, title={Sarbanes--Oxley Act of 2002}, author={{U.S. Congress}}, year={2002}, note={Pub. L. No. 107-204, 116 Stat. 745}}
+@misc{gdpr2016, title={Regulation (EU) 2016/679 (General Data Protection Regulation)}, author={{European Parliament and Council}}, year={2016}, note={OJ L 119}}
+@misc{hipaa1996, title={Health Insurance Portability and Accountability Act of 1996}, author={{U.S. Congress}}, year={1996}, note={Pub. L. No. 104-191}}
+@misc{pcidss, title={Payment Card Industry Data Security Standard (PCI DSS) v4.0}, author={{PCI Security Standards Council}}, year={2022}}
+@misc{ccpa2018, title={California Consumer Privacy Act}, author={{State of California}}, year={2018}, note={Cal. Civ. Code \S1798.100 et seq.}}
+@misc{euaiact2024, title={Regulation (EU) 2024/1689 laying down harmonised rules on artificial intelligence (AI Act)}, author={{European Parliament and Council}}, year={2024}}
+@misc{dora2022, title={Regulation (EU) 2022/2554 on digital operational resilience for the financial sector (DORA)}, author={{European Parliament and Council}}, year={2022}}
+@misc{coloradoai2024, title={Colorado Artificial Intelligence Act (SB 24-205)}, author={{State of Colorado}}, year={2024}}
+@misc{doj_eccp2024, title={Evaluation of Corporate Compliance Programs (Updated September 2024)}, author={{U.S. Department of Justice, Criminal Division}}, year={2024}}
+@misc{coso2013, title={Internal Control---Integrated Framework}, author={{Committee of Sponsoring Organizations of the Treadway Commission (COSO)}}, year={2013}}
+@misc{iso27001, title={{ISO/IEC} 27001:2022 Information Security Management Systems---Requirements}, author={{International Organization for Standardization}}, year={2022}}
+@misc{iso42001, title={{ISO/IEC} 42001:2023 Artificial Intelligence Management System}, author={{International Organization for Standardization}}, year={2023}}
+@misc{cobit2019, title={{COBIT} 2019 Framework: Governance and Management Objectives}, author={{ISACA}}, year={2019}}
+@misc{tcsec1985, title={Trusted Computer System Evaluation Criteria ({TCSEC}, ``Orange Book'')}, author={{U.S. Department of Defense}}, year={1985}, note={DoD 5200.28-STD}}
+@misc{commoncriteria, title={Common Criteria for Information Technology Security Evaluation ({ISO/IEC} 15408)}, author={{Common Criteria Recognition Arrangement}}, year={2022}}
+
+% ------------- Foundations: reference monitor & principles -----------
+@techreport{anderson1972, title={Computer Security Technology Planning Study}, author={Anderson, James P.}, institution={U.S. Air Force Electronic Systems Division}, number={ESD-TR-73-51}, year={1972}}
+@article{saltzer1975, title={The Protection of Information in Computer Systems}, author={Saltzer, Jerome H. and Schroeder, Michael D.}, journal={Proceedings of the IEEE}, volume={63}, number={9}, pages={1278--1308}, year={1975}}
+@techreport{bell1973, title={Secure Computer Systems: Mathematical Foundations}, author={Bell, D. Elliott and LaPadula, Leonard J.}, institution={MITRE Corporation}, number={MTR-2547}, year={1973}}
+@techreport{biba1977, title={Integrity Considerations for Secure Computer Systems}, author={Biba, Kenneth J.}, institution={MITRE Corporation}, number={MTR-3153}, year={1977}}
+@inproceedings{clark1987, title={A Comparison of Commercial and Military Computer Security Policies}, author={Clark, David D. and Wilson, David R.}, booktitle={Proc. IEEE Symposium on Security and Privacy}, pages={184--194}, year={1987}}
+@inproceedings{brewer1989, title={The {Chinese} Wall Security Policy}, author={Brewer, David F.C. and Nash, Michael J.}, booktitle={Proc. IEEE Symposium on Security and Privacy}, pages={206--214}, year={1989}}
+@article{denning1976, title={A Lattice Model of Secure Information Flow}, author={Denning, Dorothy E.}, journal={Communications of the ACM}, volume={19}, number={5}, pages={236--243}, year={1976}}
+@article{sandhu1994access, title={Access Control: Principles and Practice}, author={Sandhu, Ravi S. and Samarati, Pierangela}, journal={IEEE Communications Magazine}, volume={32}, number={9}, pages={40--48}, year={1994}}
+
+% ------------- Access control models & policy languages --------------
+@inproceedings{ferraiolo1992rbac, title={Role-Based Access Controls}, author={Ferraiolo, David F. and Kuhn, D. Richard}, booktitle={Proc. 15th NIST-NCSC National Computer Security Conference}, pages={554--563}, year={1992}}
+@article{sandhu1996rbac, title={Role-Based Access Control Models}, author={Sandhu, Ravi S. and Coyne, Edward J. and Feinstein, Hal L. and Youman, Charles E.}, journal={Computer}, volume={29}, number={2}, pages={38--47}, year={1996}, doi={10.1109/2.485845}}
+@book{ferraiolo2003rbac, title={Role-Based Access Control}, author={Ferraiolo, David F. and Kuhn, D. Richard and Chandramouli, Ramaswamy}, publisher={Artech House}, edition={2}, year={2007}}
+@article{kuhn2010attributes, title={Adding Attributes to Role-Based Access Control}, author={Kuhn, D. Richard and Coyne, Edward J. and Weil, Timothy R.}, journal={Computer}, volume={43}, number={6}, pages={79--81}, year={2010}}
+@techreport{nist800162abac, title={Guide to Attribute Based Access Control ({ABAC}) Definition and Considerations}, author={Hu, Vincent C. and Ferraiolo, David and Kuhn, Rick and Schnitzer, Adam and Sandlin, Kenneth and Miller, Robert and Scarfone, Karen}, institution={NIST}, number={SP 800-162}, year={2014}}
+@article{servos2017abac, title={Current Research and Open Problems in Attribute-Based Access Control}, author={Servos, Daniel and Osborn, Sylvia L.}, journal={ACM Computing Surveys}, volume={49}, number={4}, pages={1--45}, year={2017}, doi={10.1145/3007204}}
+@inproceedings{fong2011rebac, title={Relationship-Based Access Control: Protection Model and Policy Language}, author={Fong, Philip W.L.}, booktitle={Proc. ACM Conference on Data and Application Security and Privacy (CODASPY)}, pages={191--202}, year={2011}}
+@inproceedings{zanzibar2019, title={Zanzibar: {Google}'s Consistent, Global Authorization System}, author={Pang, Ruoming and C{\'a}ceres, Ram{\'o}n and Burrows, Mike and others}, booktitle={Proc. USENIX Annual Technical Conference (ATC)}, pages={33--46}, year={2019}}
+@article{ngac2011, title={The Policy Machine: A Novel Architecture and Framework for Access Control Policy Specification and Enforcement}, author={Ferraiolo, David and Atluri, Vijayalakshmi and Gavrila, Serban}, journal={Journal of Systems Architecture}, volume={57}, number={4}, pages={412--424}, year={2011}}
+@misc{xacml3, title={eXtensible Access Control Markup Language ({XACML}) Version 3.0}, author={{OASIS}}, year={2013}, note={OASIS Standard}}
+@inproceedings{damianou2001ponder, title={The {Ponder} Policy Specification Language}, author={Damianou, Nicodemos and Dulay, Naranker and Lupu, Emil and Sloman, Morris}, booktitle={Proc. Int. Workshop on Policies for Distributed Systems and Networks (POLICY)}, pages={18--38}, year={2001}}
+@article{lupu1999conflicts, title={Conflicts in Policy-Based Distributed Systems Management}, author={Lupu, Emil C. and Sloman, Morris}, journal={IEEE Transactions on Software Engineering}, volume={25}, number={6}, pages={852--869}, year={1999}}
+@inproceedings{brucker2009breakglass, title={Extending Access Control Models with Break-Glass}, author={Brucker, Achim D. and Petritsch, Helmut}, booktitle={Proc. ACM Symposium on Access Control Models and Technologies (SACMAT)}, pages={197--206}, year={2009}}
+@misc{nobi2022mlac, title={Machine Learning in Access Control: A Taxonomy and Survey}, author={Nobi, Mohammad Nur and Gupta, Maanak and Praharaj, Lopamudra and others}, year={2022}, note={arXiv:2207.01739. Verify final venue before submission}}
+
+% ------------- Enforcement theory & runtime verification -------------
+@article{schneider2000enforceable, title={Enforceable Security Policies}, author={Schneider, Fred B.}, journal={ACM Transactions on Information and System Security}, volume={3}, number={1}, pages={30--50}, year={2000}, doi={10.1145/353323.353382}}
+@article{ligatti2005edit, title={Edit Automata: Enforcement Mechanisms for Run-Time Security Policies}, author={Ligatti, Jay and Bauer, Lujo and Walker, David}, journal={International Journal of Information Security}, volume={4}, number={1--2}, pages={2--16}, year={2005}}
+@article{basin2013enforceable, title={Enforceable Security Policies Revisited}, author={Basin, David and Jug{\'e}, Vincent and Klaedtke, Felix and Z{\u{a}}linescu, Eugen}, journal={ACM Transactions on Information and System Security}, volume={16}, number={1}, year={2013}}
+@inproceedings{erlingsson2000irm, title={{IRM} Enforcement of {Java} Stack Inspection}, author={Erlingsson, {\'U}lfar and Schneider, Fred B.}, booktitle={Proc. IEEE Symposium on Security and Privacy}, pages={246--255}, year={2000}}
+@article{falcone2012verify, title={What Can You Verify and Enforce at Runtime?}, author={Falcone, Yli{\`e}s and Fernandez, Jean-Claude and Mounier, Laurent}, journal={International Journal on Software Tools for Technology Transfer}, volume={14}, number={3}, pages={349--382}, year={2012}}
+@article{leucker2009rv, title={A Brief Account of Runtime Verification}, author={Leucker, Martin and Schallhart, Christian}, journal={The Journal of Logic and Algebraic Programming}, volume={78}, number={5}, pages={293--303}, year={2009}}
+@article{havelund2004, title={Efficient Monitoring of Safety Properties}, author={Havelund, Klaus and Ro{\c{s}}u, Grigore}, journal={International Journal on Software Tools for Technology Transfer}, volume={6}, number={2}, pages={158--173}, year={2004}}
+@inproceedings{chenrosu2007mop, title={{MOP}: An Efficient and Generic Runtime Verification Framework}, author={Chen, Feng and Ro{\c{s}}u, Grigore}, booktitle={Proc. ACM OOPSLA}, pages={569--588}, year={2007}}
+@article{bauer2011tosem, title={Runtime Verification for {LTL} and {TLTL}}, author={Bauer, Andreas and Leucker, Martin and Schallhart, Christian}, journal={ACM Transactions on Software Engineering and Methodology}, volume={20}, number={4}, pages={1--64}, year={2011}}
+@book{bartocci2018rv, title={Lectures on Runtime Verification: Introductory and Advanced Topics}, editor={Bartocci, Ezio and Falcone, Yli{\`e}s}, publisher={Springer}, series={LNCS 10457}, year={2018}}
+@article{basin2015monitoring, title={Monitoring Metric First-Order Temporal Properties}, author={Basin, David and Klaedtke, Felix and M{\"u}ller, Samuel and Z{\u{a}}linescu, Eugen}, journal={Journal of the ACM}, volume={62}, number={2}, pages={1--45}, year={2015}}
+@inproceedings{garg2011auditing, title={Policy Auditing over Incomplete Logs: Theory, Implementation and Applications}, author={Garg, Deepak and Jia, Limin and Datta, Anupam}, booktitle={Proc. ACM Conference on Computer and Communications Security (CCS)}, pages={151--162}, year={2011}}
+
+% ------------- OS, language, and data-centric enforcement ------------
+@inproceedings{loscocco2001selinux, title={Integrating Flexible Support for Security Policies into the {Linux} Operating System}, author={Loscocco, Peter and Smalley, Stephen}, booktitle={Proc. USENIX Annual Technical Conference, FREENIX Track}, pages={29--42}, year={2001}}
+@inproceedings{wright2002lsm, title={{Linux} Security Modules: General Security Support for the {Linux} Kernel}, author={Wright, Chris and Cowan, Crispin and Smalley, Stephen and Morris, James and Kroah-Hartman, Greg}, booktitle={Proc. USENIX Security Symposium}, pages={17--31}, year={2002}}
+@inproceedings{myers1997difc, title={A Decentralized Model for Information Flow Control}, author={Myers, Andrew C. and Liskov, Barbara}, booktitle={Proc. ACM Symposium on Operating Systems Principles (SOSP)}, pages={129--142}, year={1997}}
+@inproceedings{krohn2007flume, title={Information Flow Control for Standard {OS} Abstractions}, author={Krohn, Maxwell and Yip, Alexander and Brodsky, Micah and Cliffer, Natan and Kaashoek, M. Frans and Kohler, Eddie and Morris, Robert}, booktitle={Proc. ACM Symposium on Operating Systems Principles (SOSP)}, pages={321--334}, year={2007}}
+@inproceedings{enck2010taintdroid, title={{TaintDroid}: An Information-Flow Tracking System for Realtime Privacy Monitoring on Smartphones}, author={Enck, William and Gilbert, Peter and Chun, Byung-Gon and Cox, Landon P. and Jung, Jaeyeon and McDaniel, Patrick and Sheth, Anmol N.}, booktitle={Proc. USENIX Symposium on Operating Systems Design and Implementation (OSDI)}, pages={393--407}, year={2010}}
+@article{sabelfeld2003, title={Language-Based Information-Flow Security}, author={Sabelfeld, Andrei and Myers, Andrew C.}, journal={IEEE Journal on Selected Areas in Communications}, volume={21}, number={1}, pages={5--19}, year={2003}}
+@inproceedings{pasquier2017camflow, title={Practical Whole-System Provenance Capture}, author={Pasquier, Thomas and Han, Xueyuan and Goldstein, Mark and Moyer, Thomas and Eyers, David and Seltzer, Margo and Bacon, Jean}, booktitle={Proc. ACM Symposium on Cloud Computing (SoCC)}, pages={405--418}, year={2017}}
+
+% ------------- Usage control, privacy, purpose ------------------------
+@article{park2004ucon, title={The {UCON}\textsubscript{ABC} Usage Control Model}, author={Park, Jaehong and Sandhu, Ravi}, journal={ACM Transactions on Information and System Security}, volume={7}, number={1}, pages={128--174}, year={2004}}
+@article{pretschner2006ducontrol, title={Distributed Usage Control}, author={Pretschner, Alexander and Hilty, Manuel and Basin, David}, journal={Communications of the ACM}, volume={49}, number={9}, pages={39--44}, year={2006}}
+@inproceedings{hilty2007osl, title={A Policy Language for Distributed Usage Control}, author={Hilty, Manuel and Pretschner, Alexander and Basin, David and Schaefer, Christian and Walter, Thomas}, booktitle={Proc. European Symposium on Research in Computer Security (ESORICS)}, pages={531--546}, year={2007}}
+@inproceedings{agrawal2002hippocratic, title={Hippocratic Databases}, author={Agrawal, Rakesh and Kiernan, Jerry and Srikant, Ramakrishnan and Xu, Yirong}, booktitle={Proc. International Conference on Very Large Data Bases (VLDB)}, pages={143--154}, year={2002}}
+@article{byun2008purpose, title={Purpose Based Access Control of Complex Data for Privacy Protection}, author={Byun, Ji-Won and Li, Ninghui}, journal={The VLDB Journal}, volume={17}, number={4}, pages={603--619}, year={2008}}
+@article{pearson2011sticky, title={Sticky Policies: An Approach for Managing Privacy across Multiple Parties}, author={Pearson, Siani and Casassa Mont, Marco}, journal={Computer}, volume={44}, number={9}, pages={60--68}, year={2011}}
+@article{nissenbaum2004, title={Privacy as Contextual Integrity}, author={Nissenbaum, Helen}, journal={Washington Law Review}, volume={79}, number={1}, pages={119--157}, year={2004}}
+@inproceedings{barth2006, title={Privacy and Contextual Integrity: Framework and Applications}, author={Barth, Adam and Datta, Anupam and Mitchell, John C. and Nissenbaum, Helen}, booktitle={Proc. IEEE Symposium on Security and Privacy}, pages={184--198}, year={2006}}
+@misc{cavoukian2011pbd, title={Privacy by Design: The 7 Foundational Principles}, author={Cavoukian, Ann}, year={2011}, note={Information and Privacy Commissioner of Ontario}}
+@misc{epal2003, title={Enterprise Privacy Authorization Language ({EPAL} 1.2)}, author={{IBM Corporation}}, year={2003}, note={W3C Member Submission}}
+@article{blanco2024gdprsticky, title={Towards a {GDPR}-Compliant Cloud Architecture with Data Privacy Controlled through Sticky Policies}, author={{[authors]}}, journal={PeerJ Computer Science}, year={2024}, note={Verify author list before submission}}
+
+% ------------- Business process compliance ----------------------------
+@inproceedings{sadiq2007bpc, title={Modeling Control Objectives for Business Process Compliance}, author={Sadiq, Shazia and Governatori, Guido and Namiri, Kioumars}, booktitle={Proc. International Conference on Business Process Management (BPM)}, pages={149--164}, year={2007}}
+@article{rozinat2008conformance, title={Conformance Checking of Processes Based on Monitoring Real Behavior}, author={Rozinat, Anne and van der Aalst, Wil M.P.}, journal={Information Systems}, volume={33}, number={1}, pages={64--95}, year={2008}}
+@article{ly2015compliance, title={Compliance Monitoring in Business Processes: Functionalities, Application, and Tool-Support}, author={Ly, Linh Thao and Maggi, Fabrizio Maria and Montali, Marco and Rinderle-Ma, Stefanie and van der Aalst, Wil M.P.}, journal={Information Systems}, volume={54}, pages={209--234}, year={2015}}
+@article{hashmi2018done, title={Are We Done with Business Process Compliance: State of the Art and Challenges Ahead}, author={Hashmi, Mustafa and Governatori, Guido and Lam, Ho-Pun and Wynn, Moe Thandar}, journal={Knowledge and Information Systems}, volume={57}, number={1}, pages={79--133}, year={2018}}
+@book{vanderaalst2011pm, title={Process Mining: Discovery, Conformance and Enhancement of Business Processes}, author={van der Aalst, Wil M.P.}, publisher={Springer}, year={2011}}
+@article{vasarhelyi1991, title={The Continuous Audit of Online Systems}, author={Vasarhelyi, Miklos A. and Halper, Fern B.}, journal={Auditing: A Journal of Practice \& Theory}, volume={10}, number={1}, pages={110--125}, year={1991}}
+
+% ------------- Zero trust & network-mediated enforcement --------------
+@techreport{nist800207zta, title={Zero Trust Architecture}, author={Rose, Scott and Borchert, Oliver and Mitchell, Stu and Connelly, Sean}, institution={NIST}, number={SP 800-207}, year={2020}, doi={10.6028/NIST.SP.800-207}}
+@techreport{nist180035zta, title={Implementing a Zero Trust Architecture}, author={{National Institute of Standards and Technology}}, institution={NIST}, number={SP 1800-35}, year={2025}}
+@misc{omb2209, title={Moving the {U.S.} Government Toward Zero Trust Cybersecurity Principles (M-22-09)}, author={{U.S. Office of Management and Budget}}, year={2022}}
+@article{beyondcorp2014, title={{BeyondCorp}: A New Approach to Enterprise Security}, author={Ward, Rory and Beyer, Betsy}, journal={;login:}, volume={39}, number={6}, pages={6--11}, year={2014}}
+@techreport{nist800204, title={Security Strategies for Microservices-based Application Systems}, author={Chandramouli, Ramaswamy}, institution={NIST}, number={SP 800-204}, year={2019}}
+@techreport{nist800204a, title={Building Secure Microservices-based Applications Using Service-Mesh Architecture}, author={Chandramouli, Ramaswamy and Butcher, Zack}, institution={NIST}, number={SP 800-204A}, year={2020}}
+@techreport{nist800204b, title={Attribute-based Access Control for Microservices-based Applications Using a Service Mesh}, author={Chandramouli, Ramaswamy and Butcher, Zack and Chetal, Aradhna}, institution={NIST}, number={SP 800-204B}, year={2021}}
+@misc{istio, title={Istio Service Mesh}, author={{Istio Authors (CNCF)}}, year={2024}, note={\url{https://istio.io/}}}
+@misc{envoy, title={Envoy Proxy}, author={{Envoy Authors (CNCF)}}, year={2024}, note={\url{https://www.envoyproxy.io/}}}
+@misc{cilium, title={Cilium: {eBPF}-based Networking, Observability, and Security}, author={{Cilium Authors (CNCF)}}, year={2024}, note={\url{https://cilium.io/}}}
+@misc{ambient2023, title={Istio Ambient Mesh: Sidecar-less Data Plane Architecture}, author={{Istio Authors}}, year={2023}, note={\url{https://istio.io/latest/docs/ambient/}}}
+@article{proxy_arch2025, title={A Comparative Analysis of Service Mesh Proxy Architectures: From Sidecars to Ambient and Proxyless Models in Cloud-Native Environments}, author={{[authors]}}, journal={International Journal of Modern Computer Science and IT Innovations}, volume={2}, number={10}, year={2025}, note={Verify author list before submission}}
+@misc{ebpf_mesh2025, title={Enabling Network Policy Enforcement in Service Meshes}, author={{[authors]}}, year={2025}, note={arXiv:2510.04052. Verify before submission}}
+@misc{microservices_slr2024, title={A Systematic Literature Review of Inter-Service Security Threats and Mitigation Strategies in Microservice Architectures}, author={{[authors]}}, year={2024}, note={Verify venue and author list before submission}}
+
+% ------------- Policy-as-code, cloud, pipeline enforcement ------------
+@misc{opa, title={Open Policy Agent}, author={{Cloud Native Computing Foundation}}, year={2024}, note={CNCF Graduated Project. \url{https://www.openpolicyagent.org/}}}
+@inproceedings{cedar2024, title={Cedar: A New Language for Expressive, Fast, Safe, and Analyzable Authorization}, author={Cutler, Joseph W. and Disselkoen, Craig and Eline, Aaron and He, Shaobo and others}, booktitle={Proc. ACM on Programming Languages (OOPSLA)}, year={2024}, note={Verify pages before submission}}
+@misc{sentinel, title={Sentinel: Policy as Code Framework}, author={{HashiCorp}}, year={2024}, note={\url{https://www.hashicorp.com/sentinel}}}
+@misc{kyverno, title={Kyverno: {Kubernetes} Native Policy Management}, author={{Kyverno Authors (CNCF)}}, year={2024}, note={\url{https://kyverno.io/}}}
+@misc{gatekeeper, title={{OPA} Gatekeeper: Policy Controller for {Kubernetes}}, author={{Open Policy Agent Community}}, year={2024}, note={\url{https://open-policy-agent.github.io/gatekeeper/}}}
+@techreport{oscal, title={Open Security Controls Assessment Language ({OSCAL})}, author={{National Institute of Standards and Technology}}, institution={NIST}, year={2023}, note={\url{https://pages.nist.gov/OSCAL/}}}
+@inproceedings{rahman2019sins, title={The Seven Sins: Security Smells in Infrastructure as Code Scripts}, author={Rahman, Akond and Parnin, Chris and Williams, Laurie}, booktitle={Proc. IEEE/ACM International Conference on Software Engineering (ICSE)}, pages={164--175}, year={2019}}
+@misc{awsscp, title={Service Control Policies ({SCPs}), {AWS} Organizations}, author={{Amazon Web Services}}, year={2024}}
+@misc{azurepolicy, title={Azure Policy}, author={{Microsoft}}, year={2024}}
+
+% ------------- Software supply chain (deploy-time PEPs) ---------------
+@inproceedings{torresarias2019intoto, title={in-toto: Providing Farm-to-Table Guarantees for Bits and Bytes}, author={Torres-Arias, Santiago and Afzali, Hammad and Kuppusamy, Trishank Karthik and Curtmola, Reza and Cappos, Justin}, booktitle={Proc. USENIX Security Symposium}, pages={1393--1410}, year={2019}}
+@inproceedings{samuel2010tuf, title={Survivable Key Compromise in Software Update Systems}, author={Samuel, Justin and Mathewson, Nick and Cappos, Justin and Dingledine, Roger}, booktitle={Proc. ACM Conference on Computer and Communications Security (CCS)}, pages={61--72}, year={2010}}
+@inproceedings{newman2022sigstore, title={Sigstore: Software Signing for Everybody}, author={Newman, Zachary and Meyers, John Speed and Torres-Arias, Santiago}, booktitle={Proc. ACM Conference on Computer and Communications Security (CCS)}, year={2022}, note={Verify pages before submission}}
+@misc{slsa, title={{SLSA}: Supply-chain Levels for Software Artifacts}, author={{OpenSSF}}, year={2023}, note={\url{https://slsa.dev/}}}
+
+% ------------- Agentic era: models, risks, standards -------------------
+@misc{ouyang2022rlhf, title={Training Language Models to Follow Instructions with Human Feedback}, author={Ouyang, Long and Wu, Jeff and Jiang, Xu and others}, year={2022}, note={NeurIPS 2022; arXiv:2203.02155}}
+@misc{bai2022constitutional, title={Constitutional {AI}: Harmlessness from {AI} Feedback}, author={Bai, Yuntao and Kadavath, Saurav and Kundu, Sandipan and others}, year={2022}, note={arXiv:2212.08073}}
+@misc{inan2023llamaguard, title={Llama Guard: {LLM}-based Input-Output Safeguard for Human-AI Conversations}, author={Inan, Hakan and Upasani, Kartikeya and Chi, Jianfeng and others}, year={2023}, note={arXiv:2312.06674}}
+@inproceedings{nemoguardrails2023, title={{NeMo Guardrails}: A Toolkit for Controllable and Safe {LLM} Applications with Programmable Rails}, author={Rebedea, Traian and Dinu, Razvan and Sreedhar, Makesh and Parisien, Christopher and Cohen, Jonathan}, booktitle={Proc. EMNLP: System Demonstrations}, pages={431--445}, year={2023}}
+@misc{guardrailsai, title={Guardrails {AI}}, author={{Guardrails AI}}, year={2024}, note={\url{https://www.guardrailsai.com/}}}
+@inproceedings{greshake2023, title={Not What You've Signed Up For: Compromising Real-World {LLM}-Integrated Applications with Indirect Prompt Injection}, author={Greshake, Kai and Abdelnabi, Sahar and Mishra, Shailesh and Endres, Christoph and Holz, Thorsten and Fritz, Mario}, booktitle={Proc. ACM Workshop on Artificial Intelligence and Security (AISec)}, pages={79--90}, year={2023}}
+@inproceedings{ruan2024toolemu, title={Identifying the Risks of {LM} Agents with an {LM}-Emulated Sandbox}, author={Ruan, Yangjun and Dong, Honghua and Wang, Andrew and and others}, booktitle={Proc. International Conference on Learning Representations (ICLR)}, year={2024}, note={arXiv:2309.15817}}
+@misc{wu2025isolategpt, title={{IsolateGPT}: An Execution Isolation Architecture for {LLM}-Based Agentic Systems}, author={Wu, Yuhao and and others}, year={2025}, note={NDSS 2025. Verify author list before submission}}
+@inproceedings{bagdasarian2024airgap, title={{AirGapAgent}: Protecting Privacy-Conscious Conversational Agents}, author={Bagdasarian, Eugene and and others}, booktitle={Proc. ACM Conference on Computer and Communications Security (CCS)}, year={2024}, note={Verify author list and pages before submission}}
+@misc{debenedetti2025camel, title={Defeating Prompt Injections by Design ({CaMeL})}, author={Debenedetti, Edoardo and and others}, year={2025}, note={arXiv preprint. Verify details before submission}}
+@misc{progent2025, title={Progent: Programmable Privilege Control for {LLM} Agents}, author={{[authors]}}, year={2025}, note={arXiv preprint. Verify before submission}}
+@inproceedings{agentspec2026, title={{AgentSpec}: Customizable Runtime Enforcement for Safe {LLM} Agents}, author={Wang, Haoyu and Poskitt, Christopher M. and Sun, Jun}, booktitle={Proc. IEEE/ACM International Conference on Software Engineering (ICSE)}, year={2026}, note={Verify pages before submission}}
+@misc{mi9_2025, title={{MI9}: A Runtime Governance Framework for Agentic {AI}}, author={{[authors]}}, year={2025}, note={arXiv preprint. Verify author list before submission}}
+@misc{guardagent2024, title={{GuardAgent}: Safeguard {LLM} Agents via Knowledge-Enabled Reasoning}, author={Xiang, Zhen and and others}, year={2024}, note={arXiv:2406.09187}}
+@misc{pro2guard2025, title={{Pro2Guard}: Proactive Runtime Enforcement of {LLM} Agent Safety via Probabilistic Model Checking}, author={Wang, Haoyu and Poskitt, Christopher M. and and others}, year={2025}, note={arXiv:2508.00500}}
+@misc{trustagent2024, title={{TrustAgent}: Towards Safe and Trustworthy {LLM}-based Agents through Agent Constitution}, author={Hua, Wenyue and and others}, year={2024}, note={arXiv preprint. Verify before submission}}
+@misc{agentsafety_survey2024, title={Agent Safety: A Survey of Risks for {LLM}-Based Agents}, author={Wang, Xiao and and others}, year={2024}, note={arXiv:2401.03586. Verify before submission}}
+@misc{deng2024threat, title={{AI} Agents Under Threat: A Survey of Key Security Challenges in {LLM}-Based Agents}, author={Deng, Zehang and and others}, year={2024}, note={arXiv preprint; later ACM Computing Surveys. Verify before submission}}
+@misc{shamsujjoha2024swiss, title={Swiss Cheese Model for {AI} Safety: A Taxonomy and Reference Architecture of Multi-Layered Guardrails for Foundation Model Based Agents}, author={Shamsujjoha, Md and Lu, Qinghua and Zhao, Dehai and Zhu, Liming}, year={2024}, note={arXiv preprint. Verify before submission}}
+@misc{owasp_llm2025, title={{OWASP} Top 10 for Large Language Model Applications}, author={{OWASP Foundation}}, year={2025}}
+@misc{owasp_agentic2026, title={{OWASP} Top 10 for Agentic Applications}, author={{OWASP Foundation}}, year={2026}, note={Published December 2025}}
+@techreport{nist_airmf2023, title={Artificial Intelligence Risk Management Framework ({AI RMF} 1.0)}, author={{National Institute of Standards and Technology}}, institution={NIST}, number={AI 100-1}, year={2023}}
+@techreport{nist_genai2024, title={{AI RMF}: Generative Artificial Intelligence Profile}, author={{National Institute of Standards and Technology}}, institution={NIST}, number={AI 600-1}, year={2024}}
+@misc{nist_caisi2026, title={{AI} Agent Standards Initiative}, author={{NIST Center for AI Standards and Innovation (CAISI)}}, year={2026}}
+@misc{anthropic_rsp, title={Responsible Scaling Policy}, author={{Anthropic}}, year={2023}}
+@misc{openai_preparedness, title={Preparedness Framework}, author={{OpenAI}}, year={2023}}
+@misc{mcp2024, title={Model Context Protocol}, author={{Anthropic}}, year={2024}, note={\url{https://modelcontextprotocol.io/}}}
+@misc{spiffe, title={{SPIFFE}: Secure Production Identity Framework for Everyone}, author={{CNCF}}, year={2024}, note={\url{https://spiffe.io/}}}
+@misc{microsoft_agenttoolkit2026, title={Agent Governance Toolkit: Open-Source Runtime Security for {AI} Agents}, author={{Microsoft}}, year={2026}}
+@misc{ibm_breach2025, title={Cost of a Data Breach Report 2025}, author={{IBM Security and Ponemon Institute}}, year={2025}}
+
+% ===== Added in v0.2 (GAP-28): predicate ordering / cascades / inference control / implementation =====
+@inproceedings{hellerstein1993predicate, title={Predicate Migration: Optimizing Queries with Expensive Predicates}, author={Hellerstein, Joseph M. and Stonebraker, Michael}, booktitle={Proc. ACM SIGMOD International Conference on Management of Data}, pages={267--276}, year={1993}, note={Verify pages before submission}}
+@inproceedings{babu2004adaptive, title={Adaptive Ordering of Pipelined Stream Filters}, author={Babu, Shivnath and Motwani, Rajeev and Munagala, Kamesh and Nishizawa, Itaru and Widom, Jennifer}, booktitle={Proc. ACM SIGMOD International Conference on Management of Data}, pages={407--418}, year={2004}, note={Verify pages before submission}}
+@inproceedings{viola2001cascade, title={Rapid Object Detection Using a Boosted Cascade of Simple Features}, author={Viola, Paul and Jones, Michael}, booktitle={Proc. IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, pages={511--518}, year={2001}, note={Verify pages before submission}}
+@article{sweeney2002kanon, title={k-Anonymity: A Model for Protecting Privacy}, author={Sweeney, Latanya}, journal={International Journal of Uncertainty, Fuzziness and Knowledge-Based Systems}, volume={10}, number={5}, pages={557--570}, year={2002}}
+@article{denning1979tracker, title={The Tracker: A Threat to Statistical Database Security}, author={Denning, Dorothy E. and Denning, Peter J. and Schwartz, Mayer D.}, journal={ACM Transactions on Database Systems}, volume={4}, number={1}, pages={76--96}, year={1979}}
+@article{farkas2002inference, title={The Inference Problem: A Survey}, author={Farkas, Csilla and Jajodia, Sushil}, journal={ACM SIGKDD Explorations Newsletter}, volume={4}, number={2}, pages={6--11}, year={2002}}
+@misc{kroxylicious, title={Kroxylicious: A Pluggable Proxy for {Apache Kafka}}, author={{Kroxylicious Authors}}, year={2024}, note={\url{https://kroxylicious.io/}}}
+
+% ===== Added for OSCAL evidence-plane integration =====
+@misc{trestle, title={Compliance-trestle: An Opinionated Tooling Platform for Managing Compliance as Code Using {NIST OSCAL}}, author={{OSCAL Compass Authors}}, year={2026}, note={CNCF sandbox project, v4 (OSCAL 1.2.1). \url{https://github.com/oscal-compass/compliance-trestle}}}
+@techreport{nist80053, title={Security and Privacy Controls for Information Systems and Organizations}, author={{Joint Task Force}}, institution={NIST}, number={SP 800-53 Rev. 5}, year={2020}}
+@misc{c2p, title={Compliance-to-Policy ({C2P}): Bridging {OSCAL} Compliance Artifacts and Policy Validation Points}, author={{OSCAL Compass Authors}}, year={2026}, note={CNCF sandbox project. \url{https://github.com/oscal-compass/compliance-to-policy}}}

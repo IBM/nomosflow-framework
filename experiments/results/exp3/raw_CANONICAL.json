@@ -1,0 +1,321 @@
+{
+  "exp": "exp3",
+  "corpus_size": 200,
+  "opa_live": true,
+  "apl_real": true,
+  "llm_live": true,
+  "t5_mode": "live_llm_validator",
+  "aggregate": {
+    "STATIC": {
+      "tp": 39,
+      "fp": 0,
+      "tn": 87,
+      "fn": 74,
+      "precision": 1.0,
+      "recall": 0.34513274336283184,
+      "f1": 0.5131578947368421,
+      "fpr": 0.0
+    },
+    "POLICY": {
+      "tp": 52,
+      "fp": 0,
+      "tn": 87,
+      "fn": 61,
+      "precision": 1.0,
+      "recall": 0.46017699115044247,
+      "f1": 0.6303030303030303,
+      "fpr": 0.0
+    },
+    "FULL": {
+      "tp": 94,
+      "fp": 0,
+      "tn": 87,
+      "fn": 19,
+      "precision": 1.0,
+      "recall": 0.831858407079646,
+      "f1": 0.9082125603864734,
+      "fpr": 0.0
+    }
+  },
+  "per_class": {
+    "static_regex": {
+      "count": 40,
+      "label": "violation",
+      "tier": "T1",
+      "STATIC": {
+        "tp": 25,
+        "fp": 0,
+        "tn": 0,
+        "fn": 15,
+        "precision": 1.0,
+        "recall": 0.625,
+        "f1": 0.7692307692307693,
+        "fpr": 0.0
+      },
+      "POLICY": {
+        "tp": 10,
+        "fp": 0,
+        "tn": 0,
+        "fn": 30,
+        "precision": 1.0,
+        "recall": 0.25,
+        "f1": 0.4,
+        "fpr": 0.0
+      },
+      "FULL": {
+        "tp": 31,
+        "fp": 0,
+        "tn": 0,
+        "fn": 9,
+        "precision": 1.0,
+        "recall": 0.775,
+        "f1": 0.8732394366197184,
+        "fpr": 0.0
+      }
+    },
+    "policy_rule": {
+      "count": 40,
+      "label": "violation",
+      "tier": "T3",
+      "STATIC": {
+        "tp": 10,
+        "fp": 0,
+        "tn": 0,
+        "fn": 30,
+        "precision": 1.0,
+        "recall": 0.25,
+        "f1": 0.4,
+        "fpr": 0.0
+      },
+      "POLICY": {
+        "tp": 34,
+        "fp": 0,
+        "tn": 0,
+        "fn": 6,
+        "precision": 1.0,
+        "recall": 0.85,
+        "f1": 0.9189189189189189,
+        "fpr": 0.0
+      },
+      "FULL": {
+        "tp": 34,
+        "fp": 0,
+        "tn": 0,
+        "fn": 6,
+        "precision": 1.0,
+        "recall": 0.85,
+        "f1": 0.9189189189189189,
+        "fpr": 0.0
+      }
+    },
+    "semantic": {
+      "count": 20,
+      "label": "violation",
+      "tier": "T5",
+      "STATIC": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 0,
+        "fn": 20,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "fpr": 0.0
+      },
+      "POLICY": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 0,
+        "fn": 20,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "fpr": 0.0
+      },
+      "FULL": {
+        "tp": 19,
+        "fp": 0,
+        "tn": 0,
+        "fn": 1,
+        "precision": 1.0,
+        "recall": 0.95,
+        "f1": 0.9743589743589743,
+        "fpr": 0.0
+      }
+    },
+    "benign_normal": {
+      "count": 50,
+      "label": "benign",
+      "tier": "any",
+      "STATIC": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 50,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "fpr": 0.0
+      },
+      "POLICY": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 50,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "fpr": 0.0
+      },
+      "FULL": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 50,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "fpr": 0.0
+      }
+    },
+    "benign_suspicious": {
+      "count": 25,
+      "label": "benign",
+      "tier": "any",
+      "STATIC": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 25,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "fpr": 0.0
+      },
+      "POLICY": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 25,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "fpr": 0.0
+      },
+      "FULL": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 25,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "fpr": 0.0
+      }
+    },
+    "edge_case": {
+      "count": 25,
+      "label": "benign",
+      "tier": "any",
+      "STATIC": {
+        "tp": 4,
+        "fp": 0,
+        "tn": 12,
+        "fn": 9,
+        "precision": 1.0,
+        "recall": 0.3076923076923077,
+        "f1": 0.47058823529411764,
+        "fpr": 0.0
+      },
+      "POLICY": {
+        "tp": 8,
+        "fp": 0,
+        "tn": 12,
+        "fn": 5,
+        "precision": 1.0,
+        "recall": 0.6153846153846154,
+        "f1": 0.761904761904762,
+        "fpr": 0.0
+      },
+      "FULL": {
+        "tp": 10,
+        "fp": 0,
+        "tn": 12,
+        "fn": 3,
+        "precision": 1.0,
+        "recall": 0.7692307692307693,
+        "f1": 0.8695652173913044,
+        "fpr": 0.0
+      }
+    }
+  },
+  "overlap": {
+    "static_detected_n": 39,
+    "policy_detected_n": 52,
+    "full_detected_n": 94,
+    "union_n": 73,
+    "intersection_n": 18,
+    "overlap_rate": 0.2465753424657534,
+    "static_only_n": 21,
+    "policy_only_n": 34,
+    "static_only_ids": [
+      1,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      184,
+      198
+    ],
+    "policy_only_ids": [
+      11,
+      13,
+      15,
+      18,
+      44,
+      45,
+      46,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      179,
+      181,
+      182,
+      188,
+      189,
+      192
+    ]
+  }
+}

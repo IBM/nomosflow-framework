@@ -1,0 +1,72 @@
+% Auto-generated LaTeX for EXP-2: Resolution Distribution (NomosFlow)
+% 2026-08-14T05:23:22.448955+00:00
+
+\begin{table}[t]
+  \centering
+  \caption{Section 1 — Resolution distribution}
+  \label{tab:exp2_0}
+  \begin{tabular}{lrrr}
+    \toprule
+    \textbf{Tier} & \textbf{Count} & \textbf{Fraction} & \textbf{Mean_latency_ms} \\
+    \midrule
+    T1_APL & 629 & 0.315 & 0.01 \\
+    T1_ATTEST & 0 & 0.000 & 0.00 \\
+    T2_CMF & 0 & 0.000 & 0.00 \\
+    T3_OPA & 813 & 0.406 & 2.92 \\
+    T4_RATE & 0 & 0.000 & 0.00 \\
+    T5_LLM & 1 & 0.001 & 98.62 \\
+    APPROVED & 557 & 0.279 & 0.00 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \caption{Section 2 — Survival probabilities and per-tier latency}
+  \label{tab:exp2_1}
+  \begin{tabular}{lrr}
+    \toprule
+    \textbf{Tier} & \textbf{p_i (reach prob)} & \textbf{c_i (mean ms)} \\
+    \midrule
+    T1_APL & 1.0000 & 0.00 \\
+    T1_ATTEST & 0.0000 & 0.00 \\
+    T2_CMF & 0.6855 & 0.02 \\
+    T3_OPA & 0.6855 & 2.90 \\
+    T4_RATE & 0.2790 & 0.05 \\
+    T5_LLM & 0.0025 & 92.82 \\
+    APPROVED & 0.0000 & 0.00 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \caption{Section 3 — Tier ordering: deployed vs optimal (Prop. 3)}
+  \label{tab:exp2_2}
+  \begin{tabular}{lrrr}
+    \toprule
+    \textbf{Deployed_rank} & \textbf{Optimal_rank} & \textbf{Tier} & \textbf{c_i/(1-p_i)} \\
+    \midrule
+    1 & 6 & T1_APL & ∞ \\
+    2 & 1 & T1_ATTEST & 0.00 \\
+    3 & 3 & T2_CMF & 0.08 \\
+    4 & 4 & T3_OPA & 9.23 \\
+    5 & 2 & T4_RATE & 0.07 \\
+    6 & 5 & T5_LLM & 93.05 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \caption{Section 4 — Short-circuit ablation}
+  \label{tab:exp2_3}
+  \begin{tabular}{lrr}
+    \toprule
+    \textbf{Mode} & \textbf{Mean_total_ms} & \textbf{Reduction_pct} \\
+    \midrule
+    ladder & 2.26 & — \\
+    forced_pipeline & 3.53 & 36.0% \\
+    \bottomrule
+  \end{tabular}
+\end{table}

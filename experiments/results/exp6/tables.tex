@@ -1,0 +1,36 @@
+% Auto-generated LaTeX for EXP-6  Fault injection — zero false-ALLOWs + zero lost records
+% 2026-08-14T05:23:30.786535+00:00
+
+\begin{table}[t]
+  \centering
+  \caption{Fault injection results — zero false-ALLOWs, zero lost records}
+  \label{tab:exp6_0}
+  \begin{tabular}{lrrrrrr}
+    \toprule
+    \textbf{Scenario} & \textbf{N} & \textbf{False_ALLOWs} & \textbf{Lost_Records} & \textbf{Chain_OK} & \textbf{Avail_pct} & \textbf{Mean_ms} \\
+    \midrule
+    OPA_KILL & 500 & 0 & 0 & ✓ & 100.0% & 0.02 \\
+    LLM_TIMEOUT & 500 & 0 & 0 & ✓ & 100.0% & 2.51 \\
+    AUDIT_PARTITION & 500 & 0 & 0 & ✓ & 100.0% & 2.46 \\
+    NO_FAULT & 500 & 0 & 0 & ✓ & 100.0% & 2.72 \\
+    LLM_TIMEOUT_LIVE & 500 & 0 & 0 & ✓ & 100.0% & 2.46 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \caption{Decision distribution under fault}
+  \label{tab:exp6_1}
+  \begin{tabular}{lrrrr}
+    \toprule
+    \textbf{Scenario} & \textbf{APPROVED} & \textbf{DENIED} & \textbf{THROTTLED} & \textbf{ERROR} \\
+    \midrule
+    OPA_KILL & 0 & 500 & 0 & 0 \\
+    LLM_TIMEOUT & 123 & 377 & 0 & 0 \\
+    AUDIT_PARTITION & 137 & 363 & 0 & 0 \\
+    NO_FAULT & 137 & 363 & 0 & 0 \\
+    LLM_TIMEOUT_LIVE & 123 & 377 & 0 & 0 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

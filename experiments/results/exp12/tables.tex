@@ -1,0 +1,50 @@
+% Auto-generated LaTeX for EXP-12: Sidecar Resource Overhead
+% 2026-08-14T05:25:07.423103+00:00
+
+\begin{table}[t]
+  \centering
+  \caption{CPU and RSS by configuration}
+  \label{tab:exp12_0}
+  \begin{tabular}{lrrrr}
+    \toprule
+    \textbf{Config} & \textbf{Mean_CPU_pct} & \textbf{Peak_CPU_pct} & \textbf{Mean_RSS_MB} & \textbf{Peak_RSS_MB} \\
+    \midrule
+    no_enforcement & 99.82 & 100.6 & 236.1 & 241.05 \\
+    apl_only & 99.76 & 100.2 & 210.5 & 228.0 \\
+    opa_only & 39.18 & 45.0 & 134.75 & 135.03 \\
+    full_stack & 39.84 & 45.4 & 121.08 & 133.36 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \caption{Overhead vs. no-enforcement baseline}
+  \label{tab:exp12_1}
+  \begin{tabular}{lrr}
+    \toprule
+    \textbf{Metric} & \textbf{Delta} & \textbf{Delta_pct} \\
+    \midrule
+    mean_cpu_pct & -59.98 & -60.1% \\
+    peak_cpu_pct & -55.20 & -54.9% \\
+    mean_rss_mb & -115.02 & -48.7% \\
+    peak_rss_mb & -107.69 & -44.7% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \caption{Live-benchmark scale throughput + OPA latency (benchmarks/tier_benchmark_20260710_021432.json)}
+  \label{tab:exp12_3}
+  \begin{tabular}{lrrr}
+    \toprule
+    \textbf{Scale} & \textbf{RPS (live)} & \textbf{Decisions (APPROVED/DENIED)} & \textbf{OPA_mean_ms} \\
+    \midrule
+    100 & 392.0 & APPROVED=86 / DENIED=14 & 2.59 \\
+    1000 & 18.3 & APPROVED=766 / DENIED=234 & 5.05 \\
+    10000 & 14.8 & APPROVED=7893 / DENIED=2107 & 5.47 \\
+    100000 & 17.1 & APPROVED=79093 / DENIED=20907 & 5.40 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

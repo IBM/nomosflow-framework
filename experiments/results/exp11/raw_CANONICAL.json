@@ -1,0 +1,215 @@
+{
+  "exp_id": "exp11",
+  "repo_root": "/Users/rsinha/agentic-dataops/compliance-mvp/event-driven-compliance-sidecar-podman-sandbox",
+  "script": "paper_experiments/exp11_multiagent/run.py",
+  "requests_per_agent": 200,
+  "scaling_thread": [
+    {
+      "agent_count": 1,
+      "mode": "thread",
+      "total_requests": 200,
+      "total_rps": 324.8365342942372,
+      "per_agent_rps": 324.8365342942372,
+      "per_agent_mean_latency_ms": 3.0509918922325596,
+      "p99_ms": 11.835279243532517,
+      "peak_rss_bytes": -9814016,
+      "per_agent_rss_bytes": -9814016.0
+    },
+    {
+      "agent_count": 5,
+      "mode": "thread",
+      "total_requests": 1000,
+      "total_rps": 1560.0167702498616,
+      "per_agent_rps": 312.0033540499723,
+      "per_agent_mean_latency_ms": 3.1363877133117057,
+      "p99_ms": 4.825046703335829,
+      "peak_rss_bytes": 229376,
+      "per_agent_rss_bytes": 45875.2
+    },
+    {
+      "agent_count": 10,
+      "mode": "thread",
+      "total_requests": 2000,
+      "total_rps": 1645.8303394057612,
+      "per_agent_rps": 164.58303394057612,
+      "per_agent_mean_latency_ms": 5.921354177291505,
+      "p99_ms": 9.318367058876902,
+      "peak_rss_bytes": -3244032,
+      "per_agent_rss_bytes": -324403.2
+    },
+    {
+      "agent_count": 25,
+      "mode": "thread",
+      "total_requests": 5000,
+      "total_rps": 1655.1599713816038,
+      "per_agent_rps": 66.20639885526415,
+      "per_agent_mean_latency_ms": 14.6885211669025,
+      "p99_ms": 24.532077888725336,
+      "peak_rss_bytes": -720896,
+      "per_agent_rss_bytes": -28835.84
+    },
+    {
+      "agent_count": 50,
+      "mode": "thread",
+      "total_requests": 10000,
+      "total_rps": 1234.3852707380104,
+      "per_agent_rps": 24.687705414760206,
+      "per_agent_mean_latency_ms": 39.39963424822781,
+      "p99_ms": 72.72011058696081,
+      "peak_rss_bytes": 11599872,
+      "per_agent_rss_bytes": 231997.44
+    },
+    {
+      "agent_count": 100,
+      "mode": "thread",
+      "total_requests": 20000,
+      "total_rps": 927.8228744404339,
+      "per_agent_rps": 9.27822874440434,
+      "per_agent_mean_latency_ms": 105.91936260227521,
+      "p99_ms": 207.57458325009753,
+      "peak_rss_bytes": -52150272,
+      "per_agent_rss_bytes": -521502.72
+    }
+  ],
+  "scaling_process": [
+    {
+      "agent_count": 1,
+      "mode": "process",
+      "total_requests": 200,
+      "total_rps": 270.65850357155904,
+      "per_agent_rps": 270.65850357155904,
+      "per_agent_mean_latency_ms": 2.5267712216009386,
+      "p99_ms": 4.038049110095016,
+      "peak_rss_bytes": 2277376,
+      "per_agent_rss_bytes": 2277376.0
+    },
+    {
+      "agent_count": 5,
+      "mode": "process",
+      "total_requests": 1000,
+      "total_rps": 1483.7218091041111,
+      "per_agent_rps": 296.74436182082223,
+      "per_agent_mean_latency_ms": 2.3440787679865025,
+      "p99_ms": 5.611149185569955,
+      "peak_rss_bytes": -131072,
+      "per_agent_rss_bytes": -26214.4
+    },
+    {
+      "agent_count": 10,
+      "mode": "process",
+      "total_requests": 2000,
+      "total_rps": 2008.3072807842327,
+      "per_agent_rps": 200.83072807842328,
+      "per_agent_mean_latency_ms": 3.4845513720065355,
+      "p99_ms": 10.224306307500228,
+      "peak_rss_bytes": -1458176,
+      "per_agent_rss_bytes": -145817.6
+    },
+    {
+      "agent_count": 25,
+      "mode": "process",
+      "total_requests": 5000,
+      "total_rps": 1347.46270762893,
+      "per_agent_rps": 53.8985083051572,
+      "per_agent_mean_latency_ms": 5.834704207454342,
+      "p99_ms": 34.21133416006342,
+      "peak_rss_bytes": -35487744,
+      "per_agent_rss_bytes": -1419509.76
+    }
+  ],
+  "scaling": [
+    {
+      "agent_count": 1,
+      "mode": "thread",
+      "total_requests": 200,
+      "total_rps": 324.8365342942372,
+      "per_agent_rps": 324.8365342942372,
+      "per_agent_mean_latency_ms": 3.0509918922325596,
+      "p99_ms": 11.835279243532517,
+      "peak_rss_bytes": -9814016,
+      "per_agent_rss_bytes": -9814016.0
+    },
+    {
+      "agent_count": 5,
+      "mode": "thread",
+      "total_requests": 1000,
+      "total_rps": 1560.0167702498616,
+      "per_agent_rps": 312.0033540499723,
+      "per_agent_mean_latency_ms": 3.1363877133117057,
+      "p99_ms": 4.825046703335829,
+      "peak_rss_bytes": 229376,
+      "per_agent_rss_bytes": 45875.2
+    },
+    {
+      "agent_count": 10,
+      "mode": "thread",
+      "total_requests": 2000,
+      "total_rps": 1645.8303394057612,
+      "per_agent_rps": 164.58303394057612,
+      "per_agent_mean_latency_ms": 5.921354177291505,
+      "p99_ms": 9.318367058876902,
+      "peak_rss_bytes": -3244032,
+      "per_agent_rss_bytes": -324403.2
+    },
+    {
+      "agent_count": 25,
+      "mode": "thread",
+      "total_requests": 5000,
+      "total_rps": 1655.1599713816038,
+      "per_agent_rps": 66.20639885526415,
+      "per_agent_mean_latency_ms": 14.6885211669025,
+      "p99_ms": 24.532077888725336,
+      "peak_rss_bytes": -720896,
+      "per_agent_rss_bytes": -28835.84
+    },
+    {
+      "agent_count": 50,
+      "mode": "thread",
+      "total_requests": 10000,
+      "total_rps": 1234.3852707380104,
+      "per_agent_rps": 24.687705414760206,
+      "per_agent_mean_latency_ms": 39.39963424822781,
+      "p99_ms": 72.72011058696081,
+      "peak_rss_bytes": 11599872,
+      "per_agent_rss_bytes": 231997.44
+    },
+    {
+      "agent_count": 100,
+      "mode": "thread",
+      "total_requests": 20000,
+      "total_rps": 927.8228744404339,
+      "per_agent_rps": 9.27822874440434,
+      "per_agent_mean_latency_ms": 105.91936260227521,
+      "p99_ms": 207.57458325009753,
+      "peak_rss_bytes": -52150272,
+      "per_agent_rss_bytes": -521502.72
+    }
+  ],
+  "components": [
+    [
+      "OPA process",
+      "amortised/shared",
+      "single shared policy engine (thread); isolated per worker (process)"
+    ],
+    [
+      "APL validator instance",
+      "amortised/shared",
+      "single instance reused across agents (thread); per-worker (process)"
+    ],
+    [
+      "CMF enricher",
+      "amortised/shared",
+      "conceptually shared service, not separately exercised here"
+    ],
+    [
+      "rate_limits dict entry",
+      "O(N_agents)",
+      "~200 bytes per principal"
+    ],
+    [
+      "per-principal history",
+      "O(N_agents * H)",
+      "H = rate_limits update count"
+    ]
+  ]
+}

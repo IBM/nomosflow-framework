@@ -1,0 +1,56 @@
+{
+  "n_items": 200,
+  "n_agree": 169,
+  "p_observed": 0.845,
+  "p_expected_chance": 0.5143,
+  "cohen_kappa": 0.6809,
+  "interpretation": "Substantial (0.61 \u2264 \u03ba < 0.81)",
+  "confusion": {
+    "benign": {
+      "benign": 67,
+      "violation": 20
+    },
+    "violation": {
+      "benign": 11,
+      "violation": 102
+    }
+  },
+  "only_in_a": 0,
+  "only_in_b": 0,
+  "per_class_disagreement": {
+    "static_regex": {
+      "n": 40,
+      "n_disagree": 1,
+      "rate": 0.025
+    },
+    "policy_rule": {
+      "n": 40,
+      "n_disagree": 6,
+      "rate": 0.15
+    },
+    "semantic": {
+      "n": 20,
+      "n_disagree": 1,
+      "rate": 0.05
+    },
+    "benign_normal": {
+      "n": 50,
+      "n_disagree": 13,
+      "rate": 0.26
+    },
+    "benign_suspicious": {
+      "n": 25,
+      "n_disagree": 6,
+      "rate": 0.24
+    },
+    "edge_case": {
+      "n": 25,
+      "n_disagree": 4,
+      "rate": 0.16
+    }
+  },
+  "annotator_b_method": "Genuine blind automated annotator: model=aws/claude-sonnet-4-5 received the NomosFlow policy specification (plain-English rules derived from policy.rego) and the event payload for each item.  Labels and class tags were withheld.  The model was asked for a binary verdict (violation | benign) with no other guidance.  This measures label-scheme interpretability from the policy text alone.  Annotator B is an automated system, not a human.",
+  "model": "aws/claude-sonnet-4-5",
+  "n_errors": 9,
+  "elapsed_total_s": 1076.1
+}
