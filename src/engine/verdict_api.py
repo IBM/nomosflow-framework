@@ -245,3 +245,5 @@ class VerdictResponse:
             "final":      final_map.get(self.verdict, self.verdict),
             "request_id": self.request_id,
         }
+
+# Made with Bob

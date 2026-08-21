@@ -1,0 +1,12 @@
+{
+  "baseline": "ENVOY_OPA_GATEWAY",
+  "coverage": null,
+  "fpr": null,
+  "mean_latency_ms": 3.161,
+  "opa_p50_ms": 2.603,
+  "envoy_hop_overhead_ms": 0.4,
+  "overhead_vs_no_enforcement": 3.141,
+  "opa_live": true,
+  "n_samples": 50,
+  "note": "LIVE: OPA P50=2.6 ms + 0.4 ms Envoy overhead."
+}

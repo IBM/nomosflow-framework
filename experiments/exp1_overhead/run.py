@@ -96,7 +96,7 @@ try:
     from src.validators.llm_validator import LLMValidator as _LLMValidator
     _llm_validator = _LLMValidator(
         model=os.getenv("LLM_MODEL", "gpt-3.5-turbo"),
-        enabled=True,
+        enabled=os.getenv("LLM_VALIDATION_ENABLED", "true").lower() == "true",
         cache_enabled=True,
     )
     _LLM_REAL = True
@@ -426,3 +426,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# Made with Bob
