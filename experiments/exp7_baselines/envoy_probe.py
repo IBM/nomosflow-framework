@@ -206,3 +206,5 @@ def run_coverage_probe(corpus: list[dict]) -> dict:
 if __name__ == "__main__":
     result = run_probe()
     print(json.dumps(result, indent=2))
+
+# Made with Bob

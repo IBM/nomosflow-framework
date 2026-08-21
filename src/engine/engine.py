@@ -225,3 +225,5 @@ def _to_trace(tier_dict: dict) -> TierTrace:
         latency_ms = float(tier_dict.get("ms", 0.0)),
         live       = bool(tier_dict.get("live", False)),
     )
+
+# Made with Bob

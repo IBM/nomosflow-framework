@@ -332,3 +332,5 @@ if __name__ == "__main__":
     f2 = _fig2_coverage_frontier()
     print("\n  Both figures written to experiments/results/figures/")
     print("  Include in LaTeX via figures.tex\n")
+
+# Made with Bob

@@ -109,3 +109,5 @@ def fmt_ms(v: float, decimals: int = 2) -> str:
 
 def fmt_pct(v: float) -> str:
     return f"{v*100:.1f}%"
+
+# Made with Bob
