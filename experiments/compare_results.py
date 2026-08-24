@@ -8,14 +8,17 @@ any failure so CI catches regressions.
 Usage
 -----
     python experiments/compare_results.py
+    python experiments/compare_results.py --compare-canonical
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
 
 _RESULTS = Path(__file__).parent / "results"
+_COMPARE_CANONICAL = "--compare-canonical" in sys.argv[1:]
 
 
 def _latest(exp: str) -> dict:
@@ -27,8 +30,22 @@ def _latest(exp: str) -> dict:
     return json.loads(files[-1].read_text())
 
 
+def _canonical(exp: str) -> dict:
+    """Return parsed JSON of the checked-in raw_CANONICAL.json for exp."""
+    path = _RESULTS / exp / "raw_CANONICAL.json"
+    if not path.exists():
+        raise FileNotFoundError(f"No raw_CANONICAL.json for {exp}")
+    return json.loads(path.read_text())
+
+
 def _check(label: str, ok: bool, detail: str = "") -> tuple[str, str, str]:
     return label, detail, "PASS" if ok else "FAIL"
+
+
+def _canonical_check(exp: str) -> tuple[str, str, str]:
+    latest = _latest(exp)
+    canonical = _canonical(exp)
+    return _check(f"{exp} latest == canonical", latest == canonical)
 
 
 checks: list[tuple[str, str, str]] = []
@@ -84,10 +101,8 @@ except Exception as e:
 # ── EXP-6: false_allows = 0 across all fault scenarios ───────────────────────
 try:
     raw = _latest("exp6")
-    all_safe = all(
-        s.get("false_allows", 1) == 0
-        for s in raw.get("scenarios", {}).values()
-    )
+    scenarios = raw.get("scenarios", [])
+    all_safe = all(s.get("false_allows", 1) == 0 for s in scenarios)
     checks.append(_check("exp6 false_allows = 0 (all scenarios)", all_safe))
 except Exception as e:
     checks.append(("exp6", str(e), "SKIP"))
@@ -130,9 +145,9 @@ except Exception as e:
 # ── EXP-11: thread-mode RPS peaks between 5–25 agents ────────────────────────
 try:
     raw = _latest("exp11")
-    thread_rows = [r for r in raw.get("results", []) if r.get("mode") == "thread"]
+    thread_rows = raw.get("scaling_thread", [])
     if thread_rows:
-        peak_agent = max(thread_rows, key=lambda r: r.get("total_rps", 0))["agents"]
+        peak_agent = max(thread_rows, key=lambda r: r.get("total_rps", 0))["agent_count"]
         checks.append(_check("exp11 thread peak in 5–50 agent range",
                              5 <= peak_agent <= 50, f"peak_agent={peak_agent}"))
     else:
@@ -164,8 +179,8 @@ except Exception as e:
 
 # ── EXP-GAP-32: zero drift between OPA and Python OSCAL maps ─────────────────
 try:
-    raw   = _latest("exp_gap32")
-    drift = raw.get("key_drift", raw.get("drift", {}).get("key_drift", -1))
+    raw = _latest("exp_gap32")
+    drift = len(raw.get("keys_in_opa_not_py", [])) + len(raw.get("keys_in_py_not_opa", []))
     checks.append(_check("gap32 OPA↔Python key_drift = 0", drift == 0,
                          f"key_drift={drift}"))
 except Exception as e:
@@ -173,13 +188,24 @@ except Exception as e:
 
 # ── EXP-GAP-35: 5/5 redaction test cases pass ────────────────────────────────
 try:
-    raw    = _latest("exp_gap35")
-    passed = raw.get("redaction_passed", raw.get("pass_count", 0))
-    total  = raw.get("redaction_total",  raw.get("total_cases", 5))
+    raw = _latest("exp_gap35")
+    cases = raw.get("redaction_cases", [])
+    passed = sum(1 for case in cases if case.get("ok"))
+    total = len(cases)
     checks.append(_check("gap35 redaction 5/5 pass", passed == total and total >= 5,
                          f"{passed}/{total}"))
 except Exception as e:
     checks.append(("gap35", str(e), "SKIP"))
+
+if _COMPARE_CANONICAL:
+    for exp in (
+        "exp1", "exp2", "exp3", "exp4", "exp6", "exp7", "exp8", "exp9",
+        "exp11", "exp12", "exp_gap13", "exp_gap32", "exp_gap35",
+    ):
+        try:
+            checks.append(_canonical_check(exp))
+        except Exception as e:
+            checks.append((f"{exp} canonical", str(e), "SKIP"))
 
 
 # ── Report ────────────────────────────────────────────────────────────────────

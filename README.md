@@ -32,7 +32,16 @@ python experiments/run_all.py
 
 # Check paper invariants against your fresh run:
 python experiments/compare_results.py
+
+# Optionally compare your fresh run against the checked-in canonical outputs:
+python experiments/compare_results.py --compare-canonical
 ```
+
+Reviewer note:
+- [`python experiments/run_all.py`](experiments/run_all.py) generates fresh result files under [`experiments/results/`](experiments/results/).
+- [`python experiments/compare_results.py`](experiments/compare_results.py:10) is the primary reproducibility check and validates the paper's invariants/claims.
+- [`python experiments/compare_results.py --compare-canonical`](experiments/compare_results.py:11) is stricter and checks whether the latest generated `raw_*.json` files exactly match the checked-in [`raw_CANONICAL.json`](experiments/results/exp2/raw_CANONICAL.json) outputs.
+- Performance- and resource-oriented experiments such as [`exp1_overhead`](experiments/exp1_overhead/run.py), [`exp11_multiagent`](experiments/exp11_multiagent/run.py), and [`exp12_resource`](experiments/exp12_resource/run.py) can be sensitive to hardware, OS, Python/runtime version, and background system load. Treat the invariant check as the primary portability check; use canonical comparison as an exact-match check for like-for-like environments.
 
 ## With live OPA (reproduces measured latency values)
 
