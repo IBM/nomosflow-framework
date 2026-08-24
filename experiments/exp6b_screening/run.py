@@ -14,7 +14,16 @@ they never become ALLOW.
 The Pareto frontier contains rate values where recall improves without
 throughput regressing vs. the previous Pareto point.
 
-Configure via env:  LLM_RATES="0.0,0.05,0.1,0.2,0.5,1.0"
+Configure via env:  LLM_RATES="0.0,0.05,0.2,0.5,1.0"
+
+Latency model (corrected, 2026-08):
+  Static tier base:  Gaussian(mu=3.2 ms, sigma=0.8 ms)  — unchanged
+  Semantic (T7/LLM): sampled from lognormal fitted to EXP-1 LIVE_BENCHMARK
+                     T7 (LLM tier) measurements (Table 7, P50 ≈ 9,500 ms,
+                     sigma_log ≈ 0.26).  The prior constant of 45 ms was
+                     ~200× too optimistic; this correction makes the
+                     throughput collapse visible and strengthens the case
+                     for selective screening.
 """
 from __future__ import annotations
 
@@ -34,24 +43,32 @@ from typing import Any
 # ── shared imports ────────────────────────────────────────────────────────────
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from experiments.shared.common import (
-    _stats, make_request, make_violation_request, save_result,
+    _stats, make_request, make_violation_request, result_dir, save_result,
 )
 from experiments.shared.opa_client import decide
 from experiments.shared.report import fmt_ms, fmt_pct, write_summary
 
 # ── experiment parameters ─────────────────────────────────────────────────────
-_DEFAULT_RATES = "0.0,0.05,0.1,0.2,0.5,1.0"
+_DEFAULT_RATES = "0.0,0.05,0.2,0.5,1.0"
 LLM_RATES: list[float] = [
     float(r)
     for r in os.getenv("LLM_RATES", _DEFAULT_RATES).split(",")
     if r.strip()
 ]
 
-# LLM simulated latency overhead (ms) when a request is routed
-_LLM_LATENCY_MS = 45.0
-# Static tier base latency (ms, normal distributed)
+# Static tier base latency (ms, normal distributed) — unchanged
 _BASE_LATENCY_MU  = 3.2
 _BASE_LATENCY_SIG = 0.8
+
+# Semantic / LLM per-call latency model.
+# Fitted to EXP-1 LIVE_BENCHMARK T7 (LLM tier) observations (Table 7):
+#   P50 ≈ 9,500 ms  →  mu_log = ln(9500) ≈ 9.159
+#   sigma_log = 0.26  (gives P95 ≈ 15,100 ms, matching observed spread)
+# The previous constant (45 ms) was ~200× below the measured value and
+# made the throughput column artificially optimistic.
+import math as _math
+_LLM_LAT_MU_LOG  = _math.log(9_500.0)   # lognormal location (ln ms)
+_LLM_LAT_SIG_LOG = 0.26                  # lognormal scale
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -91,6 +108,39 @@ def _build_exp3_corpus() -> list[dict[str, Any]]:
 
     random.shuffle(corpus)
     return corpus
+
+
+def _save_corpus(corpus: list[dict[str, Any]]) -> None:
+    """Serialise the EXP-6b screening corpus to experiments/results/exp6b/corpus.json.
+
+    The file contains:
+      description  — human-readable summary of composition
+      vclass_counts — violation-class breakdown
+      corpus        — all 80 entries with _label, _vclass, and request fields
+    """
+    import json as _json
+    from collections import Counter as _Counter
+
+    vclass_counts = dict(_Counter(r["_vclass"] for r in corpus))
+    label_counts  = dict(_Counter(r["_label"]  for r in corpus))
+
+    doc = {
+        "description": (
+            "EXP-6b selective-screening corpus — 80 requests. "
+            "40 benign (label=benign, vclass=none); "
+            "40 violations: 8 each of rbac_write, purpose_mismatch, "
+            "bad_token, future_timestamp, purpose_bypass_fred. "
+            "Structural classes (rbac_write, bad_token, future_timestamp) are "
+            "caught by static/OPA tiers; semantic classes (purpose_mismatch, "
+            "purpose_bypass_fred) require LLM routing."
+        ),
+        "label_counts": label_counts,
+        "vclass_counts": vclass_counts,
+        "corpus": corpus,
+    }
+    path = result_dir("exp6b") / "corpus.json"
+    path.write_text(_json.dumps(doc, indent=2, default=str))
+    print(f"  ✓ corpus  → experiments/results/exp6b/corpus.json  ({len(corpus)} requests)")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -138,7 +188,9 @@ def _run_rate(
         routed = random.random() < rate
         llm_catch = False
         if routed:
-            lat += _LLM_LATENCY_MS
+            # Sample semantic latency from the measured T7 (LLM tier)
+            # distribution (EXP-1 LIVE_BENCHMARK, Table 7: P50 ≈ 9,500 ms)
+            lat += random.lognormvariate(_LLM_LAT_MU_LOG, _LLM_LAT_SIG_LOG)
             llm_catch = _llm_detect(req)
 
         # A violation is caught if static or LLM detected it
@@ -198,6 +250,7 @@ def main() -> None:
     print(f"  LLM_RATES = {LLM_RATES}")
 
     corpus = _build_exp3_corpus()
+    _save_corpus(corpus)
     print(f"  Corpus: {len(corpus)} requests "
           f"({sum(1 for r in corpus if r['_label']=='violation')} violations)")
 
@@ -251,17 +304,33 @@ def main() -> None:
     }
 
     save_result("exp6b", raw_output)
+    latency_note = (
+        "Selective screening Pareto frontier (Table~14). "
+        "Semantic per-call latency sampled from lognormal fitted to EXP-1 "
+        "LIVE\\_BENCHMARK T7 (LLM tier) measurements (Table~7): P50 \\approx 9{,}500\\,ms, "
+        "$\\sigma_{\\ln} = 0.26$. "
+        "Static tier base: $\\mathcal{N}(3.2\\,\\text{ms},\\,0.8\\,\\text{ms})$."
+    )
     write_summary(
         exp_id="exp6b",
         title="EXP-6b  Selective screening Pareto frontier",
         sections=[
             {
                 "heading": "Recall / throughput Pareto",
+                "caption": latency_note,
                 "table":   pareto_rows,
             },
             {
                 "heading": "Static floor",
                 "text":    static_floor_text,
+            },
+            {
+                "heading": "Latency model",
+                "text":    (
+                    "Semantic per-call latency (T7/LLM tier): lognormal, P50 = 9,500 ms, "
+                    "sigma_log = 0.26 (EXP-1 LIVE_BENCHMARK T7, Table 7). "
+                    "Static base: Gaussian(3.2 ms, 0.8 ms)."
+                ),
             },
         ],
         gaps=[

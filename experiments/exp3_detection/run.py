@@ -45,7 +45,7 @@ _REPO = _HERE.parents[2]
 if str(_REPO) not in sys.path:
     sys.path.insert(0, str(_REPO))
 
-from experiments.shared.common import make_violation_request, save_result
+from experiments.shared.common import make_violation_request, result_dir, save_result
 from experiments.shared.opa_client import decide, probe
 from experiments.shared.report import write_summary, fmt_pct
 from experiments.shared.live_data import (
@@ -437,6 +437,38 @@ def _build_corpus() -> list[dict[str, Any]]:
     return corpus
 
 
+def _save_corpus(corpus: list[dict[str, Any]]) -> None:
+    """Serialise the EXP-3 labeled corpus to experiments/results/exp3/corpus.json.
+
+    The file contains:
+      description  — human-readable summary of composition
+      class_counts — breakdown per class
+      corpus       — all 200 entries with id, class, label, deciding_tier,
+                     and the full content dict reviewers can inspect or replay
+    """
+    import json as _json
+    from collections import Counter as _Counter
+
+    class_counts = dict(_Counter(e['class'] for e in corpus))
+    label_counts = dict(_Counter(e['label'] for e in corpus))
+
+    doc = {
+        "description": (
+            "EXP-3 detection-efficacy labeled corpus — 200 requests. "
+            "Classes: static_regex (40 T1 violations), policy_rule (40 T3 violations), "
+            "semantic (20 T5 violations), benign_normal (50), "
+            "benign_suspicious (25), edge_case (25 mixed)."
+        ),
+        "class_counts": class_counts,
+        "label_counts": label_counts,
+        "deciding_tiers": sorted({e['deciding_tier'] for e in corpus}),
+        "corpus": corpus,
+    }
+    path = result_dir("exp3") / "corpus.json"
+    path.write_text(_json.dumps(doc, indent=2, default=str))
+    print(f"  ✓ corpus  → experiments/results/exp3/corpus.json  ({len(corpus)} requests)")
+
+
 # ---------------------------------------------------------------------------
 # Validator modes
 # ---------------------------------------------------------------------------
@@ -597,6 +629,7 @@ def _probe_llm() -> "tuple[bool, Any | None]":
 def main() -> None:
     print("\n=== EXP-3: Detection Efficacy ===\n")
     corpus = _build_corpus()
+    _save_corpus(corpus)
     print(f"  Corpus built: {len(corpus)} requests")
 
     opa_live = probe()

@@ -61,9 +61,15 @@ class LLMValidator:
             self.enabled = False
         
         if self.enabled:
-            # Configure LiteLLM
+            # Suppress LiteLLM verbose curl/debug output.
+            # set_verbose alone is insufficient in litellm ≥ 1.30; the logger
+            # level and LITELLM_LOG env var must also be set.
             litellm.set_verbose = False
             litellm.drop_params = True  # Drop unsupported params
+            import os as _os
+            _os.environ.setdefault("LITELLM_LOG", "ERROR")
+            import logging as _logging
+            _logging.getLogger("LiteLLM").setLevel(_logging.ERROR)
             
             # Set API key from environment if available
             # Support multiple LLM providers: OpenAI, Anthropic, etc.

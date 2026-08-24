@@ -88,10 +88,12 @@ def write_summary(
     latex_lines: list[str] = [f"% Auto-generated LaTeX for {title}", f"% {ts}", ""]
     for i, sec in enumerate(sections):
         if "table" in sec and sec["table"]:
+            # Use explicit caption if provided, otherwise fall back to heading
+            caption = sec.get("caption") or sec.get("heading", title)
             latex_lines.append(
                 _latex_table(
                     sec["table"],
-                    caption=sec.get("heading", title),
+                    caption=caption,
                     label=f"tab:{exp_id}_{i}",
                 )
             )

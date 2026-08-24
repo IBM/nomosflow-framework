@@ -1,36 +1,42 @@
 % Auto-generated LaTeX for EXP-6  Fault injection — zero false-ALLOWs + zero lost records
-% 2026-08-14T05:23:30.786535+00:00
+% Values from raw_CANONICAL.json (live OPA, Aug 15 2026)
+% Lost_Records/Chain_OK shown as "--" for non-WAL scenarios (N/A), matching paper Table 13.
 
 \begin{table}[t]
   \centering
-  \caption{Fault injection results — zero false-ALLOWs, zero lost records}
+  \caption{EXP-6: Fault injection results (live OPA, $N$=500 per scenario).
+    False-ALLOW count (primary safety invariant) is 0 in all cases.
+    Lost-Records and Chain-OK verified only for \textsc{Audit\_Partition} (WAL path);
+    other scenarios show ``--'' (not applicable).
+    \textsc{Llm\_Timeout\_Live} uses env-var kill (\texttt{LLM\_VALIDATION\_ENABLED=false}),
+    not \texttt{mock.patch}, exercising the real fail-secure code path.}
   \label{tab:exp6_0}
   \begin{tabular}{lrrrrrr}
     \toprule
-    \textbf{Scenario} & \textbf{N} & \textbf{False_ALLOWs} & \textbf{Lost_Records} & \textbf{Chain_OK} & \textbf{Avail_pct} & \textbf{Mean_ms} \\
+    \textbf{Scenario} & \textbf{False-ALLOWs} & \textbf{Lost-Records} & \textbf{Chain-OK} & \textbf{Avail.} & \textbf{Mean\,(ms)} \\
     \midrule
-    OPA_KILL & 500 & 0 & 0 & ✓ & 100.0% & 0.02 \\
-    LLM_TIMEOUT & 500 & 0 & 0 & ✓ & 100.0% & 2.51 \\
-    AUDIT_PARTITION & 500 & 0 & 0 & ✓ & 100.0% & 2.46 \\
-    NO_FAULT & 500 & 0 & 0 & ✓ & 100.0% & 2.72 \\
-    LLM_TIMEOUT_LIVE & 500 & 0 & 0 & ✓ & 100.0% & 2.46 \\
+    OPA\_KILL          & 0 & -- & -- & 100.0\% & 0.03 \\
+    LLM\_TIMEOUT       & 0 & -- & -- & 100.0\% & 2.51 \\
+    AUDIT\_PARTITION   & 0 &  0 & \checkmark & 100.0\% & 2.46 \\
+    NO\_FAULT          & 0 & -- & -- & 100.0\% & 2.72 \\
+    LLM\_TIMEOUT\_LIVE & 0 & -- & -- & 100.0\% & 2.46 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 \begin{table}[t]
   \centering
-  \caption{Decision distribution under fault}
+  \caption{EXP-6: Decision distribution under fault injection (live OPA, $N$=500 per scenario).}
   \label{tab:exp6_1}
   \begin{tabular}{lrrrr}
     \toprule
     \textbf{Scenario} & \textbf{APPROVED} & \textbf{DENIED} & \textbf{THROTTLED} & \textbf{ERROR} \\
     \midrule
-    OPA_KILL & 0 & 500 & 0 & 0 \\
-    LLM_TIMEOUT & 123 & 377 & 0 & 0 \\
-    AUDIT_PARTITION & 137 & 363 & 0 & 0 \\
-    NO_FAULT & 137 & 363 & 0 & 0 \\
-    LLM_TIMEOUT_LIVE & 123 & 377 & 0 & 0 \\
+    OPA\_KILL          &   0 & 500 & 0 & 0 \\
+    LLM\_TIMEOUT       & 123 & 377 & 0 & 0 \\
+    AUDIT\_PARTITION   & 137 & 363 & 0 & 0 \\
+    NO\_FAULT          & 137 & 363 & 0 & 0 \\
+    LLM\_TIMEOUT\_LIVE & 123 & 377 & 0 & 0 \\
     \bottomrule
   \end{tabular}
 \end{table}

@@ -14,29 +14,29 @@ Agent request
       │
       ▼
 ┌─────────────────────────────────────────────────────────────┐
-│  T1 — APL (Authorization Policy Layer)          µs range   │
+│  T3 — CMF (Context Metadata Forge)              µs range   │
+│       • CDM v2 context enrichment                           │
+│       • PII tagging                                         │
+│       (never denies; enriches and passes through)           │
+│                                                             │
+│  T4 — APL (Authorization Policy Layer)          µs range   │
 │       • Token format validation                             │
 │       • RBAC check (role × action matrix)                   │
 │       • Resource pattern match (FRED / EDGAR / local)       │
 │       • Purpose validation                                  │
 │       • Skill attestation (contract seal check)             │
 │                                                             │
-│  T2 — CMF (Context Metadata Forge)              µs range   │
-│       • CDM v2 context enrichment                           │
-│       • PII tagging                                         │
-│       (never denies; enriches and passes through)           │
-│                                                             │
-│  T3 — OPA (Open Policy Agent)                   ms range   │
+│  T5 — OPA (Open Policy Agent)                   ms range   │
 │       • Full Rego policy evaluation                         │
 │       • 15+ regulatory rules (GDPR, SOX, HIPAA …)          │
 │       • Hot-reload supported (in-place policy update)       │
 │                                                             │
-│  T4 — Rate-limit                                µs range   │
+│  T6 — Rate-limit                                µs range   │
 │       • Per-agent token-bucket (50 req/s default)           │
 │       • Configurable via RATE_LIMIT_THRESHOLD env var       │
 │                                                             │
-│  T5 — LLM validator                            ms–s range  │
-│       • Semantic / hallucination check                      │
+│  T7 — LLM validator                     ~9,500 ms P50      │
+│       • Semantic / indirect-PII check                       │
 │       • Sampled at ~1 % of traffic                          │
 │       • Fails SECURE: outage → DENY (not ALLOW)            │
 │       • PII redacted from payload before model call         │
@@ -51,9 +51,9 @@ Agent request
 
 The pipeline is a **ladder**: as soon as any tier issues DENY, processing stops
 and the request is rejected without invoking downstream tiers. This means:
-- ~31% of traffic is resolved at T1 (cheap APL checks)
-- ~41% is resolved at T3 (OPA policy)
-- Only ~0.1% reaches T5 (LLM)
+- ~31% of traffic is resolved at T4 (APL attribute checks)
+- ~41% is resolved at T5 (OPA policy)
+- Only ~0.1% reaches T7 (LLM)
 
 Short-circuiting reduces mean end-to-end latency by ~36–55% versus running all
 tiers for every request (see EXP-2).
@@ -61,8 +61,8 @@ tiers for every request (see EXP-2).
 ## Fail-secure design
 
 Every tier defaults to DENY on error:
-- **T3 OPA unreachable**: APL provides a safe fallback — T1 denies invalid tokens / RBAC violations; legitimate traffic is passed.
-- **T5 LLM unavailable**: `LLMValidator` raises `TimeoutError` → sidecar maps to DENIED (set `FAIL_OPEN_LLM=true` only for testing).
+- **T5 OPA unreachable**: T5 fails closed — requests T4 (APL) can decide on attribute predicates alone are decided there (malformed tokens, clear RBAC violations); all others receive DENIED. OPA policy evaluation is not substituted; requests that would require it are not passed.
+- **T7 LLM unavailable**: `LLMValidator` raises `TimeoutError` → sidecar maps to DENIED (set `FAIL_OPEN_LLM=true` only for testing).
 - **Audit DB failure**: records are spilled to a local WAL (`/tmp/compliance_audit_wal.jsonl`) and drained on the next successful flush; the hash-chain remains intact.
 
 ## Interceptors

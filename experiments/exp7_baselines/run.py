@@ -9,7 +9,7 @@ if str(_REPO_ROOT_INSERT) not in _sys.path:
 from pathlib import Path
 from typing import Any
 
-from experiments.shared.common import Timer, _REPO_ROOT, make_request, make_violation_request, save_result
+from experiments.shared.common import Timer, _REPO_ROOT, make_request, make_violation_request, result_dir, save_result
 from experiments.shared.opa_client import decide
 from experiments.shared.report import fmt_ms, fmt_pct, write_summary
 from experiments.shared.live_data import tier_bench_by_scale, throughput_rps as _live_rps
@@ -59,6 +59,42 @@ def build_exp3_corpus() -> list[dict[str, Any]]:
         req["violation_type"] = violation
         corpus.append(req)
     return corpus
+
+
+def _save_corpus(corpus: list[dict[str, Any]]) -> None:
+    """Serialise the EXP-7 baseline corpus to experiments/results/exp7/corpus.json.
+
+    The file contains:
+      description    — human-readable summary of composition
+      violation_types — list of violation classes used
+      label_counts   — benign / violation breakdown
+      vtype_counts   — per-violation-type counts
+      corpus         — all 80 entries with label, violation_type, and request fields
+    """
+    import json as _json
+    from collections import Counter as _Counter
+
+    label_counts = dict(_Counter(r["label"] for r in corpus))
+    vtype_counts = dict(_Counter(
+        r.get("violation_type", "none") for r in corpus
+    ))
+
+    doc = {
+        "description": (
+            "EXP-7 baseline-comparison corpus — 80 requests. "
+            "40 benign (SENIOR READ fred/GDP) and 40 violations cycling "
+            "through: rbac_write, purpose_mismatch, bad_token, "
+            "hallucinated_cik, future_timestamp, path_traversal, "
+            "purpose_bypass_fred."
+        ),
+        "violation_types": VIOLATION_TYPES,
+        "label_counts": label_counts,
+        "vtype_counts": vtype_counts,
+        "corpus": corpus,
+    }
+    path = result_dir("exp7") / "corpus.json"
+    path.write_text(_json.dumps(doc, indent=2, default=str))
+    print(f"  ✓ corpus  → experiments/results/exp7/corpus.json  ({len(corpus)} requests)")
 
 
 def app_level_check(req: dict[str, Any]) -> tuple[bool, float]:
@@ -131,6 +167,7 @@ def evaluate_baseline(name: str, corpus: list[dict[str, Any]], no_enforcement_la
 
 def main() -> None:
     corpus = build_exp3_corpus()
+    _save_corpus(corpus)
     no_enforcement_latency = 0.02
     with Timer() as timer:
         results = [

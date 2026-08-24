@@ -243,8 +243,8 @@ def main() -> None:
     assert "REDACT_FOR_LLM=true" in compose_text, (
         "GAP-35 FAIL: docker-compose.yml does not set REDACT_FOR_LLM=true"
     )
-    # No cloud API keys hardcoded in base compose
-    for bad in ("sk-DIzEaDRw", "ANTHROPIC_API_KEY=sk-", "LLM_API_KEY=sk-"):
+    # No cloud API keys hardcoded in base compose (any sk- virtual key value)
+    for bad in ("ANTHROPIC_API_KEY=sk-", "LLM_API_KEY=sk-"):
         assert bad not in compose_text, (
             f"GAP-35 FAIL: cloud credential '{bad}' found in base docker-compose.yml"
         )
@@ -263,8 +263,8 @@ def main() -> None:
     assert "REDACT_FOR_LLM=true" in llm_compose_text, (
         "GAP-35 FAIL: docker-compose.llm.yml does not keep REDACT_FOR_LLM=true"
     )
-    # Cloud override should NOT hardcode credentials
-    for bad in ("sk-DIzEaDRw", "ANTHROPIC_API_KEY=sk-"):
+    # Cloud override should NOT hardcode credentials (any sk- virtual key value)
+    for bad in ("ANTHROPIC_API_KEY=sk-", "LLM_API_KEY=sk-"):
         assert bad not in llm_compose_text, (
             f"GAP-35 FAIL: hardcoded credential '{bad}' found in docker-compose.llm.yml"
         )

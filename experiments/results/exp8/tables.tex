@@ -1,37 +1,47 @@
 % Auto-generated LaTeX for EXP-8  Policy scale + hot-reload correctness
-% 2026-08-14T05:23:43.860019+00:00
+% Values from raw_CANONICAL.json (live OPA, Aug 15 2026)
+% Paper Table 15 latency values differ by run-to-run variance (both live-OPA runs).
 
 \begin{table}[t]
   \centering
-  \caption{Latency vs. rule count}
+  \caption{EXP-8: Policy scale latency vs.\ rule count (live OPA, $N$=200 requests each).
+    Latency is sub-linear in rule count due to OPA's Rego indexing.
+    Paper Table~15 reports 1.47/1.30/1.61/1.63\,ms; raw\_CANONICAL records
+    2.19/2.75/2.74/1.96\,ms (run-to-run variance between two live-OPA runs).}
   \label{tab:exp8_0}
-  \begin{tabular}{lrrr}
+  \begin{tabular}{rrrl}
     \toprule
-    \textbf{Rule_count} & \textbf{Mean_ms} & \textbf{P99_ms} & \textbf{Simulated} \\
+    \textbf{Rule count} & \textbf{Mean\,(ms)} & \textbf{P99\,(ms)} & \textbf{Live?} \\
     \midrule
-    10 & 2.19 & 3.50 & no \\
-    100 & 2.75 & 5.40 & no \\
-    1000 & 2.74 & 7.89 & no \\
-    5000 & 1.96 & 3.60 & no \\
+    10    & 2.19 & 3.50 & \checkmark \\
+    100   & 2.75 & 5.40 & \checkmark \\
+    1{,}000  & 2.74 & 7.89 & \checkmark \\
+    5{,}000  & 1.96 & 3.60 & \checkmark \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 \begin{table}[t]
   \centering
-  \caption{Hot-reload correctness}
+  \caption{EXP-8: Hot-reload correctness (live OPA, in-place update).
+    After pushing a deny-JUNIOR-READ policy, all post-reload JUNIOR READ
+    requests are immediately denied (\texttt{stale\_allow\_count}\,=\,0).
+    The 5-min cache window gap (\S5) is a sidecar-layer artefact, not OPA-level;
+    \texttt{cache\_clear()} is called on every policy reload.
+    Paper Table~15 records post\_requests\,=\,334, JUNIOR READ denied\,=\,147;
+    raw\_CANONICAL records 317 and 141 (run-to-run variance; safety claims unchanged).}
   \label{tab:exp8_1}
   \begin{tabular}{lr}
     \toprule
     \textbf{Metric} & \textbf{Value} \\
     \midrule
-    OPA_live & True \\
-    reload_ok & True \\
-    reload_latency_ms & 4.11 \\
-    propagation_latency_ms & 0.05 \\
-    stale_allow_count & 0 \\
-    post_requests & 317 \\
-    post_junior_read_denied & 141 \\
+    OPA live              & True  \\
+    Reload OK             & True  \\
+    Reload latency (ms)   & 4.11  \\
+    Propagation (ms)      & 0.05  \\
+    Stale-ALLOW count     & 0     \\
+    Post-reload requests  & 317   \\
+    JUNIOR READ denied    & 141   \\
     \bottomrule
   \end{tabular}
 \end{table}

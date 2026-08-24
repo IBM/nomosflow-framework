@@ -1,7 +1,7 @@
 {
   "exp_id": "exp11",
-  "repo_root": "/Users/rsinha/agentic-dataops/compliance-mvp/event-driven-compliance-sidecar-podman-sandbox",
-  "script": "paper_experiments/exp11_multiagent/run.py",
+  "repo_root": "/workspace/nomosflow-framework",
+  "script": "experiments/exp11_multiagent/run.py",
   "requests_per_agent": 200,
   "scaling_thread": [
     {
