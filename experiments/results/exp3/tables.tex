@@ -1,5 +1,5 @@
 % Auto-generated LaTeX for EXP-3 — NomosFlow Detection Efficacy
-% 2026-08-15T03:16:44.914403+00:00
+% 2026-08-24T16:04:29.514196+00:00
 
 \begin{table}[t]
   \centering
@@ -24,9 +24,9 @@
     \toprule
     \textbf{Class} & \textbf{Count} & \textbf{STATIC_caught} & \textbf{POLICY_caught} & \textbf{FULL_caught} & \textbf{Deciding_tier} \\
     \midrule
-    static_regex & 40 & 25 & 10 & 31 & T1 \\
-    policy_rule & 40 & 10 & 34 & 34 & T3 \\
-    semantic & 20 & 0 & 0 & 19 & T5 \\
+    static_regex & 40 & 25 & 1 & 25 & T1 \\
+    policy_rule & 40 & 10 & 40 & 40 & T3 \\
+    semantic & 20 & 0 & 0 & 17 & T5 \\
     benign_normal & 50 & 0 FP & 0 FP & 0 FP & any \\
     benign_suspicious & 25 & 0 FP & 0 FP & 0 FP & any \\
     edge_case & 25 & 0 FP & 0 FP & 0 FP & any \\
@@ -90,18 +90,25 @@
 
 \begin{table}[t]
   \centering
-  \caption{Live overlap analysis — static vs. LLM (500-case run)}
+  \caption{Live overlap analysis --- static vs.\ LLM (500-case run).
+    \textbf{Provenance note (corrected 2026-08-15b):} The source overlap table
+    double-counted cases evaluated by both validators (counts summed to 800,
+    not 500). Corrected from confusion matrices: Both\,=\,99, Static-only\,=\,66,
+    LLM-only\,=\,88, Neither\,=\,247 (sum\,=\,500).
+    Complementarity drops from 70.0\% to 60.9\%; source column retained for auditability.}
   \label{tab:exp3_5}
-  \begin{tabular}{lr}
+  \begin{tabular}{lrr}
     \toprule
-    \textbf{Detection Category} & \textbf{Count} \\
+    \textbf{Detection Category} & \textbf{Corrected ($n$=500)} & \textbf{Source table} \\
     \midrule
-    Both Static and LLM & 99 \\
-    Static Only & 121 \\
-    LLM Only & 110 \\
-    Neither & 470 \\
-    **Overlap rate** & 30.0% \\
-    **Complementary rate** & 70.0% \\
+    Both Static and LLM &  99 &  99 \\
+    Static only         &  66 & 121 \\
+    LLM only            &  88 & 110 \\
+    Neither             & 247 & 470 \\
+    \midrule
+    Total               & 500 & 800 \\
+    \midrule
+    Complementarity (single-validator / all detections) & 60.9\% & (70.0\%) \\
     \bottomrule
   \end{tabular}
 \end{table}

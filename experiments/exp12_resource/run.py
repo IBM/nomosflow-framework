@@ -3,8 +3,9 @@ EXP-12: Sidecar resource overhead (CPU% and RSS).
 
 Measures steady-state and peak CPU% and RSS for the Python sidecar process
 under four execution configurations, then computes overhead of the full stack
-versus a no-enforcement baseline. Also contextualises the paper's claimed
-310 MB runtime figure.
+versus a no-enforcement baseline. Also contextualises the paper's ≈373 MB
+full-pod runtime figure, with measured and analytical components labelled
+separately.
 
 Configurations
 --------------
@@ -366,14 +367,16 @@ def main() -> None:
     )
 
     sec3_text = (
-        "The paper's 310 MB runtime figure reflects the complete NomosFlow stack "
-        "running in a single podman pod:\n\n"
+        "The paper's ≈373 MB full-pod runtime figure reflects the complete "
+        "NomosFlow stack running in a single podman pod. "
+        "Components labelled 'analytical' are literature/vendor estimates; "
+        "components labelled 'measured' come from podman stats or psutil:\n\n"
         "| Component          | RSS (MB)                     | Source         |\n"
         "|--------------------|------------------------------|----------------|\n"
         "| Kafka broker (JVM) | ~180                         | analytical     |\n"
-        f"| OPA server         | {opa_rss_str:<28s} | podman stats   |\n"
+        f"| OPA server         | {opa_rss_str:<28s} | measured       |\n"
         "| Prometheus         | ~30                          | analytical     |\n"
-        f"| Python sidecar     | ~{sidecar_rss_str:<28s} | psutil (EXP-12)|\n"
+        f"| Python sidecar     | ~{sidecar_rss_str:<28s} | measured (psutil, EXP-12)|\n"
         "| OS / page cache    | ~20                          | analytical     |\n\n"
     )
     if ps["podman_live"]:
@@ -446,7 +449,9 @@ def main() -> None:
 
     # Gaps: podman_stats gap is resolved if podman_live=True
     gaps = [
-        "310 MB figure includes Kafka+OPA+Prometheus; sidecar-only RSS is substantially lower",
+        "≈373 MB figure includes Kafka+OPA+Prometheus; sidecar-only RSS is substantially lower. "
+        "Kafka (~180 MB) and Prometheus (~30 MB) are analytical estimates; "
+        "OPA and Python sidecar RSS are measured via podman stats and psutil respectively.",
         "Live-benchmark RPS numbers reflect 1-thread sequential execution for scale≤1k; "
         "scale=10k and scale=100k use LLM sampling which dominates wall time",
     ]
@@ -472,7 +477,7 @@ def main() -> None:
             "table":   sec2_table,
         },
         {
-            "heading": "310 MB claim decomposition (GAP-12 resolved)",
+            "heading": "≈373 MB full-pod decomposition (measured + analytical, GAP-12 resolved)",
             "text":    sec3_text,
         },
     ]

@@ -73,7 +73,7 @@ ASYNC_PROCESSING = os.getenv('ASYNC_PROCESSING', 'false').lower() == 'true'
 
 # S3 Configuration (from environment or defaults)
 S3_ENABLED = os.getenv('S3_AUDIT_ENABLED', 'true').lower() == 'true'
-S3_ENDPOINT_URL = os.getenv('S3_ENDPOINT_URL', 'http://vdm.vpc.cloud9.ibm.com:4566')
+S3_ENDPOINT_URL = os.getenv('S3_ENDPOINT_URL', 'http://localhost:4566')
 S3_BUCKET = os.getenv('S3_AUDIT_BUCKET', 'compliance-audit-logs')
 S3_ACCESS_KEY = os.getenv('S3_ACCESS_KEY', 'test')
 S3_SECRET_KEY = os.getenv('S3_SECRET_KEY', 'test')
@@ -649,7 +649,7 @@ sidecar_info.info({
 
 # --- EXTERNAL API CONFIGURATION ---
 FRED_API_KEY = os.getenv("FRED_API_KEY","")
-SEC_USER_AGENT = "Research Project rsinha@us.ibm.com"
+SEC_USER_AGENT = os.getenv("SEC_USER_AGENT", "NomosFlow Research Project")
 
 # --- DOMAIN WHITELIST CONFIGURATION ---
 # Load from environment variables (configured in s3-config.env)

@@ -1,34 +1,42 @@
 % Auto-generated LaTeX for EXP-1: Per-Tier Overhead Microbenchmark
-% 2026-08-14T05:23:13.448980+00:00
+% 2026-08-24T16:04:26.687493+00:00
 
 \begin{table}[t]
   \centering
-  \caption{Per-Tier Latency (P50 / P95 / P99 in ms)}
+  \caption{Per-tier latency (ms) at three request scales.
+    Tier naming: T1\_APL = APL check, T2\_CMF = CMF filter, T3\_OPA = OPA policy,
+    T4\_rate\_limit = rate-limiter, T5\_LLM = LLM validator.
+    Paper Table~7 uses the alternate numbering T3=CMF, T4=APL, T5=OPA, T6=rate-lim, T7=LLM.
+    NOMOSFLOW\_FULL / OPA\_ONLY rows from \texttt{raw\_CANONICAL.json} (2026-08-15 live run);
+    paper values from an earlier run (run-to-run variance, no methodology difference).
+    LIVE\_BENCHMARK rows from \texttt{benchmarks/tier\_benchmark\_20260710\_021432.json}.}
   \label{tab:exp1_0}
   \begin{tabular}{lrrrrrr}
     \toprule
     \textbf{Tier} & \textbf{Baseline} & \textbf{Scale} & \textbf{P50} & \textbf{P95} & \textbf{P99} & \textbf{Max} \\
     \midrule
-    total & NO_ENFORCEMENT & 100 & 0.00 & 0.00 & 0.00 & 0.00 \\
-    T3_OPA & OPA_ONLY & 100 & 2.27 & 3.79 & 7.00 & 7.55 \\
-    T1_APL & NOMOSFLOW_FULL & 100 & 0.00 & 0.04 & 0.05 & 0.11 \\
-    T2_CMF & NOMOSFLOW_FULL & 100 & 0.02 & 0.04 & 0.09 & 0.23 \\
-    T3_OPA & NOMOSFLOW_FULL & 100 & 2.32 & 4.00 & 8.02 & 17.89 \\
-    T4_rate_limit & NOMOSFLOW_FULL & 100 & 0.00 & 0.00 & 0.00 & 0.01 \\
-    total & NO_ENFORCEMENT & 1000 & 0.00 & 0.00 & 0.00 & 0.00 \\
-    T3_OPA & OPA_ONLY & 1000 & 2.02 & 3.44 & 6.09 & 27.09 \\
-    T1_APL & NOMOSFLOW_FULL & 1000 & 0.00 & 0.01 & 0.01 & 0.07 \\
-    T2_CMF & NOMOSFLOW_FULL & 1000 & 0.02 & 0.04 & 0.07 & 0.13 \\
-    T3_OPA & NOMOSFLOW_FULL & 1000 & 2.09 & 3.32 & 4.38 & 12.85 \\
-    T4_rate_limit & NOMOSFLOW_FULL & 1000 & 0.00 & 0.00 & 0.01 & 0.02 \\
-    T5_LLM & NOMOSFLOW_FULL & 1000 & 36112.78 & 36148.12 & 36151.26 & 36152.04 \\
-    total & NO_ENFORCEMENT & 10000 & 0.00 & 0.00 & 0.00 & 0.00 \\
-    T3_OPA & OPA_ONLY & 10000 & 2.27 & 3.86 & 5.85 & 62.37 \\
-    T1_APL & NOMOSFLOW_FULL & 10000 & 0.00 & 0.01 & 0.02 & 0.35 \\
-    T2_CMF & NOMOSFLOW_FULL & 10000 & 0.02 & 0.05 & 0.08 & 2.18 \\
-    T3_OPA & NOMOSFLOW_FULL & 10000 & 2.44 & 3.84 & 5.21 & 14.17 \\
-    T4_rate_limit & NOMOSFLOW_FULL & 10000 & 0.00 & 0.00 & 0.01 & 0.07 \\
-    T5_LLM & NOMOSFLOW_FULL & 10000 & 15234.71 & 22103.29 & 22713.83 & 22866.46 \\
+    total & NO\_ENFORCEMENT & 100 & 0.00 & 0.00 & 0.00 & 0.00 \\
+    T3\_OPA & OPA\_ONLY & 100 & 2.27 & 3.79 & 7.00 & 7.55 \\
+    T1\_APL & NOMOSFLOW\_FULL & 100 & 0.004 & 0.038 & 0.050 & 0.11 \\
+    T2\_CMF & NOMOSFLOW\_FULL & 100 & 0.024 & 0.044 & 0.093 & 0.23 \\
+    T3\_OPA & NOMOSFLOW\_FULL & 100 & 2.32 & 4.00 & 8.02 & 17.89 \\
+    T4\_rate\_limit & NOMOSFLOW\_FULL & 100 & 0.002 & 0.002 & 0.004 & 0.005 \\
+    \hline
+    total & NO\_ENFORCEMENT & 1{,}000 & 0.00 & 0.00 & 0.00 & 0.00 \\
+    T3\_OPA & OPA\_ONLY & 1{,}000 & 2.02 & 3.44 & 6.09 & 27.09 \\
+    T1\_APL & NOMOSFLOW\_FULL & 1{,}000 & 0.004 & 0.009 & 0.013 & 0.07 \\
+    T2\_CMF & NOMOSFLOW\_FULL & 1{,}000 & 0.020 & 0.043 & 0.068 & 0.13 \\
+    T3\_OPA & NOMOSFLOW\_FULL & 1{,}000 & 2.09 & 3.32 & 4.38 & 12.85 \\
+    T4\_rate\_limit & NOMOSFLOW\_FULL & 1{,}000 & 0.002 & 0.003 & 0.005 & 0.023 \\
+    T5\_LLM & NOMOSFLOW\_FULL & 1{,}000 & 36{,}113 & 36{,}148 & 36{,}151 & 36{,}152 \\
+    \hline
+    total & NO\_ENFORCEMENT & 10{,}000 & 0.00 & 0.00 & 0.00 & 0.00 \\
+    T3\_OPA & OPA\_ONLY & 10{,}000 & 2.27 & 3.86 & 5.85 & 62.37 \\
+    T1\_APL & NOMOSFLOW\_FULL & 10{,}000 & 0.004 & 0.010 & 0.019 & 0.35 \\
+    T2\_CMF & NOMOSFLOW\_FULL & 10{,}000 & 0.025 & 0.046 & 0.079 & 2.18 \\
+    T3\_OPA & NOMOSFLOW\_FULL & 10{,}000 & 2.44 & 3.84 & 5.21 & 14.17 \\
+    T4\_rate\_limit & NOMOSFLOW\_FULL & 10{,}000 & 0.002 & 0.004 & 0.007 & 0.07 \\
+    T5\_LLM & NOMOSFLOW\_FULL & 10{,}000 & 15{,}235 & 22{,}103 & 22{,}714 & 22{,}866 \\
     T3_OPA & LIVE_BENCHMARK & 100 & 2.17 & 4.92 & 6.65 & 10.11 \\
     T1_APL & LIVE_BENCHMARK & 100 & 0.005 & 0.009 & 0.011 & 0.011 \\
     T2_CMF & LIVE_BENCHMARK & 100 & 0.002 & 0.002 & 0.003 & 0.005 \\
@@ -54,25 +62,32 @@
 
 \begin{table}[t]
   \centering
-  \caption{Throughput comparison}
+  \caption{End-to-end throughput (req/s) by configuration.
+    NOMOSFLOW\_FULL / OPA\_ONLY values from \texttt{raw\_CANONICAL.json} (2026-08-15 live run);
+    differ from paper Table~7 due to run-to-run variance.
+    LIVE\_BENCHMARK rows from \texttt{benchmarks/tier\_benchmark\_20260710\_021432.json} (2026-07-10);
+    these match the paper exactly.}
   \label{tab:exp1_2}
-  \begin{tabular}{lrrrr}
+  \begin{tabular}{llr}
     \toprule
-    \textbf{Baseline} & \textbf{Scale} & \textbf{RPS} & \textbf{CPU_delta_pct} & \textbf{RSS_delta_MB} \\
+    \textbf{Baseline} & \textbf{Scale} & \textbf{RPS} \\
     \midrule
-    NO_ENFORCEMENT & 100 & 3761658 & 0.0 & 0.0 \\
-    OPA_ONLY & 100 & 395 & 0.0 & 0.016 \\
-    NOMOSFLOW_FULL & 100 & 362 & 0.0 & 0.062 \\
-    NO_ENFORCEMENT & 1000 & 4672001 & 0.0 & 0.0 \\
-    OPA_ONLY & 1000 & 436 & 0.0 & 0.031 \\
-    NOMOSFLOW_FULL & 1000 & 12 & 0.0 & -45.953 \\
-    NO_ENFORCEMENT & 10000 & 6262721 & 0.0 & 0.406 \\
-    OPA_ONLY & 10000 & 397 & 0.0 & -31.578 \\
-    NOMOSFLOW_FULL & 10000 & 127 & 0.0 & 5.688 \\
-    LIVE_BENCHMARK & 100 & 392.0 & measured & measured \\
-    LIVE_BENCHMARK & 1000 & 18.3 & measured & measured \\
-    LIVE_BENCHMARK & 10000 & 14.8 & measured & measured \\
-    LIVE_BENCHMARK & 100000 & 17.1 & measured & measured \\
+    NO\_ENFORCEMENT & 100     & 3{,}761{,}658 \\
+    OPA\_ONLY       & 100     &           395 \\
+    NOMOSFLOW\_FULL & 100     &           362 \\
+    \hline
+    NO\_ENFORCEMENT & 1{,}000   & 4{,}672{,}001 \\
+    OPA\_ONLY       & 1{,}000   &           436 \\
+    NOMOSFLOW\_FULL & 1{,}000   &            12 \\
+    \hline
+    NO\_ENFORCEMENT & 10{,}000  & 6{,}262{,}721 \\
+    OPA\_ONLY       & 10{,}000  &           397 \\
+    NOMOSFLOW\_FULL & 10{,}000  &           127 \\
+    \hline
+    LIVE\_BENCHMARK & 100     &           392 \\
+    LIVE\_BENCHMARK & 1{,}000   &            18 \\
+    LIVE\_BENCHMARK & 10{,}000  &            15 \\
+    LIVE\_BENCHMARK & 100{,}000 &            17 \\
     \bottomrule
   \end{tabular}
 \end{table}

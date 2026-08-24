@@ -2,11 +2,11 @@
   "baseline": "ENVOY_OPA_GATEWAY",
   "coverage": null,
   "fpr": null,
-  "mean_latency_ms": 3.161,
-  "opa_p50_ms": 2.603,
+  "mean_latency_ms": 0.4,
+  "opa_p50_ms": 0.0,
   "envoy_hop_overhead_ms": 0.4,
-  "overhead_vs_no_enforcement": 3.141,
-  "opa_live": true,
+  "overhead_vs_no_enforcement": 0.38,
+  "opa_live": false,
   "n_samples": 50,
-  "note": "LIVE: OPA P50=2.6 ms + 0.4 ms Envoy overhead."
+  "note": "Latency = OPA decision latency + estimated Envoy hop overhead (0.4 ms).  See deploy/envoy/envoy.yaml for the full ext_authz configuration."
 }
