@@ -54,3 +54,5 @@ All-services-live run (opa_live=true, apl_live=true, cmf_live=true, llm_live=tru
 - ≈373 MB figure includes Kafka+OPA+Prometheus; sidecar-only RSS is substantially lower. Kafka (~180 MB) and Prometheus (~30 MB) are analytical estimates; OPA RSS measured at 104.9 MB via podman stats (raw_CANONICAL Aug 15); Python sidecar measured at 38.5 MB via psutil (raw_20260824_165956 Aug 24).
 - OPA RSS (104.9 MB) comes from raw_CANONICAL.json which captured a running opa-engine container; the Aug-24 local runs did not have OPA running as a separate container (opa_rss_mb=null in those files).
 - CPU stays withheld from paper tables; included here for completeness.
+- OPA RSS: paper §6 prose states 104.9 MB; raw_CANONICAL records 105.3 MB (two separate `podman stats` captures; 0.4 MB is within page-cache fluctuation for the same binary). Pod total (≈373 MB) is consistent at either value.
+- See `docs/gap-disclosures.md` § "Measurement variance" for root-cause analysis of all four paper-vs-canonical latency gaps
