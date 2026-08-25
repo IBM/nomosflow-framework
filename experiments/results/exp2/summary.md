@@ -69,3 +69,4 @@ Source: raw_CANONICAL.json (live OPA). Paper Table 8: ladder=1.60 ms, forced=3.5
 - T4 (APL) p_i=1.0: mandatory first tier, excluded from Prop. 3 cost-optimal ordering
 - Paper Table 8 ablation values (1.60 ms / 3.56 ms / 55%) are from the live paper run; raw_CANONICAL records 2.26 ms / 3.53 ms from a separate live-OPA run on the same host
 - Paper Table 8 T5(OPA) c_i = 1.96 ms; raw_CANONICAL records 2.90 ms (run-to-run variance, live OPA both times); counts (629/813/1/557) and fractions are exact
+- See `docs/gap-disclosures.md` § "Measurement variance" for root-cause analysis of all four paper-vs-canonical latency gaps

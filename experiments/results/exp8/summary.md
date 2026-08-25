@@ -31,3 +31,4 @@ a separate live-OPA run; raw_CANONICAL values differ by run-to-run variance (sam
 - Policy scale uses synthetic rules; real policy complexity may have different coefficients
 - Paper Table 15 reports mean_ms 1.47/1.30/1.61/1.63 ms and hot-reload 5.82 ms; raw_CANONICAL records 2.19/2.75/2.74/1.96 ms and 4.11 ms (run-to-run variance between two live-OPA runs on different hosts)
 - Paper Table 15 hot-reload row: post_requests=334, JUNIOR READ denied=147; raw_CANONICAL records 317 and 141 (run-to-run variance; stale_allow_count=0 and reload_ok=True in both — the correctness claims are identical)
+- See `docs/gap-disclosures.md` § "Measurement variance" for root-cause analysis of all four paper-vs-canonical latency gaps

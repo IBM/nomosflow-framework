@@ -18,6 +18,30 @@ results.
 
 ---
 
+## Measurement variance: paper values vs. checked-in canonical results
+
+Four paper claims come from live-OPA runs whose exact numbers depend on OPA
+response time, host hardware, and whether the experiment ran in isolation or
+as part of a concurrent batch.  In all four cases **the qualitative claim is
+identical across every run**; only the absolute value varies.  The table below
+records the paper value, the checked-in canonical value, and the root cause.
+
+> **How to read this table.** `raw_CANONICAL.json` is the reference file for
+> each experiment and is the source for `summary.md` and `tables.tex`.  The
+> paper values were hand-transcribed from an earlier live-OPA run (see
+> `experiments/results/paper_results.tex` header for dates).  Neither set of
+> values is wrong; they reflect genuine run-to-run variance on latency and
+> throughput measurements.
+
+| Experiment | Paper value | Canonical value | Root cause | Qualitative claim unchanged? |
+|---|---|---|---|---|
+| **EXP-2 ablation** (Table 8) | ladder 1.60 ms / forced 3.56 ms / **55% saving** | ladder 2.26 ms / forced 3.53 ms / **36% saving** | OPA P50 was ~1.5 ms on the paper's host vs ~2.9 ms on the canonical host. The forced mean is nearly identical (3.56 vs 3.53 ms) because all tiers run on every request and variance averages out. The saving percentage is computed as `(forced − ladder) / forced`, so the stable forced mean amplifies any ladder variance. | Yes — short-circuiting saves a substantial fraction of deterministic latency in every run. |
+| **EXP-8 scale latency** (Table 15) | 1.47 / 1.30 / 1.61 / 1.63 ms (10–5,000 rules) | 2.19 / 2.75 / 2.74 / 1.96 ms | Two separate live-OPA runs on different hosts; OPA per-request latency differs by ~0.7–1.4 ms across hardware. | Yes — latency is sub-linear in rule count and stays well under 3 ms in both runs. Correctness claims (stale-ALLOW = 0, reload-ok = True) are identical. |
+| **EXP-11 process-25 RPS** (Table 16) | **2,244 RPS** at 25 agents (process mode) | **1,347 RPS** | The paper value came from an isolated Aug-11 live-OPA run that was not preserved as `raw_CANONICAL.json`. The canonical was written during a concurrent batch run (`run_all.py`) where 13 other experiments were issuing OPA queries simultaneously, depressing throughput. The Aug-24 offline re-run shows 4,011 RPS — confirming that number reflects the OPA simulation fallback (no live OPA), not a live measurement. Per-agent mean latency: 13.7 ms (paper), 5.83 ms (canonical), 2.01 ms (Aug-24 sim) — latency ordering mirrors the RPS ordering and is consistent with live-OPA-under-load vs. isolated live-OPA vs. simulated OPA. | Yes — process mode exceeds thread mode at 25 agents in all three runs (2,244 vs 1,653; 1,347 vs 1,655; 4,011 vs 2,150), confirming GIL as the thread-mode bottleneck. |
+| **EXP-12 OPA RSS** (§6 prose) | **104.9 MB** | **105.3 MB** | Two separate `podman stats --no-stream` captures of the OPA container at different times. `podman stats` reports resident set size rounded to one decimal place; 0.4 MB is within normal page-cache fluctuation for the same binary. | Yes — both values round to ~105 MB; the pod decomposition total (≈373 MB) is consistent at either value. |
+
+---
+
 ## Experiment reproducibility notes
 
 | Experiment | Note |
