@@ -50,7 +50,8 @@ python experiments/compare_results.py    # validates paper invariants against yo
 
 # Verify every numeric paper claim against the checked-in canonical files
 # (no services, no re-running — exits 0 if all 65 checks pass)
-python experiments/verify_paper_claims.py
+python experiments/verify_paper_claims.py        # table view
+python experiments/verify_paper_claims.py -v     # + matched text snippet per row
 ```
 
 > **`compare_results.py` modes:**
