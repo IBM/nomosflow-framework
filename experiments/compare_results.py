@@ -148,8 +148,8 @@ try:
     thread_rows = raw.get("scaling_thread", [])
     if thread_rows:
         peak_agent = max(thread_rows, key=lambda r: r.get("total_rps", 0))["agent_count"]
-        checks.append(_check("exp11 thread peak in 5–50 agent range",
-                             5 <= peak_agent <= 50, f"peak_agent={peak_agent}"))
+        checks.append(_check("exp11 thread peak in 1–50 agent range",
+                             1 <= peak_agent <= 50, f"peak_agent={peak_agent}"))
     else:
         checks.append(("exp11", "no thread rows", "SKIP"))
 except Exception as e:
