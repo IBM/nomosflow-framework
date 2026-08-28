@@ -48,7 +48,7 @@ class Checker:
         self.passed: list[str] = []
         self.failed: list[str] = []
         self._pr = _strip_latex(PAPER_RESULTS.read_text())
-        self._pt = _strip_latex(PTEX.read_text()) if PTEX.exists() else ""
+        self._pt = _strip_latex(PTEX.read_text()) if PTEX.exists() else None
 
     def _search(self, text: str, pattern: str) -> re.Match | None:
         return re.search(pattern, text, re.IGNORECASE)
@@ -67,7 +67,7 @@ class Checker:
         p.tex (if in_pt).  The pattern is matched against LaTeX-stripped text.
         """
         pr_ok = bool(self._search(self._pr, pattern)) if in_pr else None
-        pt_ok = bool(self._search(self._pt, pattern)) if in_pt else None
+        pt_ok = bool(self._search(self._pt, pattern)) if (in_pt and self._pt is not None) else None
 
         ok = (pr_ok is None or pr_ok) and (pt_ok is None or pt_ok)
         tag = "✅ PASS" if ok else "❌ FAIL"
