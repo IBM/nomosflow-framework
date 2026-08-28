@@ -1,7 +1,9 @@
 # NomosFlow
 
-[![CI](https://github.com/IBM/nomosflow/actions/workflows/experiments.yml/badge.svg)](https://github.com/IBM/nomosflow/actions/workflows/experiments.yml)
+[![CI](https://github.com/IBM/nomosflow-framework/actions/workflows/experiments.yml/badge.svg)](https://github.com/IBM/nomosflow-framework/actions/workflows/experiments.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+
+> **Supplementary material:** [`supplement.pdf`](supplement.pdf) — proofs, pre-registration protocol, artifact audits, and full result tables.
 
 **NomosFlow** is an event-driven compliance sidecar for AI agents. It intercepts every data-access event and passes it through a five-tier validation pipeline before allowing it to proceed:
 
@@ -41,7 +43,7 @@ If you prefer to check the canonical numbers directly rather than re-running the
 ## Reproducing the paper experiments
 
 ```bash
-git clone https://github.com/IBM/nomosflow && cd nomosflow
+git clone https://github.com/IBM/nomosflow-framework && cd nomosflow-framework
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
@@ -139,7 +141,7 @@ EXP-3, EXP-4, EXP-6b, and EXP-7 write their labeled corpora to `experiments/resu
 ## Repository layout
 
 ```
-nomosflow/
+nomosflow-framework/
 ├── src/                   Sidecar source (validators, core, interceptors)
 ├── policies/              OPA Rego policies + OSCAL control map
 ├── benchmarks/            Canonical live-service measurement files

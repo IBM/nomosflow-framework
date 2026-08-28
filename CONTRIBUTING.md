@@ -4,7 +4,7 @@ Thank you for your interest in contributing!
 
 ## IBM Contributor License Agreement
 
-All contributors must sign the [IBM CLA](https://cla-assistant.io/IBM/nomosflow)
+All contributors must sign the [IBM CLA](https://cla-assistant.io/IBM/nomosflow-framework)
 before a pull request can be merged.  The CLA bot will prompt you automatically
 on your first PR.
 
