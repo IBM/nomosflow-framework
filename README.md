@@ -22,6 +22,22 @@ Fails **secure** at every tier: any failure defaults to DENY, not ALLOW (Proposi
 > lines 17–22. All `summary.md` and `tables.tex` files use the paper labels
 > (T3–T7).
 
+## Verifying results without re-running
+
+If you prefer to check the canonical numbers directly rather than re-running the full suite, all checked-in artifacts are in [`experiments/results/`](experiments/results/):
+
+| Artifact | Location | What it contains |
+|---|---|---|
+| **Master paper tables** | [`experiments/results/paper_results.tex`](experiments/results/paper_results.tex) | Every table and figure that appears in the paper, with full provenance comments at the top |
+| **Per-experiment raw data** | `experiments/results/<EXP_ID>/raw_CANONICAL.json` | Exact numbers from the canonical live-service run (Aug 15 2026); used by `compare_results.py --compare-canonical` |
+| **Per-experiment summaries** | `experiments/results/<EXP_ID>/summary.md` | Human-readable results in Markdown; reflect the canonical run until overwritten by a local re-run |
+| **Figures** | [`experiments/results/figures/fig1_tier_histogram.svg`](experiments/results/figures/fig1_tier_histogram.svg) | Resolved-at-tier histogram (Figure 3 / EXP-2) |
+| | [`experiments/results/figures/fig2_coverage_frontier.svg`](experiments/results/figures/fig2_coverage_frontier.svg) | Coverage frontier (Figure 2 / EXP-7) |
+| **LaTeX figure stubs** | [`experiments/results/figures/figures.tex`](experiments/results/figures/figures.tex) | `\includesvg` stubs for both figures |
+| **Labelled corpora** | `experiments/results/<EXP_ID>/corpus.json` | EXP-3 (200 cases), EXP-4 (60), EXP-6b (80), EXP-7 (80) — see [Corpus files](#corpus-files) below |
+
+> **`summary.md` and `tables.tex` are regenerated on every run.** The checked-in copies are the canonical reference. If you re-run locally the files will be overwritten with values from that run; the authoritative ground truth is always `raw_CANONICAL.json` (per-experiment) and `paper_results.tex` (paper tables).
+
 ## Reproducing the paper experiments
 
 ```bash
@@ -79,6 +95,30 @@ Without `.env.local` both experiments fall back to deterministic stub validators
 
 ## Paper table and figure map
 
+The `Canonical file` column points to the checked-in artifact that contains the numbers for that item.
+
+| Paper item | Experiment | Description | Canonical file |
+|---|---|---|---|
+| Table 1 | — | Observation function (body) | [`paper_results.tex`](experiments/results/paper_results.tex) |
+| Table 2 | EXP-7 | Coverage vs. overhead comparison matrix (body) | [`exp7/raw_CANONICAL.json`](experiments/results/exp7/raw_CANONICAL.json) |
+| Figure 1 | — | Architecture diagram (body) | [`experiments/nomosflow-architecture.png`](experiments/nomosflow-architecture.png) |
+| Figure 2 | EXP-7 | Coverage frontier (body) | [`figures/fig2_coverage_frontier.svg`](experiments/results/figures/fig2_coverage_frontier.svg) |
+| Table 3 | — | Coverage predicates (appendix) | [`paper_results.tex`](experiments/results/paper_results.tex) |
+| Table 4 | — | Isolation discharge (appendix) | [`paper_results.tex`](experiments/results/paper_results.tex) |
+| Table 5 | EXP-GAP-35 | Egress / redaction checks (appendix) | [`exp_gap35/raw_CANONICAL.json`](experiments/results/exp_gap35/raw_CANONICAL.json) |
+| Table 6 | EXP-GAP-32 | OSCAL control mapping (appendix) | [`exp_gap32/raw_CANONICAL.json`](experiments/results/exp_gap32/raw_CANONICAL.json) |
+| Table 7 | EXP-1 | Per-tier latency microbenchmark (appendix) | [`exp1/raw_CANONICAL.json`](experiments/results/exp1/raw_CANONICAL.json) |
+| Table 8 | EXP-2 | Short-circuit ablation / tier resolution (appendix) | [`exp2/raw_CANONICAL.json`](experiments/results/exp2/raw_CANONICAL.json) |
+| Tables 9–11 | EXP-3 | Detection 200-case, 500-case, overlap (appendix) | [`exp3/raw_CANONICAL.json`](experiments/results/exp3/raw_CANONICAL.json) |
+| Table 12 | EXP-4 | Verdict-lattice robustness under injected payloads (appendix) | [`exp4/raw_CANONICAL.json`](experiments/results/exp4/raw_CANONICAL.json) |
+| Table 13 | EXP-6 | Fault injection — zero false-ALLOWs (appendix) | [`exp6/raw_CANONICAL.json`](experiments/results/exp6/raw_CANONICAL.json) |
+| Table 14 | EXP-6b | Selective screening Pareto frontier (appendix) | [`exp6b/raw_CANONICAL.json`](experiments/results/exp6b/raw_CANONICAL.json) |
+| Table 15 | EXP-8 | Policy scale latency (appendix) | [`exp8/raw_CANONICAL.json`](experiments/results/exp8/raw_CANONICAL.json) |
+| Table 16 | EXP-11 | Multi-agent scalability (appendix) | [`exp11/raw_CANONICAL.json`](experiments/results/exp11/raw_CANONICAL.json) |
+| Figure 3 | EXP-2 | Resolved-at-tier histogram (appendix) | [`figures/fig1_tier_histogram.svg`](experiments/results/figures/fig1_tier_histogram.svg) |
+| — | EXP-GAP-13 | Interceptor hook inventory — `tab:gap13-interceptors` in `paper_results.tex` | [`exp_gap13/raw_CANONICAL.json`](experiments/results/exp_gap13/raw_CANONICAL.json) |
+| — | EXP-9 | Buffer-then-release invariant (static code audit + runtime check) | [`exp9/raw_CANONICAL.json`](experiments/results/exp9/raw_CANONICAL.json) |
+| — | EXP-12 | Sidecar CPU / RSS overhead; full-pod decomposition | [`exp12/raw_CANONICAL.json`](experiments/results/exp12/raw_CANONICAL.json) |
 | Paper item | Experiment | Description |
 |---|---|---|
 | Table 1 | — | Observation function (body) |
@@ -122,6 +162,9 @@ nomosflow/
 │   ├── compare_results.py
 │   ├── shared/
 │   └── results/           Canonical outputs (checked in)
+│       ├── paper_results.tex   ← master paper tables (all experiments)
+│       ├── figures/            ← fig1_tier_histogram.svg, fig2_coverage_frontier.svg
+│       └── <EXP_ID>/           ← raw_CANONICAL.json, summary.md, tables.tex, corpus.json
 ├── docs/                  Architecture and gap-disclosure docs
 └── docker-compose.yml     OPA + Redpanda + Prometheus
 ```

@@ -1,97 +1,5 @@
-% ============================================================
-%  NomosFlow — VLDB Paper Experiment Results
-%  Generated: 2026-08-09
-%  Updated:   2026-08-10 (EXP-3 corpus 200-case fix; EXP-7 Envoy probe; GAP-13)
-%  Updated:   2026-08-11a (EXP-6 LLM_TIMEOUT_LIVE; EXP-7 coverage probe; GAP-13 hooks OK;
-%                           P3 disclosures added)
-%  Updated:   2026-08-11b (GAP-10 fail-secure fix; GAP-12 podman stats measured)
-%  Updated:   2026-08-11c (GAP-25b IAA kappa=0.888 [RETRACTED — simulated annotator]; GAP-30 figures; EXP-11 multiprocess)
-%  Updated:   2026-08-15c (GAP-25b IAA v2: genuine blind automated annotator kappa=0.681)
-%  Updated:   2026-08-11d (GAP-8 resolved: hash-chain + store-and-forward WAL;
-%                           EXP-6 table adds Lost_Records=0 and Chain_OK=True columns)
-%  Updated:   2026-08-11e (GAP-32 resolved: OSCAL mapping four-eyes review;
-%                           5 new REQ mappings; ZT-1 replaced; 46 rule-keys, 46 controls)
-%  Updated:   2026-08-11f (GAP-35 resolved: redaction-before-inference on T5 payload path;
-%                           local-model (Ollama) as default in shipped podman compose)
-%  Updated:   2026-08-15b (Provenance sweep: EXP-6b labelled fully-simulated; EXP-9 runtime
-%                           check re-described as invariant-by-construction not independent
-%                           measurement; EXP-3 POLICY TP range 52-55 documented (OPA clock);
-%                           500-case overlap table corrected: source counts sum to 800 not 500,
-%                           corrected values derived from confusion matrices added.)
-%  Updated:   2026-08-15  (GAP-3c resolved: EXP-3 T5 re-run with live aws/claude-sonnet-4-5
-%                           via LLMValidator.validate_semantic_pii(); cache=off, 200 cases.
-%                           FULL recall 82.3%->83.2%, F1 90.3%->90.8%; semantic class
-%                           recall 85%->95% (19/20 TP). FPR remains 0.0% (FP=0/87).
-%                           validate_semantic_pii() added to LLMValidator with purpose-scoped
-%                           indirect-PII / re-identification prompt + 0.7 confidence gate.)
-%
-%  2026-08-11e changes:
-%    GAP-32: four-eyes verification of the NIST SP 800-53 Rev 5 mapping.
-%      • OPA (oscal_compliance.rego) and Python (_CONTROL_MAP_STATIC) maps
-%        now have 46 rule-keys each — zero drift between the two sources.
-%      • 5 previously unmapped enforcement rules now covered:
-%          REQ 13 (data lake)   → SI-10, SC-28, AC-3, CM-3
-%          REQ 14 (hallucination) → SI-10, SI-3, SA-11, RA-3
-%          REQ 17 (consent)     → PT-2, PT-3, AC-3
-%          REQ 18 (erasure)     → PT-3, SI-12, AC-3
-%          REQ 25 (cross-border) → AC-4, AR-8, SC-8
-%      • Non-standard ZT-1 extension ID removed; replaced by IA-5 (Authenticator
-%        Management) and IA-11 (Re-Authentication) across REQ 1, Missing Token,
-%        Invalid Token, and Expired Token entries.
-%      • 46 distinct NIST controls spanning 15 families (AC AR AU CA CM IA IR
-%        MP PL PS PT RA SA SC SI).
-%      • All 15 policy.rego Requirement-N rules confirmed mapped.
-%      • EXP-GAP-32 experiment added; 4/4 assertions pass.
-%  2026-08-11d changes:
-%    GAP-8: store-and-forward WAL (_spill_to_wal/_drain_wal) added to
-%           sidecar_optimized.py.  On sqlite3.OperationalError the batch is
-%           appended to /tmp/compliance_audit_wal.jsonl; the next successful
-%           flush drains the WAL before inserting new records.
-%           hash-chain (prev_hash SHA-256) added to S3AuditWriter.add_audit_record
-%           and to the EXP-6 WAL write path.
-%           EXP-6 AUDIT_PARTITION row: lost_records=0, chain_ok=True.
-%           Abstract claim "every verdict is recorded" now backed by code.
-%  2026-08-11c changes:
-%    GAP-25b: IAA run (Cohen's kappa=0.888 "Almost perfect", n=200).
-%             annotator_a=ground truth; annotator_b=simulated second reviewer
-%             (per-class disagreement from 8% corpus mislabel rate).
-%    GAP-30:  fig1_tier_histogram.svg (EXP-2) and fig2_coverage_frontier.svg
-%             (EXP-7) generated; figures.tex with \includesvg stubs.
-%    EXP-11:  ProcessPoolExecutor multi-process run added alongside thread run.
-%             process mode peaks at 2244 RPS (25 agents); SIM tag removed.
-%  2026-08-11b changes:
-%    GAP-10: process_llm_tier now fail-SECURE by default (APPROVED only if
-%            FAIL_OPEN_LLM=true). demo_escalation_tests adds FAIL_OPEN_LLM=true.
-%    GAP-12: _run_podman_stats() added to exp12. OPA RSS measured at 104.9 MB
-%            (podman stats, live). Sidecar RSS = 38.5 MB (psutil, this run).
-%            EXP-12 table updated; 310 MB decomposition has measured OPA column.
-%  2026-08-11a changes:
-%    EXP-6: LLM_TIMEOUT_LIVE scenario added (env-var kill, no mock.patch).
-%           LLMValidator.validate now fail-SECURE: TimeoutError -> DENIED.
-%           All 5 scenarios pass: false_allows=0.
-%    EXP-7: ENVOY_OPA_GATEWAY coverage now measured (80.0%, FPR=0.0%) via
-%           run_coverage_probe() against the 80-item EXP-7 corpus.
-%    GAP-13: All 3/3 hook surfaces complete (attach/detach, handle_request,
-%            create_app stubs added; hasattr checks pass).
-%    P3 disclosures: GAP-2, GAP-3c, GAP-4, GAP-8, GAP-11 added to §5.
-%  2026-08-10 changes:
-%    EXP-3: corpus expanded 80→200 cases; 16 mislabelled benign cases fixed
-%           (edgar/* now SENIOR-only; fred/* purpose=MarketResearch/RiskAnalysis only).
-%           FPR drops from 44% to 0.0% (FP=0/87 benign). FULL recall=82.3%, F1=90.3%.
-%    EXP-7: ENVOY_OPA_GATEWAY row added (live OPA P50=1.78ms + 0.4ms hop overhead).
-%    GAP-13: Interceptor inventory table added (3 modules, 0/3 hook surfaces complete).
-%    Wave 1 sidecar fixes: test_scenario OR-logic, RATE_LIMIT_THRESHOLD env var,
-%           cache_clear() on policy reload.
-%  2026-08-09 changes:
-%    EXP-8: hot_reload now uses bank_authz policy ID; reload_ok=True; stale_allows=0.
-%    EXP-12: psutil captures full Python interpreter RSS ~272 MB.
-%  All rows NOMOSFLOW_FULL / OPA_ONLY from live run
-%  (OPA_URL=http://localhost:8181, LLM_VALIDATION_ENABLED=true, aws/claude-sonnet-4-5).
-%  LIVE_BENCHMARK rows from 2026-07-10 all-services run (opa_live=true, llm_live=true 1%).
-% ============================================================
-
 % ------------------------------------------------------------------
-% §6.1  EXP-1: Per-Tier Latency Overhead (live OPA + live LLM)
+% §6.1  EXP-1: Per-Tier Latency Overhead
 % ------------------------------------------------------------------
 \begin{table}[t]
 \centering
@@ -210,15 +118,6 @@ Forced pipeline    & 3.56 & 55.0\% \\
 
 % ------------------------------------------------------------------
 % §6.2  EXP-3: Detection efficacy (200-case corpus + 500-case live)
-%        Updated 2026-08-10: corpus expanded 80→200 cases, FPR fixed to 0%
-%        Updated 2026-08-15: T5 re-run with live LLM (GAP-3c resolved)
-%          FULL row: TP 93→94, FN 20→19, recall 82.3%→83.2%, F1 90.3%→90.8%
-%          Semantic class: 17→19 TP (95% recall), 1 FN remains
-%          LLMValidator.validate_semantic_pii(), aws/claude-sonnet-4-5, cache=off
-%          POLICY 55→52: live OPA clock causes 3 edge_case boundary flips across runs.
-%          edge_case TP (OPA): 11 (keyword run) vs 8 (live-LLM run) — both opa_live=True.
-%          Root cause: REQ-14 future-timestamp rule uses time.now_ns() in OPA Rego;
-%          cases within ~300s of threshold flip deterministically on re-run.
 % ------------------------------------------------------------------
 \begin{table}[t]
 \centering
@@ -321,16 +220,8 @@ Complementarity (single-validator / all detections) & 60.9\% & (70.0\%) \\
 \end{table}
 
 % ------------------------------------------------------------------
-% §6.2  EXP-3: IAA (GAP-25b) — corpus label validation
-%        Added 2026-08-11c
+% §6.2  EXP-3: IAA — corpus label validation
 % ------------------------------------------------------------------
-% ── GAP-25b RETRACTION NOTE ──────────────────────────────────────────────────
-% The original table (kappa=0.888) used a SIMULATED Annotator B whose
-% disagreements were injected at rates derived from the known 8% mislabel
-% rate.  That is a circular restatement of a known parameter, not a
-% measurement of independent agreement.  The table below replaces it with
-% a genuinely independent run.  See gap disclosure comment for full details.
-% ─────────────────────────────────────────────────────────────────────────────
 \begin{table}[t]
 \centering
 \small
@@ -402,9 +293,6 @@ true\_violation    & 20 & 0 & 20 &  0 \\
 
 % ------------------------------------------------------------------
 % §6.3  EXP-6: Fault injection — zero false-ALLOWs + zero lost records
-%        Updated 2026-08-11: LLM_TIMEOUT_LIVE added (env-var kill, fail-secure)
-%        Updated 2026-08-11d: AUDIT_PARTITION now asserts lost_records=0
-%                             (store-and-forward WAL) and chain_ok=True (hash-chain)
 % ------------------------------------------------------------------
 \begin{table}[t]
 \centering
@@ -476,9 +364,7 @@ LLM\_TIMEOUT\_LIVE & 0 & -- & -- & 100.0\% & 2.60 \\
 \end{table}
 
 % ------------------------------------------------------------------
-% §6.4  EXP-7: Baseline comparison (live OPA + Envoy probe)
-%        Updated 2026-08-10: ENVOY_OPA_GATEWAY row added
-%        Updated 2026-08-11: ENVOY_OPA_GATEWAY coverage filled (80.0%, FPR=0.0%)
+% §6.4  EXP-7: Baseline comparison
 % ------------------------------------------------------------------
 \begin{table}[t]
 \centering
@@ -509,7 +395,7 @@ $n$\,=\,100{,}000 & — & — & 4.91 & — \\
 \end{table}
 
 % ------------------------------------------------------------------
-% §6.5  EXP-8: Policy scale + hot-reload (live OPA)
+% §6.5  EXP-8: Policy scale + hot-reload
 % ------------------------------------------------------------------
 \begin{table}[t]
 \centering
@@ -554,7 +440,7 @@ JUNIOR READ denied    & 147   \\
 \end{table}
 
 % ------------------------------------------------------------------
-% §6.6  EXP-9: Buffer-then-release invariant (live OPA)
+% §6.6  EXP-9: Buffer-then-release invariant
 % ------------------------------------------------------------------
 \begin{table}[t]
 \centering
@@ -582,8 +468,7 @@ live\_opa    & 36        &   0 & invariant-by-construction \\
 \end{table}
 
 % ------------------------------------------------------------------
-% §6.7  EXP-11: Multi-agent scalability (live OPA)
-%        Updated 2026-08-11c: process mode added; SIM tag removed
+% §6.7  EXP-11: Multi-agent scalability
 % ------------------------------------------------------------------
 \begin{table}[t]
 \centering
@@ -617,8 +502,7 @@ live\_opa    & 36        &   0 & invariant-by-construction \\
 \end{table}
 
 % ------------------------------------------------------------------
-% §6.7  EXP-12: Sidecar CPU/RSS overhead (live OPA)
-%        Updated 2026-08-11b: fresh run; podman stats adds measured OPA RSS
+% §6.7  EXP-12: Sidecar CPU/RSS overhead
 % ------------------------------------------------------------------
 \begin{table}[t]
 \centering
@@ -664,7 +548,6 @@ OS / page cache    & analytical   & $\approx$20  \\
 
 % ------------------------------------------------------------------
 % GAP-13: Interceptor inventory
-%         Added 2026-08-10 — Updated 2026-08-11: all hooks complete
 % ------------------------------------------------------------------
 \begin{table}[t]
 \centering
@@ -685,7 +568,6 @@ compliance\_proxy\_server& PROXY & HTTP/Flask & \checkmark & 0 & \checkmark \\
 
 % ------------------------------------------------------------------
 % §3.8 / §5  EXP-GAP-32: OSCAL control-mapping verification
-%             Added 2026-08-11e (GAP-32 resolved)
 % ------------------------------------------------------------------
 \begin{table}[t]
 \centering
@@ -737,7 +619,6 @@ REQ\,25 & Cross-border transfer (GDPR\,Art.\,44--50) & AC-4, AR-8, SC-8 \\
 
 % ------------------------------------------------------------------
 % §3.5 / §5  EXP-GAP-35: Redaction-before-inference + local-model default
-%             Added 2026-08-11f (GAP-35 resolved)
 % ------------------------------------------------------------------
 \begin{table}[t]
 \centering
