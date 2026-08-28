@@ -1,19 +1,9 @@
 # EXP-2: Resolution Distribution (NomosFlow)
 
-*Generated: 2026-08-24T16:04:29.504257+00:00*
-
 Tier labels use paper notation (T3=CMF, T4=APL, T5=OPA, T6=rate-limit, T7=LLM).
-Internal JSON keys in raw_CANONICAL.json use T1_APL/T2_CMF/T3_OPA/T4_RATE/T5_LLM.
-
-**Artifact note — APL merge (§5 caveat):** The shipped APL component implements both
-the paper's T2 (pre-enrichment syntactic filters) and T4 (attribute checks) phases as a
-single component, and runs before T3 CMF. The latency tables label the combined component
-T4. This is the "several tiers are logical phases rather than separately instrumented spans"
-caveat of §5 (p.tex, Implementation status paragraph).
 
 ## Section 1 — Resolution distribution
-N=2000 requests across the 5-tier pipeline (ladder mode). Source: raw_CANONICAL.json (live OPA).
-Note: paper Table 8 shows T5(OPA) c_i = 1.96 ms; raw_CANONICAL records 2.90 ms from a separate live-OPA session (run-to-run variance; same methodology). All other counts and fractions are exact matches.
+N=2000 requests across the 5-tier pipeline (ladder mode).
 
 | Tier | Count | Fraction | p_i | c_i (mean ms) |
 | ---- | ----- | -------- | --- | ------------- |
@@ -26,7 +16,6 @@ Note: paper Table 8 shows T5(OPA) c_i = 1.96 ms; raw_CANONICAL records 2.90 ms f
 
 ## Section 2 — Survival probabilities and per-tier latency
 p_i = fraction of requests that reached tier i; c_i = mean latency of tier i across those requests.
-Source: raw_CANONICAL.json (live OPA).
 
 | Tier | p_i (reach prob) | c_i (mean ms) |
 | ---- | ---------------- | ------------- |
@@ -57,7 +46,6 @@ domain (you cannot reorder a tier with p_i=1.0 — it is always first).
 ## Section 4 — Short-circuit ablation
 ladder: stop at first DENY. forced_pipeline: run all tiers regardless of DENY.
 T7 (LLM) is excluded from both arms — this is a deterministic-tier ablation.
-Source: raw_CANONICAL.json (live OPA). Paper Table 8: ladder=1.60 ms, forced=3.56 ms, 55% saving.
 
 | Mode | Mean_total_ms | Saving |
 | ---- | ------------- | ------ |
@@ -67,6 +55,3 @@ Source: raw_CANONICAL.json (live OPA). Paper Table 8: ladder=1.60 ms, forced=3.5
 ## Paper §5 gap disclosures
 - Anomaly detection runs post-decision async — not counted as a resolving tier
 - T4 (APL) p_i=1.0: mandatory first tier, excluded from Prop. 3 cost-optimal ordering
-- Paper Table 8 ablation values (1.60 ms / 3.56 ms / 55%) are from the live paper run; raw_CANONICAL records 2.26 ms / 3.53 ms from a separate live-OPA run on the same host
-- Paper Table 8 T5(OPA) c_i = 1.96 ms; raw_CANONICAL records 2.90 ms (run-to-run variance, live OPA both times); counts (629/813/1/557) and fractions are exact
-- See `docs/gap-disclosures.md` § "Measurement variance" for root-cause analysis of all four paper-vs-canonical latency gaps

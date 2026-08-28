@@ -1,7 +1,5 @@
 # EXP-GAP-13: Interceptor inventory
 
-*Generated: 2026-08-24T16:05:44.518538+00:00*
-
 ## Interceptor inventory
 | Interceptor | Type | Transport | Import | Hooks_OK | Patches_count |
 | ----------- | ---- | --------- | ------ | -------- | ------------- |

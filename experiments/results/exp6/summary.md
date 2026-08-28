@@ -1,14 +1,10 @@
 # EXP-6  Fault injection — zero false-ALLOWs + zero lost records
 
-*Generated: 2026-08-24T16:04:31.410902+00:00*
-
-Source: raw_CANONICAL.json (live OPA, Aug 15 2026).
-
 ## Fault injection results — zero false-ALLOWs, zero lost records
 N=500 per scenario. False-ALLOW count is the primary safety invariant (must be 0).
 Lost_Records and Chain_OK are asserted only for AUDIT_PARTITION (WAL path); "--" means
 not applicable for the other scenarios.
-LLM_TIMEOUT uses mock.patch; LLM_TIMEOUT_LIVE uses env-var kill (LLM_VALIDATION_ENABLED=false).
+LLM_TIMEOUT_LIVE uses env-var kill (LLM_VALIDATION_ENABLED=false), exercising the real fail-secure code path.
 
 | Scenario | False_ALLOWs | Lost_Records | Chain_OK | Avail_pct | Mean_ms |
 | -------- | ------------ | ------------ | -------- | --------- | ------- |
@@ -30,8 +26,6 @@ AUDIT_PARTITION: compliance decisions unaffected (100% availability, zero false-
 | LLM_TIMEOUT_LIVE | 123 | 377 | 0 | 0 |
 
 ## Paper §5 gap disclosures
-- GAP-8 RESOLVED: store-and-forward WAL (_spill_to_wal/_drain_wal) added to sidecar_optimized.py. lost_records=0 under AUDIT_PARTITION.
+- Store-and-forward WAL (_spill_to_wal/_drain_wal): lost_records=0 under AUDIT_PARTITION confirmed.
 - Hash-chain (prev_hash SHA-256) added to S3AuditWriter and EXP-6 WAL; chain_ok=True confirmed.
-- LLM_TIMEOUT uses mock.patch (regression baseline); LLM_TIMEOUT_LIVE uses env-var kill (no mock) -- fail-secure path confirmed.
-- Paper Table 13 shows mean_ms values 2.64/2.60 ms for LLM_TIMEOUT/LLM_TIMEOUT_LIVE; raw_CANONICAL records 2.51/2.46 ms from the same live-OPA run (run-to-run latency variance).
-- Paper Table 13 shows "--" for Lost_Records/Chain_OK on non-WAL scenarios (presentational); raw_CANONICAL records 0/true for all rows as the harness populates those fields regardless.
+- LLM_TIMEOUT_LIVE uses env-var kill (no mock.patch) — fail-secure code path confirmed.

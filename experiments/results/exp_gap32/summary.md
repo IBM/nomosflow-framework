@@ -1,7 +1,5 @@
 # EXP-GAP-32  OSCAL control-mapping four-eyes review
 
-*Generated: 2026-08-14T05:25:07.503323+00:00*
-
 ## Verification summary (GAP-32 resolved)
 | Metric | Value | Status |
 | ------ | ----- | ------ |

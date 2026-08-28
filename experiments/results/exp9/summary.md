@@ -1,7 +1,5 @@
 # EXP-9 boundary-property verification
 
-*Generated: 2026-08-14T05:23:44.191399+00:00*
-
 ## Static code audit — fetch_real_data call sites
 | File | Call_site_line | Gated_by_APPROVED |
 | ---- | -------------- | ----------------- |

@@ -1,7 +1,5 @@
 # EXP-GAP-35  Redaction-before-inference + local-model default
 
-*Generated: 2026-08-14T05:25:07.512222+00:00*
-
 ## Verification summary (GAP-35 resolved)
 | Check | Result | Detail |
 | ----- | ------ | ------ |

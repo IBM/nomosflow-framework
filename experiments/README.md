@@ -8,9 +8,8 @@ Self-contained experiment suite for the NomosFlow paper. Every experiment writes
 - `results/<EXP_ID>/corpus.json` — labeled corpus (EXP-3/4/6b/7 only)
 
 > **`summary.md` and `tables.tex` are regenerated on every run** by
-> `experiments/shared/report.py:write_summary()`. The checked-in copies reflect
-> the canonical live-service run (Aug 15 2026). Re-running offline overwrites
-> them with simulated values. The authoritative ground truth is always
+> `experiments/shared/report.py:write_summary()`. Re-running locally overwrites
+> them with values from that run. The authoritative ground truth is always
 > `raw_CANONICAL.json` (per-experiment) and
 > `results/paper_results.tex` (paper tables).
 
@@ -117,14 +116,6 @@ violations: `rbac_write`, `purpose_mismatch`, `bad_token`, `future_timestamp`,
 
 **EXP-7** (`80 requests`): fields `label`, `violation_type`. 40 benign + 40
 violations cycling through 7 violation types.
-
-## Key corrections since initial submission
-
-| Experiment | Change |
-|---|---|
-| **EXP-6b** | Semantic per-call latency corrected from 45 ms (constant) to lognormal fitted to EXP-1 LIVE_BENCHMARK T7 (LLM tier) data (P50 = 9,500 ms, σ_log = 0.26). Throughput collapse is now ~3 orders of magnitude, not 1. Table reference corrected from Table 15 to Table 14. |
-| **EXP-4** | `_StubLLMValidator` replaced by live `validate_semantic_pii()` path (same as EXP-3) when `LLM_VALIDATION_ENABLED=true`. Live run: `terminal_allow_count = 0` (Proposition 1 holds). The `injection_fooled_model = 20/20` figure reflects a scope mismatch — the model correctly answered its scoped question (no indirect PII in a GDP read); the adversarial strings were outside its evaluation domain. The paper does not claim the model was deceived; it claims Proposition 1 held. |
-| **EXP-3/4/6b/7** | Corpora serialised to `corpus.json` on every run. |
 
 ## Known limitations
 

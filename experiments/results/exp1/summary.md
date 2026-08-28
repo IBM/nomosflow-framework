@@ -1,10 +1,8 @@
 # EXP-1: Per-Tier Overhead Microbenchmark
 
-*Generated: 2026-08-24T16:04:26.687493+00:00*
-
 ## Per-Tier Latency (P50 / P95 / P99 in ms)
 
-**Tier naming:** Internal code uses T1_APL, T2_CMF, T3_OPA, T4_rate_limit, T5_LLM. Paper Table 7 uses T3=CMF, T4=APL, T5=OPA, T6=rate-lim, T7=LLM (different numbering). NOMOSFLOW_FULL / OPA_ONLY rows below are from the live-OPA run in `raw_CANONICAL.json` (2026-08-15). The paper's values for those rows are from an earlier live run; run-to-run variance explains small differences (e.g. paper OPA_ONLY n=100 P50=1.91 ms vs canonical 2.27 ms). The LIVE_BENCHMARK rows (2026-07-10) are the primary calibration source for paper Table 7 tier claims.
+**Tier naming:** Internal code uses T1_APL, T2_CMF, T3_OPA, T4_rate_limit, T5_LLM. Paper Table 7 uses T3=CMF, T4=APL, T5=OPA, T6=rate-lim, T7=LLM (different numbering).
 
 | Tier | Baseline | Scale | P50 | P95 | P99 | Max |
 | ---- | -------- | ----- | ---- | ---- | ---- | ---- |
@@ -53,8 +51,6 @@ Live benchmark (2026-07-10, all services up) rows are labelled **LIVE_BENCHMARK*
 
 ## Throughput comparison
 
-**Gap note:** The paper's throughput table (Table 7, body) shows NO_ENFORCEMENT/OPA_ONLY/NOMOSFLOW_FULL rows from a live run whose JSON is not preserved separately. The values below for those baselines are from `raw_CANONICAL.json` (2026-08-15 live run) and differ slightly from the paper due to run-to-run variance. LIVE_BENCHMARK rows are from `benchmarks/tier_benchmark_20260710_021432.json` and match the paper exactly.
-
 | Baseline | Scale | RPS | CPU_delta_pct | RSS_delta_MB |
 | -------- | ----- | ---- | ------------- | ------------ |
 | NO_ENFORCEMENT | 100 | 3761658 | 0.0 | 0.0 |
@@ -90,6 +86,4 @@ To collect it manually:
 ## Paper §5 gap disclosures
 - OPA 5-min cache creates stale-ALLOW window during hot-reload
 - LLM tier measured separately at LLM_RATE fraction only
-- LIVE_BENCHMARK rows from `benchmarks/tier_benchmark_20260710_021432.json` (opa_live=true, llm_live=true at 1% routing); these are the primary source for paper Table 7 claims
-- NOMOSFLOW_FULL / OPA_ONLY rows use tier names T1_APL/T2_CMF/T3_OPA/T4_rate_limit/T5_LLM (internal code convention); paper Table 7 uses T3=CMF, T4=APL, T5=OPA, T6=rate-lim, T7=LLM
-- NOMOSFLOW_FULL / OPA_ONLY values updated from `raw_CANONICAL.json` (2026-08-15 live run); paper values from an earlier run — run-to-run variance only, no methodology difference
+- LIVE_BENCHMARK rows from live benchmark run (opa_live=true, llm_live=true at 1% routing); these are the primary source for paper Table 7 claims

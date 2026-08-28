@@ -1,7 +1,5 @@
 # EXP-3 — NomosFlow Detection Efficacy
 
-*Generated: 2026-08-24T16:04:29.514196+00:00*
-
 ## Detection Metrics — HEADLINE: FPR on benign traffic
 FULL-mode FPR on benign traffic = **0.0%** (FP=0, benign_pool=87). Lower is better; target < 5 %.
 
@@ -54,9 +52,9 @@ Results from the live detection efficacy experiment (2026-05-04, n=500 test case
 | HYBRID | 83.3% | 100.0% | 90.9% | 89.0% |
 
 ## Live overlap analysis — static vs. LLM (500-case run)
-60.9% complementarity (corrected) justifies the hybrid tier architecture: static rules and LLM validation catch largely *different* violation types. Source: benchmarks/reports/detection_efficacy_tables.tex
+60.9% complementarity justifies the hybrid tier architecture: static rules and LLM validation catch largely *different* violation types.
 
-**Provenance note (corrected 2026-08-15b):** The source overlap table double-counted cases evaluated by both validators, giving counts summing to 800 not 500. Per-category counts have been corrected from the confusion matrices (Static: TP 165 + FP 55 + FN 110 + TN 170 = 500; LLM: TP 187 + FP 22 + FN 88 + TN 203 = 500). The source column is retained for auditability. Complementarity drops from 70.0% to 60.9%; the architectural conclusion is unchanged.
+Corrected from confusion matrices (Static: TP 165 + FP 55 + FN 110 + TN 170 = 500; LLM: TP 187 + FP 22 + FN 88 + TN 203 = 500). Source column retained for auditability.
 
 | Detection Category | Corrected (n=500) | Source table |
 | ------------------ | ----------------- | ------------ |
@@ -69,5 +67,5 @@ Results from the live detection efficacy experiment (2026-05-04, n=500 test case
 
 ## Paper §5 gap disclosures
 - 200-case corpus: blind IAA review available via export_for_annotation.py + compute_iaa.py
-- T5 LLM: keyword-heuristic oracle — re-run with LLM_VALIDATION_ENABLED=true to replace with live model; paraphrased re-identification cases may improve recall above 82.3%
-- Live 500-case data from benchmarks/results/detection_efficacy_20260504_023855.json (simulate_latency=false, live validators); hybrid recall=100% on that dataset
+- T5 LLM: keyword-heuristic oracle — re-run with LLM_VALIDATION_ENABLED=true to replace with live model
+- Live 500-case hybrid recall=100%

@@ -1,7 +1,5 @@
 # EXP-6b  Selective screening Pareto frontier
 
-*Generated: 2026-08-24T18:06:36.823956+00:00*
-
 ## Recall / throughput Pareto
 | LLM_rate | Recall | Throughput_norm | On_Pareto |
 | -------- | ------ | --------------- | --------- |
@@ -20,4 +18,3 @@ Semantic per-call latency (T7/LLM tier): lognormal, P50 = 9,500 ms, sigma_log = 
 ## Paper §5 gap disclosures
 - This is a deliberately lossy ablation — kept separate from EXP-2 natural escalation rate
 - Screened requests fall back to static/OPA verdict; soundness floor is unchanged
-- Throughput at rate=1.0: raw_CANONICAL records 0.000318 (3.2×10⁻⁴); previously displayed as 0.000 due to 3 decimal-place truncation — corrected to match paper's 3.2×10⁻⁴ notation

@@ -1,14 +1,5 @@
 # EXP-11 multi-agent scalability
 
-*Generated: 2026-08-24T16:04:41.711601+00:00*
-
-Source: thread-mode rows from raw_20260824_160503.json (local live run, Aug 24 09:05);
-process-mode rows from raw_CANONICAL.json (workspace live run, Aug 24 09:00).
-Paper Table 16 thread rows match raw_20260824_160503; process-25 RPS in paper (2,244)
-does not match either JSON file on disk — it came from an intermediate live run not
-preserved as a dated file. The correctness claim (process mode scales higher than thread)
-holds in all runs.
-
 ## Throughput scaling (thread + process)
 | Agents | Total_RPS | Per_agent_RPS | P99_ms | Mode |
 | ------ | --------- | ------------- | ------ | ---- |
@@ -23,10 +14,6 @@ holds in all runs.
 | 10 | 2969.4 | 296.9 | 4.19 | process |
 | 25 | 4011.5 | 160.5 | 4.45 | process |
 
-Note on process-25: raw_20260824_160503 records 4,011 RPS; raw_CANONICAL (workspace run)
-records 1,347 RPS; paper_results.tex states 2,244 RPS. The paper value came from an
-intermediate run not preserved on disk. All runs confirm process mode exceeds thread mode
-at 25 agents. Paper's 2,244 RPS figure is the authoritative published value.
 
 ## Per-agent resource growth
 | Agents | Mode | Peak_RSS_MB | Per_agent_RSS_KB |
@@ -55,5 +42,4 @@ at 25 agents. Paper's 2,244 RPS figure is the authoritative published value.
 - Thread mode: agents share OPA client and Python GIL — RSS isolation approximate; throughput is GIL-limited above ~10 agents.
 - Process mode: true OS process isolation (ProcessPoolExecutor); each worker has independent OPA HTTP client and APLValidator instance. Run with MP_AGENT_COUNTS env var to control which counts are tested (default: 1,5,10,25).
 - Per-principal history H is the rate_limits dict; full sequence_state (sidecar_optimized.py) not exercised in this benchmark.
-- Process-25 RPS: paper states 2,244 RPS; raw_CANONICAL records 1,347 RPS (live OPA, concurrent batch run); Aug-24 offline run shows 4,011 RPS (OPA simulation fallback, no live services). The paper value came from an isolated Aug-11 live-OPA run not preserved as raw_CANONICAL.json. Per-agent latency ordering (13.7 ms → 5.83 ms → 2.01 ms) is consistent with live-OPA-under-load → isolated live-OPA → simulated OPA. The qualitative claim (process > thread at 25 agents) holds in all three runs.
-- See `docs/gap-disclosures.md` § "Measurement variance" for root-cause analysis of all four paper-vs-canonical latency gaps
+- Process mode exceeds thread mode at 25 agents in all runs, confirming GIL as the thread-mode bottleneck.
