@@ -29,7 +29,7 @@ If you prefer to check the canonical numbers directly rather than re-running the
 | Artifact | Location | What it contains |
 |---|---|---|
 | **Master paper tables** | [`experiments/results/paper_results.tex`](experiments/results/paper_results.tex) | Every table and figure that appears in the paper, with full provenance comments at the top |
-| **Per-experiment raw data** | `experiments/results/<EXP_ID>/raw_CANONICAL.json` | Exact numbers from the canonical live-service run (Aug 15 2026); used by `compare_results.py --compare-canonical` |
+| **Per-experiment raw data** | `experiments/results/<EXP_ID>/raw_CANONICAL.json` | Exact numbers from the canonical live-service runs (Aug 9–14 2026); used by `compare_results.py --compare-canonical` |
 | **Per-experiment summaries** | `experiments/results/<EXP_ID>/summary.md` | Human-readable results in Markdown; reflect the canonical run until overwritten by a local re-run |
 | **Figures** | [`experiments/results/figures/fig1_tier_histogram.svg`](experiments/results/figures/fig1_tier_histogram.svg) | Resolved-at-tier histogram (Figure 3 / EXP-2) |
 | | [`experiments/results/figures/fig2_coverage_frontier.svg`](experiments/results/figures/fig2_coverage_frontier.svg) | Coverage frontier (Figure 2 / EXP-7) |
@@ -47,6 +47,10 @@ pip install -r requirements.txt
 
 python experiments/run_all.py            # all experiments, ~90 s, no services needed
 python experiments/compare_results.py    # validates paper invariants against your run
+
+# Verify every numeric paper claim against the checked-in canonical files
+# (no services, no re-running — exits 0 if all 65 checks pass)
+python experiments/verify_paper_claims.py
 ```
 
 > **`compare_results.py` modes:**
@@ -60,7 +64,7 @@ python experiments/compare_results.py    # validates paper invariants against yo
 > **`summary.md` / `tables.tex` are regenerated on every run** by
 > `experiments/shared/report.py:write_summary()` and will be overwritten with
 > the values from that run. The checked-in copies in `experiments/results/`
-> reflect the canonical live-service run (Aug 15 2026). If you re-run offline
+> reflect the canonical live-service runs (Aug 9–14 2026). If you re-run offline
 > the files will show simulated values; the canonical ground truth is always
 > `raw_CANONICAL.json` and `experiments/results/paper_results.tex`.
 
