@@ -5,8 +5,8 @@ Checks every numeric claim in the paper (p.tex / paper_results.tex) against
 the checked-in raw_CANONICAL.json files.  No services, no re-running.
 
 Usage:
-    python experiments/verify_paper_claims.py          # terse (pass/fail)
-    python experiments/verify_paper_claims.py -v       # verbose (show matched text)
+    python experiments/verify_paper_claims.py          # table view (always shown)
+    python experiments/verify_paper_claims.py -v       # also show matched text snippet
 
 Exit code: 0 if all checks pass, 1 if any fail.
 """
@@ -17,11 +17,18 @@ import json
 import re
 import sys
 from pathlib import Path
+from typing import NamedTuple
 
-REPO   = Path(__file__).resolve().parent.parent
-RESULTS = REPO / "experiments" / "results"
+REPO          = Path(__file__).resolve().parent.parent
+RESULTS       = REPO / "experiments" / "results"
 PAPER_RESULTS = RESULTS / "paper_results.tex"
 PTEX          = REPO / "p.tex"
+
+# column widths
+_W_LABEL  = 46
+_W_CANON  = 12
+_W_SOURCE = 14   # "paper_results" or "p.tex" columns
+_SEP = "─"
 
 # ── helpers ───────────────────────────────────────────────────────────────
 
@@ -40,13 +47,34 @@ def _strip_latex(s: str) -> str:
     return s
 
 
+def _snippet(m: re.Match | None) -> str:
+    """Return up to 40 chars of context around a match, or ''."""
+    if m is None:
+        return ""
+    start = max(0, m.start() - 10)
+    end   = min(len(m.string), m.end() + 10)
+    raw   = m.string[start:end].replace("\n", " ").strip()
+    return f'"{raw[:40]}"'
+
+
+# ── row record ────────────────────────────────────────────────────────────
+
+class Row(NamedTuple):
+    group:     str          # e.g. "EXP-2", "GAP-32"
+    label:     str          # claim description
+    canon_str: str          # formatted canonical value for display
+    pr_ok:     bool | None  # None = not checked (in_pr=False or file absent)
+    pt_ok:     bool | None
+    pr_snip:   str          # matched text snippet (verbose only)
+    pt_snip:   str
+
+
 # ── check registry ────────────────────────────────────────────────────────
 
 class Checker:
     def __init__(self, verbose: bool = False):
-        self.verbose   = verbose
-        self.passed: list[str] = []
-        self.failed: list[str] = []
+        self.verbose = verbose
+        self.rows: list[Row] = []
         self._pr = _strip_latex(PAPER_RESULTS.read_text())
         self._pt = _strip_latex(PTEX.read_text()) if PTEX.exists() else None
 
@@ -66,19 +94,98 @@ class Checker:
         Assert that `pattern` appears in paper_results.tex (if in_pr) and/or
         p.tex (if in_pt).  The pattern is matched against LaTeX-stripped text.
         """
-        pr_ok = bool(self._search(self._pr, pattern)) if in_pr else None
-        pt_ok = bool(self._search(self._pt, pattern)) if (in_pt and self._pt is not None) else None
+        pr_m  = self._search(self._pr, pattern) if in_pr else None
+        pt_m  = self._search(self._pt, pattern) if (in_pt and self._pt is not None) else None
 
-        ok = (pr_ok is None or pr_ok) and (pt_ok is None or pt_ok)
-        tag = "✅ PASS" if ok else "❌ FAIL"
+        pr_ok = bool(pr_m) if in_pr else None
+        pt_ok = bool(pt_m) if (in_pt and self._pt is not None) else None
 
-        if self.verbose or not ok:
-            pr_s = ("✓" if pr_ok else "✗") if pr_ok is not None else "—"
-            pt_s = ("✓" if pt_ok else "✗") if pt_ok is not None else "—"
-            cv   = str(round(float(canon_val), 3) if isinstance(canon_val, float) else canon_val)[:10]
-            print(f"  {tag}  {label:<46} canon={cv:<10} PR={pr_s}  p.tex={pt_s}")
+        # format canonical value for display
+        if isinstance(canon_val, float):
+            cv = str(round(canon_val, 3))
+        else:
+            cv = str(canon_val)
 
-        (self.passed if ok else self.failed).append(label)
+        # derive group prefix from label (e.g. "EXP-2  ladder…" → "EXP-2")
+        group = re.match(r"(EXP-\d+\w*|GAP-\d+)", label)
+        group_str = group.group(0) if group else ""
+
+        self.rows.append(Row(
+            group     = group_str,
+            label     = label,
+            canon_str = cv,
+            pr_ok     = pr_ok,
+            pt_ok     = pt_ok,
+            pr_snip   = _snippet(pr_m),
+            pt_snip   = _snippet(pt_m),
+        ))
+
+    # ── rendering ─────────────────────────────────────────────────────────
+
+    @property
+    def passed(self) -> list[Row]:
+        return [r for r in self.rows if self._row_ok(r)]
+
+    @property
+    def failed(self) -> list[Row]:
+        return [r for r in self.rows if not self._row_ok(r)]
+
+    @staticmethod
+    def _row_ok(r: Row) -> bool:
+        return (r.pr_ok is None or r.pr_ok) and (r.pt_ok is None or r.pt_ok)
+
+    @staticmethod
+    def _fmt_cell(ok: bool | None) -> str:
+        if ok is True:  return "  ✓  "
+        if ok is False: return "  ✗  "
+        return "  —  "   # not checked / file absent
+
+    def print_table(self) -> None:
+        pt_present = self._pt is not None
+
+        # header
+        h_label  = "Claim"
+        h_canon  = "Canon value"
+        h_pr     = "paper_results"
+        h_pt     = "p.tex"
+        h_result = "Result"
+
+        bar  = (f"{'':─<{_W_LABEL+2}}┼{'':─<{_W_CANON+2}}┼"
+                f"{'':─<{_W_SOURCE}}┼{'':─<{_W_SOURCE}}┼{'':─<8}")
+        head = (f"  {'Claim':<{_W_LABEL}}  {'Canon value':<{_W_CANON}}  "
+                f"{'paper_results':^{_W_SOURCE-2}}  {'p.tex':^{_W_SOURCE-2}}  Result")
+        divider = "─" * len(head)
+
+        print(divider)
+        print(head)
+        print(divider)
+
+        prev_group = None
+        for r in self.rows:
+            ok  = self._row_ok(r)
+            tag = "✅ PASS" if ok else "❌ FAIL"
+            pr_cell = self._fmt_cell(r.pr_ok)
+            pt_cell = self._fmt_cell(r.pt_ok)
+
+            # group separator
+            if r.group and r.group != prev_group:
+                if prev_group is not None:
+                    print(f"  {'·'*_W_LABEL}  {'·'*_W_CANON}  {'···':^{_W_SOURCE-2}}  {'···':^{_W_SOURCE-2}}  ···")
+                prev_group = r.group
+
+            label_display = r.label
+            print(
+                f"  {label_display:<{_W_LABEL}}  {r.canon_str:<{_W_CANON}}"
+                f"  {pr_cell:^{_W_SOURCE-2}}  {pt_cell:^{_W_SOURCE-2}}  {tag}"
+            )
+
+            if self.verbose:
+                if r.pr_snip:
+                    print(f"    {'':>{_W_LABEL}}  matched in paper_results: {r.pr_snip}")
+                if r.pt_snip:
+                    print(f"    {'':>{_W_LABEL}}  matched in p.tex:         {r.pt_snip}")
+
+        print(divider)
 
 
 # ── claim definitions ─────────────────────────────────────────────────────
@@ -204,41 +311,44 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("-v", "--verbose", action="store_true",
-                    help="Print every check (not just failures)")
+                    help="Also print the matched text snippet for each check")
     args = ap.parse_args()
 
     if not PAPER_RESULTS.exists():
         print(f"ERROR: {PAPER_RESULTS} not found. Run from the repo root.", file=sys.stderr)
         return 1
-    if not PTEX.exists():
-        print(f"NOTE: {PTEX} not found — p.tex checks will be skipped.")
+
+    pt_status = "present" if PTEX.exists() else "NOT FOUND — p.tex checks skipped"
+    print("NomosFlow paper-claim verification")
+    print(f"  Checking : {PAPER_RESULTS.relative_to(REPO)}")
+    print(f"  p.tex    : {pt_status}")
+    print(f"  Columns  : 'paper_results' = paper_results.tex  |  'p.tex' = p.tex (when present)")
+    print(f"             ✓ = pattern found   ✗ = not found   — = not checked for this file")
+    print()
 
     c = Checker(verbose=args.verbose)
-
-    print("NomosFlow paper-claim verification")
-    print(f"  paper_results.tex : {PAPER_RESULTS.relative_to(REPO)}")
-    print(f"  p.tex             : {'present' if PTEX.exists() else 'NOT FOUND (skipped)'}")
-    print()
-
     register_all(c)
+    c.print_table()
 
-    total = len(c.passed) + len(c.failed)
+    passed = c.passed
+    failed = c.failed
+    total  = len(passed) + len(failed)
+
     print()
-    print("=" * 60)
-    print(f"TOTAL {total}   ✅ PASS {len(c.passed)}   ❌ FAIL {len(c.failed)}")
-    if c.failed:
+    print(f"  TOTAL {total}   ✅ PASS {len(passed)}   ❌ FAIL {len(failed)}")
+
+    if failed:
         print()
-        print("Failed checks:")
-        for f in c.failed:
-            print(f"  ❌ {f}")
+        print("  Failed claims:")
+        for r in failed:
+            print(f"    ❌ {r.label}")
         print()
-        print("Each failure means a paper claim could not be matched in the")
-        print("corresponding checked-in artifact.  See CONTRIBUTING.md for")
-        print("how to update the canonical files.")
+        print("  Each failure means a paper claim could not be matched in the")
+        print("  corresponding checked-in artifact.  See CONTRIBUTING.md.")
         return 1
 
     print()
-    print("All paper claims verified against checked-in canonical files.")
+    print("  All paper claims verified against checked-in canonical files.")
     return 0
 
 
