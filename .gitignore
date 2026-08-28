@@ -26,6 +26,9 @@ credentials/
 *.db-shm
 *.db-wal
 
+# Bob AI assistant (internal tooling — never publish to OSS)
+.bob/
+
 # OS
 .DS_Store
 Thumbs.db

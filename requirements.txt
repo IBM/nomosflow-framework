@@ -1,6 +1,9 @@
 # NomosFlow — Python dependencies
-# All experiments run in fully simulated mode with these packages alone.
-# LLM packages (openai / anthropic) are optional extras for live T5 tier.
+#
+# Core packages below are required for all experiments (stub/offline mode).
+# Optional sections are needed only for specific live-service scenarios.
+
+# ── Core (always required) ────────────────────────────────────────────────────
 
 # HTTP client (OPA calls, LLM API)
 requests>=2.31.0
@@ -14,7 +17,28 @@ kafka-python>=2.0.0
 # Prometheus metrics exposure (sidecar)
 prometheus-client>=0.16.0
 
-# ── Optional: live LLM tier (T5) ────────────────────────────────────────────
-# Uncomment to enable EXP-3 live T5 and EXP-6 LLM_TIMEOUT_LIVE scenarios:
+# YAML config parsing (src/plugins/framework.py, src/validators/pii_redactor.py)
+pyyaml>=6.0
+
+# Filesystem event watching for hot-reload (src/utils/policy_version_manager.py)
+watchdog>=3.0.0
+
+# ── Optional: live LLM tier (T5) — EXP-3 and EXP-4 ─────────────────────────
+# Required when LLM_VALIDATION_ENABLED=true.
+# Set LITELLM_BASE_URL, LLM_API_KEY, and LLM_MODEL in .env.local.
+# Without these, EXP-3 and EXP-4 fall back to deterministic stub validators.
+litellm>=1.30.0
+
+# ── Optional: OpenAI / Anthropic direct (alternative to LiteLLM proxy) ───────
+# Uncomment if calling the provider API directly rather than through a proxy:
 # openai>=1.0.0
 # anthropic>=0.20.0
+
+# ── Sidecar interceptors (src/interceptors/compliance_proxy_server.py) ───────
+# flask and boto3 are bare top-level imports in compliance_proxy_server.py;
+# EXP-GAP-13 imports that module to verify its hook surface.
+flask>=3.0.0
+boto3>=1.34.0
+
+# ── Optional: async HTTP client ───────────────────────────────────────────────
+# aiohttp>=3.9.0

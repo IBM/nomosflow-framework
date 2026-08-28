@@ -1,9 +1,9 @@
-% Auto-generated LaTeX for EXP-4 semantic tier robustness
-% 2026-08-14T05:23:25.680152+00:00
+% Auto-generated LaTeX for EXP-4 sidecar control-flow robustness under injected payloads
+% 2026-08-24T17:17:36.376577+00:00
 
 \begin{table}[t]
   \centering
-  \caption{Prompt-injection robustness — verdict flips to ALLOW (must be 0)}
+  \caption{Verdict-lattice robustness under prompt injection. LLM validator is stubbed (\texttt{\_StubLLMValidator}): adversarial inputs return is\_valid=True, making any terminal ALLOW a direct Proposition~1 violation. Set \texttt{LLM\_VALIDATION\_ENABLED=true} for a live model run.}
   \label{tab:exp4_0}
   \begin{tabular}{lrrrr}
     \toprule
@@ -18,8 +18,25 @@
 
 \begin{table}[t]
   \centering
-  \caption{Complementarity (static vs. semantic)}
+  \caption{Injection robustness summary}
   \label{tab:exp4_1}
+  \begin{tabular}{lrr}
+    \toprule
+    \textbf{Metric} & \textbf{Value} & \textbf{Notes} \\
+    \midrule
+    LLM mode & stub (_StubLLMValidator, class-tag oracle) &  \\
+    Adversarial requests (N) & 20 & 4 canonical jailbreak patterns × 5 \\
+    T7 scope boundary (is_compliant=True) & 0 & N/A (stub run) \\
+    Terminal ALLOWs emitted & 0 & Proposition 1 invariant — must be 0 \\
+    verdict_flip_count & 0 & APPROVED verdicts to adversarial/violation class (must be 0) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \caption{Complementarity (static vs. semantic)}
+  \label{tab:exp4_2}
   \begin{tabular}{lr}
     \toprule
     \textbf{Metric} & \textbf{Value} \\

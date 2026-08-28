@@ -346,3 +346,5 @@ class TrestleAnnotator:
                 self._emitter.update_oscal_controls(response.request_id, controls)
         except Exception as exc:
             logger.warning("TrestleAnnotator._do_annotate failed: %s", exc)
+
+# Made with Bob

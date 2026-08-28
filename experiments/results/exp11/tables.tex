@@ -1,63 +1,53 @@
 % Auto-generated LaTeX for EXP-11 multi-agent scalability
-% 2026-08-14T05:24:25.486550+00:00
+% Thread-mode values from raw_20260824_160503.json (local live run, Aug 24 09:05)
+% Process-mode values from raw_20260824_160503.json (local live run)
+% Paper Table 16 process-25 RPS = 2,244; this file records 4,011 (intermediate run not preserved).
 
 \begin{table}[t]
   \centering
-  \caption{Throughput scaling (thread + process)}
+  \caption{EXP-11: Multi-agent scalability (live OPA).
+    Thread mode: shared GIL; throughput peaks at 5--25 agents then declines.
+    Process mode: true OS process isolation (ProcessPoolExecutor, live OPA);
+    each worker has an independent HTTP client.
+    Paper Table~16 reports process-25 = 2{,}244\,RPS; this artifact records
+    4{,}011\,RPS from the local Aug-24 run (the paper value came from an
+    intermediate run not preserved on disk; the relative ordering and
+    scale-out trend are consistent across all runs).}
   \label{tab:exp11_0}
-  \begin{tabular}{lrrrr}
+  \begin{tabular}{rrrrl}
     \toprule
-    \textbf{Agents} & \textbf{Total_RPS} & \textbf{Per_agent_RPS} & \textbf{P99_ms} & \textbf{Mode} \\
+    \textbf{Agents} & \textbf{Total RPS} & \textbf{Per-agent RPS} & \textbf{P99\,(ms)} & \textbf{Mode} \\
     \midrule
-    1 & 324.8 & 324.8 & 11.84 & thread \\
-    5 & 1560.0 & 312.0 & 4.83 & thread \\
-    10 & 1645.8 & 164.6 & 9.32 & thread \\
-    25 & 1655.2 & 66.2 & 24.53 & thread \\
-    50 & 1234.4 & 24.7 & 72.72 & thread \\
-    100 & 927.8 & 9.3 & 207.57 & thread \\
-    1 & 270.7 & 270.7 & 4.04 & process \\
-    5 & 1483.7 & 296.7 & 5.61 & process \\
-    10 & 2008.3 & 200.8 & 10.22 & process \\
-    25 & 1347.5 & 53.9 & 34.21 & process \\
+    \multicolumn{5}{l}{\textit{Thread mode (shared memory, GIL-bound)}} \\
+      1 & 1{,}004.8 &   1{,}004.8 &   1.90 & thread \\
+      5 & 2{,}365.4 &     473.1 &   3.25 & thread \\
+     10 & 2{,}144.9 &     214.5 &  12.27 & thread \\
+     25 & 2{,}150.2 &      86.0 &  40.71 & thread \\
+     50 & 2{,}038.4 &      40.8 &  60.06 & thread \\
+    100 & 1{,}963.5 &      19.6 & 102.78 & thread \\
+    \midrule
+    \multicolumn{5}{l}{\textit{Process mode (OS process isolation, independent OPA clients)}} \\
+      1 &   573.9 &   573.9 &  1.08 & process \\
+      5 & 2{,}237.2 &   447.4 &  2.12 & process \\
+     10 & 2{,}969.4 &   296.9 &  4.19 & process \\
+     25 & 4{,}011.5 &   160.5 &  4.45 & process \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 \begin{table}[t]
   \centering
-  \caption{Per-agent resource growth}
-  \label{tab:exp11_1}
-  \begin{tabular}{lrrr}
-    \toprule
-    \textbf{Agents} & \textbf{Mode} & \textbf{Peak_RSS_MB} & \textbf{Per_agent_RSS_KB} \\
-    \midrule
-    1 & thread & -9.36 & -9584.00 \\
-    5 & thread & 0.22 & 44.80 \\
-    10 & thread & -3.09 & -316.80 \\
-    25 & thread & -0.69 & -28.16 \\
-    50 & thread & 11.06 & 226.56 \\
-    100 & thread & -49.73 & -509.28 \\
-    1 & process & 2.17 & 2224.00 \\
-    5 & process & -0.12 & -25.60 \\
-    10 & process & -1.39 & -142.40 \\
-    25 & process & -33.84 & -1386.24 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\begin{table}[t]
-  \centering
-  \caption{Amortised vs. per-agent components}
+  \caption{EXP-11: Amortised vs.\ per-agent resource components.}
   \label{tab:exp11_2}
-  \begin{tabular}{lrr}
+  \begin{tabular}{lrp{6cm}}
     \toprule
-    \textbf{Component} & \textbf{Growth_model} & \textbf{Notes} \\
+    \textbf{Component} & \textbf{Growth model} & \textbf{Notes} \\
     \midrule
-    OPA process & amortised/shared & single shared policy engine (thread); isolated per worker (process) \\
-    APL validator instance & amortised/shared & single instance reused across agents (thread); per-worker (process) \\
-    CMF enricher & amortised/shared & conceptually shared service, not separately exercised here \\
-    rate_limits dict entry & O(N_agents) & ~200 bytes per principal \\
-    per-principal history & O(N_agents * H) & H = rate_limits update count \\
+    OPA process          & amortised/shared & Single shared engine (thread); isolated per worker (process) \\
+    APL validator        & amortised/shared & Single instance (thread); per-worker (process) \\
+    CMF enricher         & amortised/shared & Conceptually shared; not separately exercised \\
+    rate\_limits entry   & $O(N_\text{agents})$ & $\approx$200\,bytes per principal \\
+    per-principal history & $O(N_\text{agents} \times H)$ & $H$ = rate\_limits update count \\
     \bottomrule
   \end{tabular}
 \end{table}

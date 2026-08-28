@@ -24,7 +24,7 @@ Honest provenance statement (copy this verbatim into the paper)
    policy specification and the event payload, blind to the corpus labels and
    class tags — labelled the same 200 cases.  Cohen's κ between the
    policy-oracle ground truth (Annotator A) and the blind model (Annotator B)
-   was κ = X.XXX (n=200, p_o=X.XXX, 'INTERPRETATION').  This measures
+   was κ = 0.6809 (n=200, p_o=0.845, 'Substantial').  This measures
    label-scheme interpretability from the policy text alone.  Annotator B is
    an automated system, not a human; we report it as such."
 
@@ -417,3 +417,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# Made with Bob

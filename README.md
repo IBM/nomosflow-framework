@@ -3,90 +3,131 @@
 [![CI](https://github.com/IBM/nomosflow/actions/workflows/experiments.yml/badge.svg)](https://github.com/IBM/nomosflow/actions/workflows/experiments.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
-**NomosFlow** is an event-driven compliance sidecar for AI agents. It intercepts
-every data-access event at the pod boundary and passes it through a five-tier
-validation pipeline before allowing it to proceed:
+**NomosFlow** is an event-driven compliance sidecar for AI agents. It intercepts every data-access event and passes it through a five-tier validation pipeline before allowing it to proceed:
 
 | Tier | Component | Latency | Purpose |
 |------|-----------|---------|---------|
-| T1 | APL (Authorization Policy Layer) | µs | Token / RBAC / attestation |
-| T2 | CMF (Context Metadata Forge) | µs | CDM v2 context enrichment |
-| T3 | OPA (Open Policy Agent) | ms | Rego policy evaluation |
-| T4 | Rate-limit | µs | Per-agent token-bucket |
-| T5 | LLM validator | ~ms–s | Semantic / hallucination check (sampled) |
+| T3 | CMF | µs | CDM v2 context enrichment |
+| T4 | APL | µs | Token / RBAC / attestation |
+| T5 | OPA | ~2–5 ms | Rego policy evaluation |
+| T6 | Rate-limit | µs | Per-agent token-bucket |
+| T7 | LLM validator | ~9,500 ms P50 | Semantic / indirect-PII check (sampled) |
 
-Short-circuiting means most requests resolve at T1 or T3; T5 is invoked for
-only ~1% of traffic. The sidecar fails **secure**: any tier failure defaults to
-DENY rather than ALLOW.
+Fails **secure** at every tier: any failure defaults to DENY, not ALLOW (Proposition 1).
 
-## Quick start
+> **Tier-naming note:** The paper labels tiers T3–T7. The source code and JSON
+> keys use an internal numbering (T1\_APL, T2\_CMF, T3\_OPA, T4\_RATE, T5\_LLM).
+> The mapping is documented in
+> [`experiments/exp2_resolution/run.py`](experiments/exp2_resolution/run.py)
+> lines 17–22. All `summary.md` and `tables.tex` files use the paper labels
+> (T3–T7).
+
+## Reproducing the paper experiments
 
 ```bash
-git clone https://github.com/IBM/nomosflow
-cd nomosflow
+git clone https://github.com/IBM/nomosflow && cd nomosflow
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-# Run all paper experiments (no API keys, no containers needed — ~90 s):
-python experiments/run_all.py
-
-# Check paper invariants against your fresh run:
-python experiments/compare_results.py
+python experiments/run_all.py            # all experiments, ~90 s, no services needed
+python experiments/compare_results.py    # validates paper invariants against your run
 ```
 
-## With live OPA (reproduces measured latency values)
+> **`compare_results.py` modes:**
+> - *Default* (no flags): checks structural invariants (counts, verdict
+>   distributions, zero false-ALLOWs) against the most-recently-written
+>   `raw_*.json` per experiment. Passes on any hardware.
+> - *`--compare-canonical`*: byte-for-byte JSON equality against
+>   `raw_CANONICAL.json`. Requires the same hardware and services as the
+>   original canonical run — use only for like-for-like environments.
+>
+> **`summary.md` / `tables.tex` are regenerated on every run** by
+> `experiments/shared/report.py:write_summary()` and will be overwritten with
+> the values from that run. The checked-in copies in `experiments/results/`
+> reflect the canonical live-service run (Aug 15 2026). If you re-run offline
+> the files will show simulated values; the canonical ground truth is always
+> `raw_CANONICAL.json` and `experiments/results/paper_results.tex`.
 
+**With live OPA** (reproduces measured latency):
 ```bash
-# Start OPA in Podman or Docker:
-podman-compose up -d opa        # or: docker compose up -d opa
-
-# Run experiments against live OPA:
+podman-compose up -d opa   # or: docker compose up -d opa
 OPA_URL=http://localhost:8181 python experiments/run_all.py
 ```
+
+**With live LLM** (EXP-3 T7 tier, EXP-4 injection robustness):
+```bash
+cp .env.local.example .env.local
+# Edit .env.local — set LITELLM_BASE_URL, LLM_API_KEY, LLM_MODEL, then:
+export LLM_VALIDATION_ENABLED=true
+source .env.local
+python -m experiments.exp3_detection.run
+python -m experiments.exp4_semantic.run
+```
+Without `.env.local` both experiments fall back to deterministic stub validators — all paper invariants still pass.
+
+### Which experiments need which keys?
+
+| Experiment | Needs keys? | What for |
+|---|---|---|
+| EXP-1 through EXP-12 (stub mode) | **No** | All run offline with seeded RNG and simulated latency |
+| EXP-3 (live T7) | `LITELLM_BASE_URL` + `LLM_API_KEY` + `LLM_MODEL` | Actual LLM call for semantic PII check |
+| EXP-4 (live injection) | `LITELLM_BASE_URL` + `LLM_API_KEY` + `LLM_MODEL` | Actual LLM call per adversarial probe |
+| EXP-4 (FRED data-lake) | `FRED_API_KEY` | Live FRED macro-economic data fetch (free key) |
+| OPA live mode | OPA running at `OPA_URL` | `podman-compose up -d opa` or `docker compose up -d opa` |
+
+`FRED_API_KEY` is free — register at <https://fred.stlouisfed.org/docs/api/api_key.html>.
+
+## Paper table and figure map
+
+| Paper item | Experiment | Description |
+|---|---|---|
+| Table 1 | — | Observation function (body) |
+| Table 2 | EXP-7 | Coverage vs. overhead comparison matrix (body) |
+| Figure 1 | — | Architecture diagram (body) |
+| Figure 2 | EXP-7 | Coverage frontier (body) |
+| Table 3 | — | Coverage predicates (appendix) |
+| Table 4 | — | Isolation discharge (appendix) |
+| Table 5 | EXP-GAP-35 | Egress / redaction checks (appendix) |
+| Table 6 | EXP-GAP-32 | OSCAL control mapping (appendix) |
+| Table 7 | EXP-1 | Per-tier latency microbenchmark (appendix) |
+| Table 8 | EXP-2 | Short-circuit ablation / tier resolution (appendix) |
+| Tables 9–11 | EXP-3 | Detection 200-case, 500-case, overlap (appendix) |
+| Table 12 | EXP-4 | Verdict-lattice robustness under injected payloads (appendix) |
+| Table 13 | EXP-6 | Fault injection — zero false-ALLOWs (appendix) |
+| Table 14 | EXP-6b | Selective screening Pareto frontier (appendix) |
+| Table 15 | EXP-8 | Policy scale latency (appendix) |
+| Table 16 | EXP-11 | Multi-agent scalability (appendix) |
+| Figure 3 | EXP-2 | Resolved-at-tier histogram (appendix) |
+
+## Corpus files
+
+EXP-3, EXP-4, EXP-6b, and EXP-7 write their labeled corpora to `experiments/results/<EXP_ID>/corpus.json` on every run. Reviewers can inspect individual cases without re-running anything:
+
+| File | N | Contents |
+|------|---|----------|
+| [`results/exp3/corpus.json`](experiments/results/exp3/corpus.json) | 200 | `id`, `class`, `label`, `deciding_tier`, `content` |
+| [`results/exp4/corpus.json`](experiments/results/exp4/corpus.json) | 60 | `annotated` (harness tags) + `public` (exact model input) |
+| [`results/exp6b/corpus.json`](experiments/results/exp6b/corpus.json) | 80 | `_label`, `_vclass` per request |
+| [`results/exp7/corpus.json`](experiments/results/exp7/corpus.json) | 80 | `label`, `violation_type` per request |
 
 ## Repository layout
 
 ```
 nomosflow/
-├── src/                   NomosFlow sidecar source (validators, core, interceptors)
-├── policies/              OPA Rego policies
-├── deploy/envoy/          Envoy ext_authz config (EXP-7 gateway baseline)
+├── src/                   Sidecar source (validators, core, interceptors)
+├── policies/              OPA Rego policies + OSCAL control map
 ├── benchmarks/            Canonical live-service measurement files
-├── experiments/           Self-contained experiment suite
-│   ├── run_all.py         Master runner
-│   ├── compare_results.py Reviewer invariant checker
-│   ├── shared/            Shared utilities and OPA client
-│   ├── exp1_overhead/     §6.1 per-tier latency
-│   ├── exp2_resolution/   §6.1 resolution histogram
-│   ├── exp3_detection/    §6.2 detection F1 / FPR / IAA
-│   ├── exp4_semantic/     §6.2 prompt-injection robustness
-│   ├── exp6_failure/      §6.3 fault injection
-│   ├── exp6b_screening/   §6.3 selective-screening Pareto
-│   ├── exp7_baselines/    §6.4 NomosFlow vs OPA-gateway vs app-level
-│   ├── exp8_policy_scale/ §6.5 policy scale + hot-reload
-│   ├── exp9_rb_stream/    §6.6 buffer-then-release invariant
-│   ├── exp11_multiagent/  §6.7 multi-agent scalability
-│   ├── exp12_resource/    §6.7 CPU/RSS overhead
-│   ├── exp_gap13/         §5 interceptor inventory
-│   ├── exp_gap32/         §5 OSCAL control-mapping
-│   ├── exp_gap35/         §5 redaction-before-inference
-│   └── results/           Pre-computed canonical outputs (checked in)
-├── docs/                  Architecture and methodology docs
-└── docker-compose.yml     Minimal stack: OPA + Redpanda + Prometheus
+├── experiments/           Self-contained experiment suite (see experiments/README.md)
+│   ├── run_all.py
+│   ├── compare_results.py
+│   ├── shared/
+│   └── results/           Canonical outputs (checked in)
+├── docs/                  Architecture and gap-disclosure docs
+└── docker-compose.yml     OPA + Redpanda + Prometheus
 ```
 
-See [`experiments/README.md`](experiments/README.md) for detailed per-experiment
-documentation, environment variables, and the paper section mapping.
-
-## Citing this work
-
-If you use NomosFlow or these experimental results, please cite using
-[`CITATION.cff`](CITATION.cff) or the paper DOI (to be added on publication).
+See [`experiments/README.md`](experiments/README.md) for per-experiment details, environment variables, and the paper section mapping.
 
 ## License
 
-Apache License 2.0 — see [`LICENSE`](LICENSE).
-
-## Contributing
-
-See [`CONTRIBUTING.md`](CONTRIBUTING.md). All contributors must sign the IBM CLA.
+Apache 2.0 — see [`LICENSE`](LICENSE). Contributions require the IBM CLA; see [`CONTRIBUTING.md`](CONTRIBUTING.md).

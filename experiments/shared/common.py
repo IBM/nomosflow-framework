@@ -202,3 +202,5 @@ def req_digest(req: dict) -> str:
     return hashlib.sha256(
         json.dumps(clean, sort_keys=True).encode()
     ).hexdigest()[:12]
+
+# Made with Bob

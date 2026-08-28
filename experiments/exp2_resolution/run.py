@@ -13,6 +13,14 @@ Pipeline tiers (deployed order):
   T5_LLM    — LLM semantic check; only for requests flagged _route_to_llm=True
   APPROVED  — cleared all tiers
 
+NOTE — internal identifier mapping to paper tier labels (p.tex):
+  T1_APL  → paper T4 (APL attribute checks)
+  T2_CMF  → paper T3 (CMF enrichment; mediating, never decides)
+  T3_OPA  → paper T5 (OPA policy engine)
+  T4_RATE → paper T6 (rate-limit / stateful)
+  T5_LLM  → paper T7 (LLM semantic check)
+  Internal names are JSON result-file keys; do NOT rename them.
+
 Prop. 3 cost model: optimal tier order minimises sum_i c_i / (1 - p_i),
 where p_i is the fraction of requests that *reach* tier i and c_i is the
 mean latency of tier i (across requests that reached it).
@@ -484,3 +492,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# Made with Bob

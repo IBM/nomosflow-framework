@@ -77,11 +77,11 @@ def _fig1_tier_histogram() -> Path:
     if not tier_dist:
         # Use the hardcoded summary data (always matches the last run)
         tier_dist = [
-            {"tier": "T1 APL",     "count": 629, "fraction": 0.315, "mean_latency_ms": 0.00},
-            {"tier": "T2 CMF",     "count":   0, "fraction": 0.000, "mean_latency_ms": 0.02},
-            {"tier": "T3 OPA",     "count": 813, "fraction": 0.406, "mean_latency_ms": 2.14},
-            {"tier": "T4 Rate",    "count":   0, "fraction": 0.000, "mean_latency_ms": 0.05},
-            {"tier": "T5 LLM",     "count":   1, "fraction": 0.001, "mean_latency_ms": 98.62},
+            {"tier": "T4 APL",     "count": 629, "fraction": 0.315, "mean_latency_ms": 0.00},
+            {"tier": "T3 CMF",     "count":   0, "fraction": 0.000, "mean_latency_ms": 0.02},
+            {"tier": "T5 OPA",     "count": 813, "fraction": 0.406, "mean_latency_ms": 2.14},
+            {"tier": "T6 Rate",    "count":   0, "fraction": 0.000, "mean_latency_ms": 0.05},
+            {"tier": "T7 LLM",     "count":   1, "fraction": 0.001, "mean_latency_ms": 98.62},
             {"tier": "APPROVED",   "count": 557, "fraction": 0.279, "mean_latency_ms": 0.00},
         ]
 
@@ -138,7 +138,7 @@ def _fig1_tier_histogram() -> Path:
                  f'x2="{W - margin["right"]}" y2="{margin["top"] + ph}"/>')
 
     # bars
-    llm_tiers = {"T5 LLM", "T5_LLM"}
+    llm_tiers = {"T7 LLM", "T5_LLM"}
     for i, t in enumerate(tiers):
         bx   = bar_x(i)
         bh   = bar_h(t["count"])
@@ -332,3 +332,5 @@ if __name__ == "__main__":
     f2 = _fig2_coverage_frontier()
     print("\n  Both figures written to experiments/results/figures/")
     print("  Include in LaTeX via figures.tex\n")
+
+# Made with Bob

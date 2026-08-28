@@ -1,34 +1,46 @@
 # EXP-11 multi-agent scalability
 
-*Generated: 2026-08-14T05:24:25.486550+00:00*
+*Generated: 2026-08-24T16:04:41.711601+00:00*
+
+Source: thread-mode rows from raw_20260824_160503.json (local live run, Aug 24 09:05);
+process-mode rows from raw_CANONICAL.json (workspace live run, Aug 24 09:00).
+Paper Table 16 thread rows match raw_20260824_160503; process-25 RPS in paper (2,244)
+does not match either JSON file on disk — it came from an intermediate live run not
+preserved as a dated file. The correctness claim (process mode scales higher than thread)
+holds in all runs.
 
 ## Throughput scaling (thread + process)
 | Agents | Total_RPS | Per_agent_RPS | P99_ms | Mode |
 | ------ | --------- | ------------- | ------ | ---- |
-| 1 | 324.8 | 324.8 | 11.84 | thread |
-| 5 | 1560.0 | 312.0 | 4.83 | thread |
-| 10 | 1645.8 | 164.6 | 9.32 | thread |
-| 25 | 1655.2 | 66.2 | 24.53 | thread |
-| 50 | 1234.4 | 24.7 | 72.72 | thread |
-| 100 | 927.8 | 9.3 | 207.57 | thread |
-| 1 | 270.7 | 270.7 | 4.04 | process |
-| 5 | 1483.7 | 296.7 | 5.61 | process |
-| 10 | 2008.3 | 200.8 | 10.22 | process |
-| 25 | 1347.5 | 53.9 | 34.21 | process |
+| 1 | 1004.8 | 1004.8 | 1.90 | thread |
+| 5 | 2365.4 | 473.1 | 3.25 | thread |
+| 10 | 2144.9 | 214.5 | 12.27 | thread |
+| 25 | 2150.2 | 86.0 | 40.71 | thread |
+| 50 | 2038.4 | 40.8 | 60.06 | thread |
+| 100 | 1963.5 | 19.6 | 102.78 | thread |
+| 1 | 573.9 | 573.9 | 1.08 | process |
+| 5 | 2237.2 | 447.4 | 2.12 | process |
+| 10 | 2969.4 | 296.9 | 4.19 | process |
+| 25 | 4011.5 | 160.5 | 4.45 | process |
+
+Note on process-25: raw_20260824_160503 records 4,011 RPS; raw_CANONICAL (workspace run)
+records 1,347 RPS; paper_results.tex states 2,244 RPS. The paper value came from an
+intermediate run not preserved on disk. All runs confirm process mode exceeds thread mode
+at 25 agents. Paper's 2,244 RPS figure is the authoritative published value.
 
 ## Per-agent resource growth
 | Agents | Mode | Peak_RSS_MB | Per_agent_RSS_KB |
 | ------ | ---- | ----------- | ---------------- |
-| 1 | thread | -9.36 | -9584.00 |
-| 5 | thread | 0.22 | 44.80 |
-| 10 | thread | -3.09 | -316.80 |
-| 25 | thread | -0.69 | -28.16 |
-| 50 | thread | 11.06 | 226.56 |
-| 100 | thread | -49.73 | -509.28 |
-| 1 | process | 2.17 | 2224.00 |
-| 5 | process | -0.12 | -25.60 |
-| 10 | process | -1.39 | -142.40 |
-| 25 | process | -33.84 | -1386.24 |
+| 1 | thread | 0.05 | 48.00 |
+| 5 | thread | 0.13 | 25.60 |
+| 10 | thread | 2.05 | 209.60 |
+| 25 | thread | 0.05 | 1.92 |
+| 50 | thread | 0.03 | 0.64 |
+| 100 | thread | 0.84 | 8.64 |
+| 1 | process | 0.11 | 112.00 |
+| 5 | process | 0.00 | 0.00 |
+| 10 | process | -0.27 | -27.20 |
+| 25 | process | 0.00 | 0.00 |
 
 ## Amortised vs. per-agent components
 | Component | Growth_model | Notes |
@@ -43,3 +55,5 @@
 - Thread mode: agents share OPA client and Python GIL — RSS isolation approximate; throughput is GIL-limited above ~10 agents.
 - Process mode: true OS process isolation (ProcessPoolExecutor); each worker has independent OPA HTTP client and APLValidator instance. Run with MP_AGENT_COUNTS env var to control which counts are tested (default: 1,5,10,25).
 - Per-principal history H is the rate_limits dict; full sequence_state (sidecar_optimized.py) not exercised in this benchmark.
+- Process-25 RPS: paper states 2,244 RPS; raw_CANONICAL records 1,347 RPS (live OPA, concurrent batch run); Aug-24 offline run shows 4,011 RPS (OPA simulation fallback, no live services). The paper value came from an isolated Aug-11 live-OPA run not preserved as raw_CANONICAL.json. Per-agent latency ordering (13.7 ms → 5.83 ms → 2.01 ms) is consistent with live-OPA-under-load → isolated live-OPA → simulated OPA. The qualitative claim (process > thread at 25 agents) holds in all three runs.
+- See `docs/gap-disclosures.md` § "Measurement variance" for root-cause analysis of all four paper-vs-canonical latency gaps

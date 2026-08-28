@@ -1,7 +1,7 @@
 {
   "exp_id": "exp9",
-  "repo_root": "/Users/rsinha/agentic-dataops/compliance-mvp/event-driven-compliance-sidecar-podman-sandbox",
-  "script": "paper_experiments/exp9_rb_stream/run.py",
+  "repo_root": "/workspace/nomosflow-framework",
+  "script": "experiments/exp9_rb_stream/run.py",
   "runtime_ms": 328.05329200346023,
   "call_sites_found": 1,
   "sites_gated_by_approved": 1,

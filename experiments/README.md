@@ -1,95 +1,141 @@
 # NomosFlow — Experiments
 
-Self-contained experiment suite for the NomosFlow paper.
-Every experiment writes raw results to `results/<EXP_ID>/` as JSON
-and a paper-ready summary to `results/<EXP_ID>/summary.md`.
+Self-contained experiment suite for the NomosFlow paper. Every experiment writes:
+- `results/<EXP_ID>/raw_CANONICAL.json` — reference numbers (checked in; **do not modify**)
+- `results/<EXP_ID>/raw_<timestamp>.json` — fresh run output
+- `results/<EXP_ID>/summary.md` — human-readable results (**overwritten on every run**)
+- `results/<EXP_ID>/tables.tex` — LaTeX table snippets (**overwritten on every run**)
+- `results/<EXP_ID>/corpus.json` — labeled corpus (EXP-3/4/6b/7 only)
 
-```
-experiments/
-├── README.md                  ← this file
-├── run_all.py                 ← master runner
-├── compare_results.py         ← reviewer invariant checker
-├── shared/
-│   ├── common.py              ← percentile helpers, request generator, AuditDB
-│   ├── opa_client.py          ← OPA probe + call wrapper
-│   ├── report.py              ← summary → markdown + LaTeX table emitter
-│   └── live_data.py           ← loaders for canonical benchmark files
-├── exp1_overhead/run.py       ← EXP-1: per-tier latency + baselines
-├── exp2_resolution/run.py     ← EXP-2: resolved_at_tier histogram + p_i/c_i
-├── exp3_detection/run.py      ← EXP-3: detection efficacy + FPR headline
-├── exp4_semantic/run.py       ← EXP-4: semantic tier robustness / prompt injection
-├── exp6_failure/run.py        ← EXP-6: fault injection (OPA kill, LLM timeout)
-├── exp6b_screening/run.py     ← EXP-6b: selective screening Pareto frontier
-├── exp7_baselines/run.py      ← EXP-7: NomosFlow vs. OPA-gateway vs. app-level
-├── exp8_policy_scale/run.py   ← EXP-8: policy scale + hot-reload correctness
-├── exp9_rb_stream/run.py      ← EXP-9: buffer-then-release invariant verification
-├── exp11_multiagent/run.py    ← EXP-11: 1–100 agents, per-agent resource curve
-├── exp12_resource/run.py      ← EXP-12: sidecar CPU/RSS overhead
-├── exp_gap13/run.py           ← EXP-GAP-13: interceptor inventory
-├── exp_gap32/run.py           ← EXP-GAP-32: OSCAL control-mapping verification
-├── exp_gap35/run.py           ← EXP-GAP-35: redaction-before-inference
-└── results/                   ← canonical + fresh run outputs
-    └── <EXP_ID>/
-        ├── raw_CANONICAL.json ← checked-in reference numbers
-        ├── raw_<timestamp>.json ← fresh runs (gitignored)
-        └── summary.md
-```
+> **`summary.md` and `tables.tex` are regenerated on every run** by
+> `experiments/shared/report.py:write_summary()`. The checked-in copies reflect
+> the canonical live-service run (Aug 15 2026). Re-running offline overwrites
+> them with simulated values. The authoritative ground truth is always
+> `raw_CANONICAL.json` (per-experiment) and
+> `results/paper_results.tex` (paper tables).
 
-## Quick start — run all experiments
+> **Tier-naming note:** The paper labels tiers T3–T7. Internal code and JSON
+> keys use T1\_APL, T2\_CMF, T3\_OPA, T4\_RATE, T5\_LLM. The mapping is
+> documented in [`exp2_resolution/run.py`](exp2_resolution/run.py) lines 17–22.
+> All `summary.md` and `tables.tex` files use the paper labels (T3–T7).
+
+## Running
 
 ```bash
-cd <repo-root>
-# Run without live services (all tiers simulated):
+# All experiments, no services needed (~90 s):
 python experiments/run_all.py
 
-# Run with live OPA (start OPA first):
-OPA_URL=http://localhost:8181 python experiments/run_all.py
+# Single experiment:
+python -m experiments.exp3_detection.run
 
-# Run single experiment:
-python experiments/exp1_overhead/run.py
-
-# Check paper invariants against your run:
+# Validate paper invariants:
 python experiments/compare_results.py
+
+# Strict canonical comparison (same hardware):
+python experiments/compare_results.py --compare-canonical
 ```
+
+> **`compare_results.py` modes:**
+> - *Default* (no flags): checks structural invariants (counts, verdict
+>   distributions, zero false-ALLOWs) against the most-recently-written
+>   `raw_*.json` per experiment. Passes on any hardware.
+> - *`--compare-canonical`*: byte-for-byte JSON equality against
+>   `raw_CANONICAL.json`. Requires the same hardware and services as the
+>   original canonical run — use only for like-for-like environments.
+>
+> EXP-1, EXP-11, EXP-12 measure real latency/RSS and are sensitive to hardware
+> and system load. Use the default invariant check as the primary portability
+> test; `--compare-canonical` is for like-for-like environments only.
 
 ## Environment variables
 
 | Variable | Default | Description |
 |---|---|---|
-| `OPA_URL` | `http://localhost:8181` | OPA endpoint |
-| `LLM_VALIDATION_ENABLED` | `false` | Enable live LLM tier |
-| `LLM_BASE_URL` | `https://api.openai.com/v1` | LLM endpoint |
-| `LLM_MODEL` | `gpt-4o-mini` | LLM model name |
+| `OPA_URL` | `http://localhost:8181` | OPA endpoint (set to live OPA for measured latency) |
+| `LLM_VALIDATION_ENABLED` | `false` | `true` to enable live LLM tier in EXP-3 and EXP-4 |
+| `LITELLM_BASE_URL` | — | LiteLLM proxy or provider base URL (e.g. `https://api.openai.com/v1`) |
+| `LLM_API_KEY` | — | API key for the LLM provider |
+| `LLM_MODEL` | `gpt-3.5-turbo` | Model identifier passed to LiteLLM |
+| `LLM_VALIDATION_TIMEOUT` | `10.0` | Per-call timeout (seconds) for T7 (LLM tier) |
+| `FRED_API_KEY` | — | FRED macro-data API key (EXP-4 live data-lake; free) |
 | `BENCHMARK_SCALES` | `100,1000,10000` | Request scales for EXP-1/EXP-11 |
 | `AGENT_COUNTS` | `1,5,10,25,50,100` | Agent counts for EXP-11 |
-| `LLM_RATES` | `0.0,0.05,0.1,0.2,0.5,1.0` | Routing fractions for EXP-6b |
+| `LLM_RATES` | `0.0,0.05,0.2,0.5,1.0` | Routing fractions for EXP-6b |
 | `RESULTS_DIR` | `experiments/results` | Output directory |
+
+### Which experiments need credentials?
+
+| Experiment | Variable(s) required | Notes |
+|---|---|---|
+| **All (default)** | none | Full stub/offline mode; all paper invariants pass |
+| **EXP-3** live T7 | `LLM_VALIDATION_ENABLED=true` + `LITELLM_BASE_URL` + `LLM_API_KEY` + `LLM_MODEL` | Calls LLM for semantic PII check |
+| **EXP-4** live injection | `LLM_VALIDATION_ENABLED=true` + `LITELLM_BASE_URL` + `LLM_API_KEY` + `LLM_MODEL` | Calls LLM for each adversarial probe |
+| **EXP-4** live FRED data | `FRED_API_KEY` | Optional; fetches live macro-economic data (free key) |
+| **EXP-1/EXP-3** live OPA | OPA running at `OPA_URL` | `podman-compose up -d opa` or `docker compose up -d opa` |
+
+Copy [`.env.local.example`](../.env.local.example) to `.env.local`, fill in
+the relevant values, then `source .env.local` before running. The file is
+`.gitignore`-listed and will never be committed. Without it every experiment
+runs in deterministic stub mode.
 
 ## Paper section mapping
 
-| Experiment | Paper section | Key claim |
-|---|---|---|
-| EXP-1 | §6.1 | Per-tier P50/P95/P99; in-pod vs. gateway overhead |
-| EXP-2 | §6.1 | resolved_at_tier histogram; empirical p_i, c_i |
-| EXP-3 | §6.2 | Detection F1; FPR on benign traffic (headline) |
-| EXP-4 | §6.2 | Semantic tier deny/escalate-only under prompt injection |
-| EXP-6 | §6.3 | Zero false-ALLOWs under fault injection |
-| EXP-6b | §6.3 | Recall/throughput Pareto (lossy trade-off) |
-| EXP-7 | §6.4 | Coverage-vs-overhead vs. Envoy+OPA, app-level |
-| EXP-8 | §6.5 | Policy scale latency; hot-reload correctness |
-| EXP-9 | §6.6 | Buffer-then-release invariant (atomic RB) |
-| EXP-11 | §6.7 | Per-agent resource curve (1–100 agents) |
-| EXP-12 | §6.7 | Sidecar CPU/RSS overhead decomposition |
-| EXP-GAP-13 | §5 | Interceptor inventory |
-| EXP-GAP-32 | §5 | OSCAL control-mapping drift = 0 |
-| EXP-GAP-35 | §5 | Redaction-before-inference |
+| Experiment | Paper § | Paper tables | Key claim | Mode | Corpus |
+|---|---|---|---|---|---|
+| EXP-1 | §6.1 | Table 7 | Per-tier P50/P95/P99; in-pod vs gateway overhead | Synthetic; live OPA for measured latency | synthetic |
+| EXP-2 | §6.1 | Table 8, Figure 3 | `resolved_at_tier` histogram; empirical p_i, c_i | Synthetic | synthetic |
+| EXP-3 | §6.2 | Tables 9, 10, 11 | Detection F1 = 90.8%; FPR = 0.0% on benign traffic | All tiers live (T3–T7 active in canonical run) | **200-case labeled** → `corpus.json` |
+| EXP-4 | §6.2 | Table 12 | Proposition 1: 0 terminal ALLOWs under injected payloads; model answered correctly within its evaluation scope | Live model for `adversarial_deny` class (20 probes); stub for `clean_escalated` and `true_violation` | **60-case labeled** → `corpus.json` |
+| EXP-6 | §6.3 | Table 13 | Zero false-ALLOWs under OPA kill / LLM timeout | Synthetic (mock injection) | synthetic |
+| EXP-6b | §6.3 | Table 14 | Recall/throughput Pareto; T7 P50 = 9,500 ms (Table 7) | Simulation (seeded RNG, lognormal latency) | **80-case labeled** → `corpus.json` |
+| EXP-7 | §6.4 | Tables 2, Figure 2 | NomosFlow vs Envoy+OPA vs app-level coverage/overhead | Synthetic; live Envoy probe optional | **80-case labeled** → `corpus.json` |
+| EXP-8 | §6.5 | Table 15 | Policy scale latency; hot-reload correctness | Synthetic; live OPA optional | synthetic |
+| EXP-9 | §6.6 | — | Buffer-then-release invariant (atomic RB) | Static audit + runtime OPA probe | static audit |
+| EXP-11 | §6.7 | Table 16 | Per-agent resource curve (1–100 agents) | Synthetic | synthetic |
+| EXP-12 | §6.7 | — | Sidecar CPU/RSS overhead; ≈373 MB full-pod figure with measured and analytical components | Synthetic (psutil); measured OPA via podman stats | synthetic |
+| EXP-GAP-13 | §5 | — | Interceptor hook inventory (3/3 pass) | Static inventory | static audit |
+| EXP-GAP-32 | §5 | Table 6 | OSCAL control-mapping drift = 0 | Static parse | static parse |
+| EXP-GAP-35 | §5 | Table 5 | PII redacted before model call | Static + 5 inline cases | static + inline |
 
-## Gap disclosures (§5)
+## Corpus files (EXP-3/4/6b/7)
 
-- **OPA cache staleness**: 5-min TTL creates a stale-ALLOW window during hot-reload (EXP-8).
-- **Anomaly detection is advisory**: runs post-decision on daemon thread; not a pre-emission gate.
-- **Audit durability**: store-and-forward WAL in `/tmp/compliance_audit_wal.jsonl` on SQLite failure.
-- **T5 fail-open**: LLM API outage degrades coverage; GAP-10 fix enforces deny/escalate-only by default.
-- **EXP-3 POLICY TP ±3**: OPA's `time.now_ns()` causes clock-boundary flips in 4 edge-case requests.
-- **EXP-6b fully simulated**: Pareto table uses seeded RNG + deterministic oracle; no live LLM calls.
-- **EXP-9 runtime check**: `denied_with_data=0` is invariant-by-construction; static code audit is the evidence.
+These four experiments have labeled corpora written inline in code. Each run
+serialises the corpus to `results/<EXP_ID>/corpus.json` for reviewer inspection:
+
+**EXP-3** (`200 requests`): fields `id`, `class`, `label`, `deciding_tier`,
+`content`. Classes: `static_regex` (40), `policy_rule` (40), `semantic` (20),
+`benign_normal` (50), `benign_suspicious` (25), `edge_case` (25).
+
+**EXP-4** (`60 requests`): two representations — `annotated` (includes
+`_semantic_class`, `_violation_type`) and `public` (T1/T3 and harness annotation
+fields stripped — exact payload the live model receives). Classes:
+`clean_escalated` (20), `adversarial_deny` (20), `true_violation` (20).
+
+**EXP-6b** (`80 requests`): fields `_label`, `_vclass`. 40 benign + 40
+violations: `rbac_write`, `purpose_mismatch`, `bad_token`, `future_timestamp`,
+`purpose_bypass_fred` (8 each).
+
+**EXP-7** (`80 requests`): fields `label`, `violation_type`. 40 benign + 40
+violations cycling through 7 violation types.
+
+## Key corrections since initial submission
+
+| Experiment | Change |
+|---|---|
+| **EXP-6b** | Semantic per-call latency corrected from 45 ms (constant) to lognormal fitted to EXP-1 LIVE_BENCHMARK T7 (LLM tier) data (P50 = 9,500 ms, σ_log = 0.26). Throughput collapse is now ~3 orders of magnitude, not 1. Table reference corrected from Table 15 to Table 14. |
+| **EXP-4** | `_StubLLMValidator` replaced by live `validate_semantic_pii()` path (same as EXP-3) when `LLM_VALIDATION_ENABLED=true`. Live run: `terminal_allow_count = 0` (Proposition 1 holds). The `injection_fooled_model = 20/20` figure reflects a scope mismatch — the model correctly answered its scoped question (no indirect PII in a GDP read); the adversarial strings were outside its evaluation domain. The paper does not claim the model was deceived; it claims Proposition 1 held. |
+| **EXP-3/4/6b/7** | Corpora serialised to `corpus.json` on every run. |
+
+## Known limitations
+
+See [`docs/gap-disclosures.md`](../docs/gap-disclosures.md) for the full list.
+Reproducibility-relevant notes:
+
+- **EXP-3 POLICY TP ±3**: OPA's `time.now_ns()` causes clock-boundary flips in 4
+  `edge_case` requests. Range 52–55 TP across live-OPA re-runs; STATIC and FULL stable.
+- **EXP-6b fully simulated**: seeded RNG (`seed=42`), no live model calls. The
+  latency model is fitted to measured EXP-1 data, not live calls.
+- **EXP-4 adversarial strings**: 4 canonical jailbreak patterns cycled across 20
+  requests. Broader red-team evaluation is future work (§7).
+- **EXP-9**: `denied_with_data=0` is invariant-by-construction; static code audit
+  is the evidence (1/1 `fetch_real_data` call sites gated on `decision == "APPROVED"`).

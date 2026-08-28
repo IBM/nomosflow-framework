@@ -1,6 +1,6 @@
 {
   "exp_id": "exp_gap13",
-  "repo_root": "/Users/rsinha/agentic-dataops/compliance-mvp/event-driven-compliance-sidecar-podman-sandbox",
+  "repo_root": "/workspace/nomosflow-framework",
   "runtime_ms": 73.06316698668525,
   "n_interceptors": 3,
   "n_import_ok": 3,

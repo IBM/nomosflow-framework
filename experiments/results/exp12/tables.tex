@@ -1,50 +1,64 @@
 % Auto-generated LaTeX for EXP-12: Sidecar Resource Overhead
-% 2026-08-14T05:25:07.423103+00:00
+% CPU/RSS config table: raw_20260824_165956.json (local live run, Aug 24 09:59)
+% OPA container RSS: raw_CANONICAL.json (Aug 15 2026, podman stats, opa-engine container)
+% Pod decomposition matches paper_results.tex (GAP-12 resolved)
 
 \begin{table}[t]
   \centering
-  \caption{CPU and RSS by configuration}
+  \caption{EXP-12: Python sidecar CPU and RSS by configuration (live OPA, psutil).
+    Benchmark process RSS\,$\approx$\,36--38\,MB; the compliance stack adds
+    $+$2.44\,MB incremental RSS ($+$6.8\%) over no-enforcement.
+    Paper reports $+$2.2\,MB/$+$6.1\% using a slightly different baseline RSS
+    from its live run (run-to-run variance).
+    CPU drops $\approx$38\% under full-stack due to early-exit short-circuiting.}
   \label{tab:exp12_0}
   \begin{tabular}{lrrrr}
     \toprule
-    \textbf{Config} & \textbf{Mean_CPU_pct} & \textbf{Peak_CPU_pct} & \textbf{Mean_RSS_MB} & \textbf{Peak_RSS_MB} \\
+    \textbf{Config} & \textbf{Mean CPU\,\%} & \textbf{Peak CPU\,\%} & \textbf{Mean RSS\,(MB)} & \textbf{Peak RSS\,(MB)} \\
     \midrule
-    no_enforcement & 99.82 & 100.6 & 236.1 & 241.05 \\
-    apl_only & 99.76 & 100.2 & 210.5 & 228.0 \\
-    opa_only & 39.18 & 45.0 & 134.75 & 135.03 \\
-    full_stack & 39.84 & 45.4 & 121.08 & 133.36 \\
+    no\_enforcement & 99.96 & 100.8 & 35.89 & 35.91 \\
+    apl\_only       & 99.96 & 100.4 & 36.47 & 36.67 \\
+    opa\_only       & 60.55 &  64.3 & 38.28 & 38.33 \\
+    full\_stack     & 61.56 &  65.5 & 38.33 & 38.34 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 \begin{table}[t]
   \centering
-  \caption{Overhead vs. no-enforcement baseline}
+  \caption{EXP-12 (GAP-12 resolved): NomosFlow pod RSS decomposition.
+    OPA RSS measured via \texttt{podman stats} (live container, raw\_CANONICAL Aug\,15).
+    Python sidecar RSS measured via psutil (raw\_20260824\_165956 Aug\,24).
+    Kafka and Prometheus are analytical estimates; full pod total\,$\approx$\,373\,MB.}
   \label{tab:exp12_1}
-  \begin{tabular}{lrr}
+  \begin{tabular}{llr}
     \toprule
-    \textbf{Metric} & \textbf{Delta} & \textbf{Delta_pct} \\
+    \textbf{Component} & \textbf{Source} & \textbf{RSS\,(MB)} \\
     \midrule
-    mean_cpu_pct & -59.98 & -60.1% \\
-    peak_cpu_pct & -55.20 & -54.9% \\
-    mean_rss_mb & -115.02 & -48.7% \\
-    peak_rss_mb & -107.69 & -44.7% \\
+    Kafka broker (JVM) & analytical   & $\approx$180 \\
+    OPA server         & podman stats & 104.9 \\
+    Prometheus         & analytical   & $\approx$30  \\
+    Python sidecar     & psutil       & 38.5  \\
+    OS / page cache    & analytical   & $\approx$20  \\
+    \midrule
+    \textbf{Total}     &              & $\approx$373 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 \begin{table}[t]
   \centering
-  \caption{Live-benchmark scale throughput + OPA latency (benchmarks/tier_benchmark_20260710_021432.json)}
-  \label{tab:exp12_3}
+  \caption{EXP-12: Live-benchmark scale throughput + OPA latency
+    (\texttt{benchmarks/tier\_benchmark\_20260710\_021432.json}).}
+  \label{tab:exp12_2}
   \begin{tabular}{lrrr}
     \toprule
-    \textbf{Scale} & \textbf{RPS (live)} & \textbf{Decisions (APPROVED/DENIED)} & \textbf{OPA_mean_ms} \\
+    \textbf{Scale} & \textbf{RPS (live)} & \textbf{Decisions (APPROVED/DENIED)} & \textbf{OPA mean\,(ms)} \\
     \midrule
-    100 & 392.0 & APPROVED=86 / DENIED=14 & 2.59 \\
-    1000 & 18.3 & APPROVED=766 / DENIED=234 & 5.05 \\
-    10000 & 14.8 & APPROVED=7893 / DENIED=2107 & 5.47 \\
-    100000 & 17.1 & APPROVED=79093 / DENIED=20907 & 5.40 \\
+    100     & 392.0 & APPROVED=86 / DENIED=14       & 2.59 \\
+    1{,}000   &  18.3 & APPROVED=766 / DENIED=234     & 5.05 \\
+    10{,}000  &  14.8 & APPROVED=7{,}893 / DENIED=2{,}107 & 5.47 \\
+    100{,}000 &  17.1 & APPROVED=79{,}093 / DENIED=20{,}907 & 5.40 \\
     \bottomrule
   \end{tabular}
 \end{table}
