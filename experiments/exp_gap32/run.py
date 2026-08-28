@@ -36,7 +36,7 @@ from experiments.shared.common import save_result
 # ── file paths ────────────────────────────────────────────────────────────────
 _OPA_MAP_PATH    = _REPO / "policies" / "oscal_compliance.rego"
 _PY_MAP_PATH     = _REPO / "src" / "validators" / "trestle_validator.py"
-_POLICY_PATH     = _REPO / "config" / "policies" / "policy.rego"
+_POLICY_PATH     = _REPO / "policies" / "policy.rego"
 
 
 # ── parsers ──────────────────────────────────────────────────────────────────
