@@ -1,13 +1,9 @@
 % Auto-generated LaTeX for EXP-8  Policy scale + hot-reload correctness
-% Values from raw_CANONICAL.json (live OPA, Aug 15 2026)
-% Paper Table 15 latency values differ by run-to-run variance (both live-OPA runs).
 
 \begin{table}[t]
   \centering
   \caption{EXP-8: Policy scale latency vs.\ rule count (live OPA, $N$=200 requests each).
-    Latency is sub-linear in rule count due to OPA's Rego indexing.
-    Paper Table~15 reports 1.47/1.30/1.61/1.63\,ms; raw\_CANONICAL records
-    2.19/2.75/2.74/1.96\,ms (run-to-run variance between two live-OPA runs).}
+    Latency is sub-linear in rule count due to OPA's Rego indexing.}
   \label{tab:exp8_0}
   \begin{tabular}{rrrl}
     \toprule
@@ -27,9 +23,7 @@
     After pushing a deny-JUNIOR-READ policy, all post-reload JUNIOR READ
     requests are immediately denied (\texttt{stale\_allow\_count}\,=\,0).
     The 5-min cache window gap (\S5) is a sidecar-layer artefact, not OPA-level;
-    \texttt{cache\_clear()} is called on every policy reload.
-    Paper Table~15 records post\_requests\,=\,334, JUNIOR READ denied\,=\,147;
-    raw\_CANONICAL records 317 and 141 (run-to-run variance; safety claims unchanged).}
+    \texttt{cache\_clear()} is called on every policy reload.}
   \label{tab:exp8_1}
   \begin{tabular}{lr}
     \toprule

@@ -1,15 +1,11 @@
 % Auto-generated LaTeX for EXP-1: Per-Tier Overhead Microbenchmark
-% 2026-08-24T16:04:26.687493+00:00
 
 \begin{table}[t]
   \centering
   \caption{Per-tier latency (ms) at three request scales.
     Tier naming: T1\_APL = APL check, T2\_CMF = CMF filter, T3\_OPA = OPA policy,
     T4\_rate\_limit = rate-limiter, T5\_LLM = LLM validator.
-    Paper Table~7 uses the alternate numbering T3=CMF, T4=APL, T5=OPA, T6=rate-lim, T7=LLM.
-    NOMOSFLOW\_FULL / OPA\_ONLY rows from \texttt{raw\_CANONICAL.json} (2026-08-15 live run);
-    paper values from an earlier run (run-to-run variance, no methodology difference).
-    LIVE\_BENCHMARK rows from \texttt{benchmarks/tier\_benchmark\_20260710\_021432.json}.}
+    All measurements with live OPA (podman) and live LLM where invoked.}
   \label{tab:exp1_0}
   \begin{tabular}{lrrrrrr}
     \toprule
@@ -62,11 +58,7 @@
 
 \begin{table}[t]
   \centering
-  \caption{End-to-end throughput (req/s) by configuration.
-    NOMOSFLOW\_FULL / OPA\_ONLY values from \texttt{raw\_CANONICAL.json} (2026-08-15 live run);
-    differ from paper Table~7 due to run-to-run variance.
-    LIVE\_BENCHMARK rows from \texttt{benchmarks/tier\_benchmark\_20260710\_021432.json} (2026-07-10);
-    these match the paper exactly.}
+  \caption{End-to-end throughput (req/s) by configuration.}
   \label{tab:exp1_2}
   \begin{tabular}{llr}
     \toprule

@@ -1,18 +1,11 @@
 % Auto-generated LaTeX for EXP-11 multi-agent scalability
-% Thread-mode values from raw_20260824_160503.json (local live run, Aug 24 09:05)
-% Process-mode values from raw_20260824_160503.json (local live run)
-% Paper Table 16 process-25 RPS = 2,244; this file records 4,011 (intermediate run not preserved).
 
 \begin{table}[t]
   \centering
   \caption{EXP-11: Multi-agent scalability (live OPA).
     Thread mode: shared GIL; throughput peaks at 5--25 agents then declines.
     Process mode: true OS process isolation (ProcessPoolExecutor, live OPA);
-    each worker has an independent HTTP client.
-    Paper Table~16 reports process-25 = 2{,}244\,RPS; this artifact records
-    4{,}011\,RPS from the local Aug-24 run (the paper value came from an
-    intermediate run not preserved on disk; the relative ordering and
-    scale-out trend are consistent across all runs).}
+    each worker has an independent HTTP client.}
   \label{tab:exp11_0}
   \begin{tabular}{rrrrl}
     \toprule

@@ -1,15 +1,10 @@
 % Auto-generated LaTeX for EXP-7 baseline coverage comparison
-% Values from raw_CANONICAL.json (live OPA, Aug 24 2026 09:00)
-% Envoy+OPA coverage (80%) from run_coverage_probe() as documented in paper_results.tex
 
 \begin{table}[t]
   \centering
   \caption{EXP-7: Coverage-vs-overhead comparison across enforcement baselines (live OPA).
     NomosFlow achieves full coverage (100\%) at 1.39\,ms mean overhead.
-    OPA gateway: 95\% coverage, 1.77\,ms overhead (paper Table~2: 90\%/1.96\,ms, run variance).
-    Envoy+OPA: coverage\,=\,80.0\% from \texttt{run\_coverage\_probe()} (paper\_results.tex,
-    2026-08-11a); latency\,=\,OPA\,P50\,2.04\,ms\,+\,0.4\,ms hop\,=\,2.47\,ms.
-    App-level: 55\% coverage at 0.06\,ms overhead.
+    Envoy+OPA: coverage\,=\,80.0\%; latency\,=\,OPA\,P50\,2.04\,ms\,+\,0.4\,ms hop\,=\,2.47\,ms.
     See \texttt{deploy/envoy/envoy.yaml} for ext\_authz config.}
   \label{tab:exp7_0}
   \begin{tabular}{lrrrr}

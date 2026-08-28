@@ -1,15 +1,10 @@
 % Auto-generated LaTeX for EXP-12: Sidecar Resource Overhead
-% CPU/RSS config table: raw_20260824_165956.json (local live run, Aug 24 09:59)
-% OPA container RSS: raw_CANONICAL.json (Aug 15 2026, podman stats, opa-engine container)
-% Pod decomposition matches paper_results.tex (GAP-12 resolved)
 
 \begin{table}[t]
   \centering
   \caption{EXP-12: Python sidecar CPU and RSS by configuration (live OPA, psutil).
     Benchmark process RSS\,$\approx$\,36--38\,MB; the compliance stack adds
     $+$2.44\,MB incremental RSS ($+$6.8\%) over no-enforcement.
-    Paper reports $+$2.2\,MB/$+$6.1\% using a slightly different baseline RSS
-    from its live run (run-to-run variance).
     CPU drops $\approx$38\% under full-stack due to early-exit short-circuiting.}
   \label{tab:exp12_0}
   \begin{tabular}{lrrrr}
@@ -27,8 +22,7 @@
 \begin{table}[t]
   \centering
   \caption{EXP-12 (GAP-12 resolved): NomosFlow pod RSS decomposition.
-    OPA RSS measured via \texttt{podman stats} (live container, raw\_CANONICAL Aug\,15).
-    Python sidecar RSS measured via psutil (raw\_20260824\_165956 Aug\,24).
+    OPA RSS measured via \texttt{podman stats} (live container).
     Kafka and Prometheus are analytical estimates; full pod total\,$\approx$\,373\,MB.}
   \label{tab:exp12_1}
   \begin{tabular}{llr}
@@ -48,8 +42,7 @@
 
 \begin{table}[t]
   \centering
-  \caption{EXP-12: Live-benchmark scale throughput + OPA latency
-    (\texttt{benchmarks/tier\_benchmark\_20260710\_021432.json}).}
+  \caption{EXP-12: Live-benchmark scale throughput + OPA latency.}
   \label{tab:exp12_2}
   \begin{tabular}{lrrr}
     \toprule

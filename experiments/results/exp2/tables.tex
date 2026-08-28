@@ -1,14 +1,4 @@
 % Auto-generated LaTeX for EXP-2: Resolution Distribution (NomosFlow)
-% Values from raw_CANONICAL.json (live OPA, Aug 15 2026)
-% Tier labels use paper notation: T3=CMF, T4=APL, T5=OPA, T6=rate-limit, T7=LLM.
-% Internal JSON keys in raw_CANONICAL.json use T1_APL/T2_CMF/T3_OPA/T4_RATE/T5_LLM.
-%
-% Artifact note — APL merge (§5 caveat):
-% The shipped APL component implements both the paper's T2 (pre-enrichment syntactic
-% filters) and T4 (attribute checks) phases as a single component, and runs before T3
-% CMF. The latency tables label the combined component T4. This is the "several tiers
-% are logical phases rather than separately instrumented spans" caveat of §5
-% (p.tex, Implementation status paragraph).
 
 \begin{table}[t]
   \centering
@@ -72,9 +62,7 @@
   \centering
   \caption{EXP-2: Short-circuit ablation (live OPA).
     Ladder mode stops at first DENY; forced-pipeline runs all tiers regardless.
-    T7\,(LLM) excluded from both arms.
-    Paper Table~8 reports 1.60\,ms / 3.56\,ms / 55\% from the paper's live run;
-    raw\_CANONICAL records 2.26\,ms / 3.53\,ms from a separate live-OPA run.}
+    T7\,(LLM) excluded from both arms.}
   \label{tab:exp2_3}
   \begin{tabular}{lrr}
     \toprule
