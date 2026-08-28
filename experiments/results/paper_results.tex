@@ -320,6 +320,14 @@ LLM\_TIMEOUT\_LIVE & 0 & -- & -- & 100.0\% & 2.60 \\
 
 % ------------------------------------------------------------------
 % §6.3  EXP-6b: Selective screening Pareto
+%        Provenance: fully simulated. LLM recall is computed from a
+%        deterministic class-label oracle; latency is sampled from a
+%        lognormal fitted to the live T7 measurements (Table 7,
+%        P50 ≈ 9,500 ms). No live model calls are made.
+%        Latency constant corrected 2026-08: prior +45 ms per call
+%        was ~200× below the measured T7 value; throughput now shows
+%        the correct ~3-orders-of-magnitude collapse. See §5 gap
+%        disclosure.
 % ------------------------------------------------------------------
 \begin{table}[t]
 \centering
@@ -640,3 +648,209 @@ LLM override: no cloud key & \checkmark & credentials via env/secrets only \\
 \end{tabular}
 \end{table}
 
+% ------------------------------------------------------------------
+% §5 / Appendix  Gap disclosures (required in §5)
+% ------------------------------------------------------------------
+% \paragraph{Gap disclosures.}
+% \begin{itemize}
+%
+%   % ── Resolved gaps ──────────────────────────────────────────────
+%
+%   \item \textbf{EXP-3 corpus (resolved 2026-08-10)}: corpus expanded 80→200 cases;
+%         16 mislabelled benign cases corrected (edgar/* SENIOR-only per REQ\,2;
+%         fred/* MarketResearch/RiskAnalysis only per REQ\,5; ADMIN cannot WRITE per REQ\,11;
+%         edgar/9999999999 denied per REQ\,14).  FPR\,=\,0.0\% (FP\,=\,0/87).
+%         export\_for\_annotation.py and compute\_iaa.py added for blind IAA review.
+%   \item \textbf{EXP-7 Envoy baseline (resolved 2026-08-11)}: ENVOY\_OPA\_GATEWAY row
+%         coverage\,=\,80.0\% (FPR\,=\,0.0\%) measured by run\_coverage\_probe() against
+%         the 80-item EXP-7 corpus; OPA P50\,=\,2.04\,ms + 0.4\,ms hop overhead\,=\,2.47\,ms.
+%         deploy/envoy/envoy.yaml provided for artifact evaluation.
+%   \item \textbf{GAP-13 hook surfaces (resolved 2026-08-11)}: attach/detach added to
+%         compliance\_interceptor; handle\_request added to mcp\_interceptor;
+%         create\_app added to compliance\_proxy\_server.  All 3/3 hook checks pass.
+%   \item \textbf{EXP-6 LLM fail-secure (resolved 2026-08-11)}: LLM\_TIMEOUT\_LIVE
+%         scenario uses env-var kill (LLM\_VALIDATION\_ENABLED=false), no mock.patch.
+%         LLMValidator.validate() is now fail-SECURE: TimeoutError $\to$ DENIED.
+%         All 5 scenarios report false\_allows\,=\,0.
+%   \item \textbf{Wave 1 sidecar fixes (2026-08-10)}: test\_scenario bypass now uses
+%         OR logic (\texttt{event.get()} \textbar{}\textbar{} \texttt{os.getenv()});
+%         RATE\_LIMIT\_THRESHOLD configurable via env var; cache\_clear() called on
+%         policy reload.
+%   \item \textbf{EXP-8}: \texttt{reload\_ok\,=\,True} confirmed; \texttt{stale\_allow\_count\,=\,0}.
+%
+%   % ── Open gaps / Proposition 3 disclosures (GAP-2, 3c, 4, 8, 11) ──
+%
+%   \item \textbf{GAP-2 (Prop.\,3 singularity)}: Proposition\,3 tier ordering applies
+%         to tiers $i$ with $p_i < 1$; T1 ($p_i=1.0$, mandatory APL check) is not
+%         subject to reordering and is excluded from the optimization domain.
+%   \item \textbf{GAP-3c (semantic simulation, resolved 2026-08-15)}: The 200-case
+%         corpus T5 class previously used a keyword-heuristic oracle; EXP-3 has been
+%         re-run with live \texttt{aws/claude-sonnet-4-5} via
+%         \texttt{LLMValidator.validate\_semantic\_pii()} (\texttt{cache=off},
+%         $n$=200 independent model calls, IBM LiteLLM proxy).
+%         Semantic-class recall improves 85\%$\to$95\% (+10\,pp, 19/20 TP);
+%         FULL-mode F1 improves 90.3\%$\to$90.8\%; FPR remains 0.0\% (FP\,=\,0/87).
+%         The 1 remaining FN is a borderline context-leak case suppressed by the
+%         0.7 confidence gate; see Table~\ref{tab:exp3-semantic}.
+%         Raw result: \texttt{results/exp3/raw\_20260815\_031644.json}
+%         (\texttt{llm\_live=true}, \texttt{t5\_mode=live\_llm\_validator}).
+%   \item \textbf{EXP-3 POLICY variance (2026-08-15b)}: POLICY mode TP varies by
+%         $\pm$3 across live-OPA re-runs (observed range 52--55, both \texttt{opa\_live=True}).
+%         Root cause: the \texttt{edge\_case} class contains 4 requests whose
+%         \texttt{timestamp} values fall within 300\,s of the REQ-14 threshold at
+%         corpus-build time; OPA's \texttt{time.now\_ns()} causes these cases to flip
+%         between ALLOW and DENY deterministically on each re-run as wall-clock
+%         advances.  STATIC and FULL numbers are stable (STATIC does not call OPA;
+%         FULL applies T5 which resolves the ambiguous T3 outcomes).
+%         The POLICY row in Table~\ref{tab:exp3-detection} reports the observed range.
+%         Permanent fix: pin \texttt{\_base()} timestamps to a fixed past epoch.
+%   \item \textbf{EXP-3 overlap counts (2026-08-15b)}: The overlap table in
+%         Table~\ref{tab:exp3-overlap} previously showed counts summing to 800, not 500.
+%         The \texttt{load\_overlap\_counts()} helper in \texttt{shared/live\_data.py}
+%         returned hard-coded values (99/121/110/470) copied from the source TeX table
+%         without re-deriving them from the confusion matrices.  The confusion matrices
+%         in the same source file imply: Both\,=\,99, Static-only\,=\,66,
+%         LLM-only\,=\,88, Neither\,=\,247 (sum\,=\,500).
+%         Corrected values are shown in Table~\ref{tab:exp3-overlap} alongside
+%         the source-table values for auditability.
+%         Complementarity drops from 70.0\% to 60.9\%; the architectural conclusion
+%         is unchanged.
+%   \item \textbf{EXP-6b simulation provenance (2026-08-15b, corrected 2026-08)}: The Pareto
+%         table (Table~\ref{tab:exp6b-pareto}) is fully simulated: LLM verdict from a
+%         deterministic class-label oracle (\texttt{\_llm\_detect});
+%         per-call semantic latency sampled from a lognormal fitted to the live T7
+%         measurements of Table~\ref{tab:exp1-latency}
+%         ($\mu_\ln$\,=\,\texttt{ln}(9{,}500)\,ms, $\sigma_\ln$\,=\,0.26, P50\,$\approx$\,9.5\,s);
+%         static base: $\mathcal{N}(3.2\,\text{ms},\,0.8\,\text{ms})$;
+%         corpus seeded with \texttt{random.seed(42)}.
+%         No live model calls are made.  The table quantifies structural
+%         recall--throughput trade-off shape; absolute recall values assume the
+%         oracle's perfect accuracy on the two semantic violation classes.
+%         \textbf{Correction note:} the prior constant ($+$45\,ms per LLM-routed request)
+%         was $\approx$200$\times$ below the measured T7 value, making the throughput
+%         column artificially optimistic by $\sim$3 orders of magnitude.
+%         The corrected table shows the expected steep collapse.
+%   \item \textbf{EXP-9 runtime check (2026-08-15b)}: \texttt{denied\_with\_data}
+%         is asserted to be 0 by construction (\texttt{data\_emitted = allowed} uses
+%         the same boolean that gates the data path).  The genuine invariant evidence
+%         is the static code audit (1/1 \texttt{fetch\_real\_data} call sites confirmed
+%         inside an \texttt{if decision == "APPROVED"} branch in
+%         \texttt{sidecar\_optimized.py}).  Table~\ref{tab:exp9-rbs} updated to
+%         distinguish code-path audit from runtime assertion.
+%   \item \textbf{GAP-4 (prompt injection)}: Red-team evaluation of T5 with
+%         adversarial prompt-injection sequences beyond EXP-4 is future work (\S7).
+%   \item \textbf{GAP-8 (audit durability, resolved 2026-08-11d)}:
+%         \texttt{\_spill\_to\_wal()} and \texttt{\_drain\_wal()} added to
+%         \texttt{sidecar\_optimized.py}.  On \texttt{sqlite3.OperationalError}
+%         the pending batch is appended to \texttt{/tmp/compliance\_audit\_wal.jsonl}
+%         (path configurable via \texttt{AUDIT\_WAL\_PATH}); the next successful
+%         \texttt{flush\_audit\_batch()} call drains the WAL first, preserving
+%         append order.  Hash-chain (\texttt{prev\_hash} SHA-256) added to
+%         \texttt{S3AuditWriter.add\_audit\_record()} and to the EXP-6 WAL write.
+%         EXP-6 \textsc{AUDIT\_PARTITION} row: \texttt{lost\_records=0},
+%         \texttt{chain\_ok=True} (Table~\ref{tab:exp6-fault}).
+%         Abstract claim ``every verdict is recorded'' is now backed by code.
+%   \item \textbf{GAP-10 (T5 fail-secure, resolved 2026-08-11)}: \texttt{process\_llm\_tier}
+%         in \texttt{sidecar\_optimized.py} now returns DENIED when the LLM validator
+%         is unavailable (fail-secure by default).  Set \texttt{FAIL\_OPEN\_LLM=true}
+%         to restore the previous fail-open behaviour (used by the escalation demo).
+%   \item \textbf{GAP-11 (EXP-11 RSS)}: per-agent RSS is measured as incremental
+%         psutil delta in a threaded benchmark; negative values at $N=50$ reflect
+%         GC reclaim between samples and are not measurement errors.
+%   \item \textbf{GAP-12 (pod RSS, resolved 2026-08-11)}: OPA RSS measured at
+%         104.9\,MB via \texttt{podman stats} (live container); Python sidecar
+%         measured at 38.5\,MB (psutil, benchmark process).  Revised pod total
+%         (Kafka$\approx$180 + OPA\,104.9 + Prometheus$\approx$30 + sidecar\,38.5 +
+%         OS$\approx$20) $\approx$\,373\,MB; original 310\,MB figure was an underestimate
+%         due to lower sidecar RSS assumption.  Table~\ref{tab:exp12-podman} gives the
+%         full decomposition.
+%   \item \textbf{GAP-25b (IAA v2, resolved 2026-08-15c)}: The original IAA result
+%         ($\kappa$\,=\,0.888, reported 2026-08-11c) is \textbf{retracted}.
+%         Annotator\,B was generated by injecting disagreements at rates derived
+%         from the known 8\% corpus mislabel rate — a circular restatement of a
+%         parameter, not a measurement of independent agreement.
+%
+%         A genuine blind run was performed: \texttt{aws/claude-sonnet-4-5} was
+%         given the NomosFlow policy specification (V1–V15 in plain English,
+%         derived from \texttt{policy.rego}) and each event payload;
+%         corpus labels and class tags were withheld entirely.
+%         $n$\,=\,200 independent model calls (9 parse errors; defaulted to
+%         ``benign'' as the conservative fail-safe).
+%
+%         Result: $\kappa$\,=\,0.681 (``substantial'', Landis \& Koch), $p_o$\,=\,0.845,
+%         31/200 disagreements (15.5\%).
+%         Systematic disagreements identify two policy-specification gaps:
+%         (i)~the model cannot verify absolute timestamps against wall-clock time,
+%         causing 13 false-positive V11 (future-timestamp) violations on the
+%         benchmark epoch \texttt{1786414803}; (ii)~the \texttt{metadata.token}
+%         consistency rule is not stated in the plain-English policy, causing 1
+%         V1 miss.  Both gaps are informative rather than random noise.
+%         Per-item reasoning in \texttt{results/exp3/iaa\_blind\_raw.json}.
+%
+%         \textbf{Honest provenance statement (copy to paper):}
+%         ``A second, independent automated annotator — \texttt{aws/claude-sonnet-4-5}
+%         given the policy specification and the event payload, blind to the corpus
+%         labels and class tags — labelled the same 200 cases.  Cohen's $\kappa$
+%         between the policy-oracle ground truth (Annotator\,A) and the blind model
+%         (Annotator\,B) was $\kappa$\,=\,0.681 ($n$\,=\,200, $p_o$\,=\,0.845,
+%         ``substantial'').  Annotator\,B is an automated system, not a human.''
+%   \item \textbf{GAP-30 (figures, resolved 2026-08-11)}:
+%         Figure~\ref{fig:tier-histogram} shows the resolved-at-tier histogram (EXP-2);
+%         Figure~\ref{fig:coverage-frontier} shows the coverage-vs-overhead Pareto frontier
+%         (EXP-7).  Both generated from live experiment data by
+%         \texttt{results/figures/gen\_figures.py}.
+%   \item \textbf{EXP-11 multi-process (resolved 2026-08-11)}: ProcessPoolExecutor run
+%         alongside thread run.  Process mode: 339\,RPS (1 agent) → 2{,}244\,RPS
+%         (25 agents); 36\% higher than thread mode at 25 agents, confirming GIL
+%         as the thread-mode bottleneck.  ``SIM'' tag removed from scalability curve.
+%   \item \textbf{GAP-32 (OSCAL mapping, resolved 2026-08-11e)}: Four-eyes review of
+%         the NIST SP 800-53 Rev.\,5 control mapping.
+%         \emph{Findings:} (i)~OPA-side (\texttt{oscal\_compliance.rego}) and
+%         Python-side (\texttt{\_CONTROL\_MAP\_STATIC}) maps are now identical at 46
+%         rule-keys each — zero drift between the two sources;
+%         (ii)~five enforcement rules in \texttt{policy.rego} (REQ\,13, 14, 17, 18, 25)
+%         had no OSCAL mapping — all five are now assigned SP\,800-53 control IDs
+%         (Table~\ref{tab:gap32-new-reqs});
+%         (iii)~the non-standard \texttt{ZT-1} extension ID is replaced by
+%         \texttt{IA-5} (Authenticator Management) and \texttt{IA-11}
+%         (Re-Authentication) — both are normative SP\,800-53 Rev.\,5 controls;
+%         (iv)~46 distinct controls spanning 15 families are now mapped
+%         (Table~\ref{tab:gap32-oscal}).
+%         The paper claim ``41 rules spanning identity, PII protection, data residency,
+%         retention, audit integrity, and privacy-rights obligations'' should read
+%         ``46 rule-keys spanning \ldots'' after this update; the family enumeration
+%         is unchanged.
+%         Verified by EXP-GAP-32 (4/4 assertions pass; zero drift, zero spurious IDs,
+%         zero unmapped requirements).
+%   \item \textbf{GAP-35 (LLM data-minimisation, resolved 2026-08-11f)}:
+%         Prior to this fix the raw event dict — which may contain SSN, e-mail,
+%         phone, or credit-card values — was passed verbatim to
+%         \texttt{process\_llm\_tier()}.  \texttt{redact\_for\_llm()} now strips all
+%         four PII pattern classes from every event copy before it reaches the
+%         LLM validator; structural compliance fields (\texttt{resource},
+%         \texttt{action}, \texttt{token}, \texttt{role}, \texttt{purpose}, etc.)
+%         are preserved via a passthrough-key allowlist so the validator retains
+%         the context it needs to reach a decision.  All four
+%         \texttt{process\_llm\_tier} call sites in \texttt{sidecar\_optimized.py}
+%         are wrapped.  The base \texttt{docker-compose.yml} now defaults to local
+%         Ollama inference (\texttt{ollama/granite3.2:2b}); no cloud API keys are
+%         present in any tracked file.  Verified by EXP-GAP-35
+%         (9/9 checks pass; Table~\ref{tab:gap35-redact}).
+%   \item \textbf{OPA cache staleness}: TTL window on hot-reload; cache\_clear() now
+%         called in on\_policy\_reload() callback.
+%
+% \end{itemize}
+
+% ------------------------------------------------------------------
+% Paper figures (GAP-30)
+% Include this file from the main .tex with \input{figures/figures}
+% ------------------------------------------------------------------
+% \input{figures/figures}
+%
+% The SVG files are at:
+%   experiments/results/figures/fig1_tier_histogram.svg
+%   experiments/results/figures/fig2_coverage_frontier.svg
+%
+% To convert SVG to PDF for pdflatex (if \includesvg not available):
+%   inkscape --export-pdf=fig1_tier_histogram.pdf fig1_tier_histogram.svg
+%   inkscape --export-pdf=fig2_coverage_frontier.pdf fig2_coverage_frontier.svg

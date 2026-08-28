@@ -119,6 +119,25 @@ The `Canonical file` column points to the checked-in artifact that contains the 
 | — | EXP-GAP-13 | Interceptor hook inventory — `tab:gap13-interceptors` in `paper_results.tex` | [`exp_gap13/raw_CANONICAL.json`](experiments/results/exp_gap13/raw_CANONICAL.json) |
 | — | EXP-9 | Buffer-then-release invariant (static code audit + runtime check) | [`exp9/raw_CANONICAL.json`](experiments/results/exp9/raw_CANONICAL.json) |
 | — | EXP-12 | Sidecar CPU / RSS overhead; full-pod decomposition | [`exp12/raw_CANONICAL.json`](experiments/results/exp12/raw_CANONICAL.json) |
+| Paper item | Experiment | Description |
+|---|---|---|
+| Table 1 | — | Observation function (body) |
+| Table 2 | EXP-7 | Coverage vs. overhead comparison matrix (body) |
+| Figure 1 | — | Architecture diagram (body) |
+| Figure 2 | EXP-7 | Coverage frontier (body) |
+| Table 3 | — | Coverage predicates (appendix) |
+| Table 4 | — | Isolation discharge (appendix) |
+| Table 5 | EXP-GAP-35 | Egress / redaction checks (appendix) |
+| Table 6 | EXP-GAP-32 | OSCAL control mapping (appendix) |
+| Table 7 | EXP-1 | Per-tier latency microbenchmark (appendix) |
+| Table 8 | EXP-2 | Short-circuit ablation / tier resolution (appendix) |
+| Tables 9–11 | EXP-3 | Detection 200-case, 500-case, overlap (appendix) |
+| Table 12 | EXP-4 | Verdict-lattice robustness under injected payloads (appendix) |
+| Table 13 | EXP-6 | Fault injection — zero false-ALLOWs (appendix) |
+| Table 14 | EXP-6b | Selective screening Pareto frontier (appendix) |
+| Table 15 | EXP-8 | Policy scale latency (appendix) |
+| Table 16 | EXP-11 | Multi-agent scalability (appendix) |
+| Figure 3 | EXP-2 | Resolved-at-tier histogram (appendix) |
 
 ## Corpus files
 
