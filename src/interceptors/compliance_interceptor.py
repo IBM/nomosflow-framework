@@ -44,6 +44,7 @@ import sys
 import json
 import logging
 import uuid
+from datetime import datetime, timezone
 from typing import Any, Optional, Dict, Tuple
 from io import StringIO, BytesIO
 import urllib.request
@@ -105,7 +106,7 @@ class ComplianceProxyClient:
         
         # Add agent metadata
         data['agent_id'] = self.agent_id
-        data['timestamp'] = str(uuid.uuid4())  # Use UUID as timestamp placeholder
+        data['timestamp'] = datetime.now(timezone.utc).isoformat()
         
         # Add new policy fields if present
         if self.user_id:
