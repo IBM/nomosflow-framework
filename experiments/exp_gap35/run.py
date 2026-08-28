@@ -115,9 +115,9 @@ _PII_EVENTS: list[tuple[str, dict, list[str]]] = [
             "resource":   "edgar/0000051143",
             "action":     "READ",
             "purpose":    "Compliance",
-            "data":       {"customer": "John Doe", "ssn": "<REDACTED-SSN>"},
+            "data":       {"customer": "John Doe", "ssn": "123-45-6789"},
         },
-        ["<REDACTED-SSN>"],
+        ["123-45-6789"],
     ),
     (
         "email_in_metadata",
@@ -145,9 +145,9 @@ _PII_EVENTS: list[tuple[str, dict, list[str]]] = [
             "request_id": "req-004",
             "resource":   "internal/crm",
             "action":     "READ",
-            "records":    [{"id": 1, "email": "bob@corp.com"}, {"id": 2, "ssn": "<REDACTED-SSN>"}],
+            "records":    [{"id": 1, "email": "bob@corp.com"}, {"id": 2, "ssn": "987-65-4321"}],
         },
-        ["bob@corp.com", "<REDACTED-SSN>"],
+        ["bob@corp.com", "987-65-4321"],
     ),
     (
         "structural_fields_preserved",
