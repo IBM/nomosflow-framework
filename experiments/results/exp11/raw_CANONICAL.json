@@ -1,74 +1,74 @@
 {
   "exp_id": "exp11",
-  "repo_root": "/workspace/nomosflow-framework",
-  "script": "experiments/exp11_multiagent/run.py",
+  "repo_root": "/Users/rsinha/agentic-dataops/compliance-mvp/event-driven-compliance-sidecar-podman-sandbox",
+  "script": "paper_experiments/exp11_multiagent/run.py",
   "requests_per_agent": 200,
   "scaling_thread": [
     {
       "agent_count": 1,
       "mode": "thread",
       "total_requests": 200,
-      "total_rps": 324.8365342942372,
-      "per_agent_rps": 324.8365342942372,
-      "per_agent_mean_latency_ms": 3.0509918922325596,
-      "p99_ms": 11.835279243532517,
-      "peak_rss_bytes": -9814016,
-      "per_agent_rss_bytes": -9814016.0
+      "total_rps": 510.5179459559008,
+      "per_agent_rps": 510.5179459559008,
+      "per_agent_mean_latency_ms": 1.9404204448801465,
+      "p99_ms": 4.314278978854332,
+      "peak_rss_bytes": 1523712,
+      "per_agent_rss_bytes": 1523712.0
     },
     {
       "agent_count": 5,
       "mode": "thread",
       "total_requests": 1000,
-      "total_rps": 1560.0167702498616,
-      "per_agent_rps": 312.0033540499723,
-      "per_agent_mean_latency_ms": 3.1363877133117057,
-      "p99_ms": 4.825046703335829,
-      "peak_rss_bytes": 229376,
-      "per_agent_rss_bytes": 45875.2
+      "total_rps": 1591.8666211687091,
+      "per_agent_rps": 318.3733242337418,
+      "per_agent_mean_latency_ms": 3.063112006173469,
+      "p99_ms": 4.959610014921054,
+      "peak_rss_bytes": 278528,
+      "per_agent_rss_bytes": 55705.6
     },
     {
       "agent_count": 10,
       "mode": "thread",
       "total_requests": 2000,
-      "total_rps": 1645.8303394057612,
-      "per_agent_rps": 164.58303394057612,
-      "per_agent_mean_latency_ms": 5.921354177291505,
-      "p99_ms": 9.318367058876902,
-      "peak_rss_bytes": -3244032,
-      "per_agent_rss_bytes": -324403.2
+      "total_rps": 1657.4740737923491,
+      "per_agent_rps": 165.74740737923491,
+      "per_agent_mean_latency_ms": 5.905777501524426,
+      "p99_ms": 9.197089112130925,
+      "peak_rss_bytes": 491520,
+      "per_agent_rss_bytes": 49152.0
     },
     {
       "agent_count": 25,
       "mode": "thread",
       "total_requests": 5000,
-      "total_rps": 1655.1599713816038,
-      "per_agent_rps": 66.20639885526415,
-      "per_agent_mean_latency_ms": 14.6885211669025,
-      "p99_ms": 24.532077888725336,
-      "peak_rss_bytes": -720896,
-      "per_agent_rss_bytes": -28835.84
+      "total_rps": 1653.0224813760149,
+      "per_agent_rps": 66.1208992550406,
+      "per_agent_mean_latency_ms": 14.753121052437928,
+      "p99_ms": 24.73879500932527,
+      "peak_rss_bytes": 622592,
+      "per_agent_rss_bytes": 24903.68
     },
     {
       "agent_count": 50,
       "mode": "thread",
       "total_requests": 10000,
-      "total_rps": 1234.3852707380104,
-      "per_agent_rps": 24.687705414760206,
-      "per_agent_mean_latency_ms": 39.39963424822781,
-      "p99_ms": 72.72011058696081,
-      "peak_rss_bytes": 11599872,
-      "per_agent_rss_bytes": 231997.44
+      "total_rps": 1471.8342349606107,
+      "per_agent_rps": 29.436684699212215,
+      "per_agent_mean_latency_ms": 32.672972630918956,
+      "p99_ms": 59.66251542675309,
+      "peak_rss_bytes": 1949696,
+      "per_agent_rss_bytes": 38993.92
     },
     {
       "agent_count": 100,
       "mode": "thread",
       "total_requests": 20000,
-      "total_rps": 927.8228744404339,
-      "per_agent_rps": 9.27822874440434,
-      "per_agent_mean_latency_ms": 105.91936260227521,
-      "p99_ms": 207.57458325009753,
-      "peak_rss_bytes": -52150272,
-      "per_agent_rss_bytes": -521502.72
+      "total_rps": 890.8348797541372,
+      "per_agent_rps": 8.908348797541372,
+      "per_agent_mean_latency_ms": 109.38726281093258,
+      "p99_ms": 170.26893073052634,
+      "peak_rss_bytes": -376832,
+      "per_agent_rss_bytes": -3768.32
     }
   ],
   "scaling_process": [
@@ -76,45 +76,45 @@
       "agent_count": 1,
       "mode": "process",
       "total_requests": 200,
-      "total_rps": 270.65850357155904,
-      "per_agent_rps": 270.65850357155904,
-      "per_agent_mean_latency_ms": 2.5267712216009386,
-      "p99_ms": 4.038049110095016,
-      "peak_rss_bytes": 2277376,
-      "per_agent_rss_bytes": 2277376.0
+      "total_rps": 338.7143521868216,
+      "per_agent_rps": 338.7143521868216,
+      "per_agent_mean_latency_ms": 1.7884926981059834,
+      "p99_ms": 3.966135749360532,
+      "peak_rss_bytes": 491520,
+      "per_agent_rss_bytes": 491520.0
     },
     {
       "agent_count": 5,
       "mode": "process",
       "total_requests": 1000,
-      "total_rps": 1483.7218091041111,
-      "per_agent_rps": 296.74436182082223,
-      "per_agent_mean_latency_ms": 2.3440787679865025,
-      "p99_ms": 5.611149185569955,
-      "peak_rss_bytes": -131072,
-      "per_agent_rss_bytes": -26214.4
+      "total_rps": 1421.4070294090095,
+      "per_agent_rps": 284.2814058818019,
+      "per_agent_mean_latency_ms": 2.4379102897946723,
+      "p99_ms": 6.627873715478926,
+      "peak_rss_bytes": -81920,
+      "per_agent_rss_bytes": -16384.0
     },
     {
       "agent_count": 10,
       "mode": "process",
       "total_requests": 2000,
-      "total_rps": 2008.3072807842327,
-      "per_agent_rps": 200.83072807842328,
-      "per_agent_mean_latency_ms": 3.4845513720065355,
-      "p99_ms": 10.224306307500228,
-      "peak_rss_bytes": -1458176,
-      "per_agent_rss_bytes": -145817.6
+      "total_rps": 1939.31111655753,
+      "per_agent_rps": 193.931111655753,
+      "per_agent_mean_latency_ms": 3.631480529671535,
+      "p99_ms": 12.120734270429233,
+      "peak_rss_bytes": -98304,
+      "per_agent_rss_bytes": -9830.4
     },
     {
       "agent_count": 25,
       "mode": "process",
       "total_requests": 5000,
-      "total_rps": 1347.46270762893,
-      "per_agent_rps": 53.8985083051572,
-      "per_agent_mean_latency_ms": 5.834704207454342,
-      "p99_ms": 34.21133416006342,
-      "peak_rss_bytes": -35487744,
-      "per_agent_rss_bytes": -1419509.76
+      "total_rps": 2244.2858371976718,
+      "per_agent_rps": 89.77143348790688,
+      "per_agent_mean_latency_ms": 3.9403971472056583,
+      "p99_ms": 13.738479471066993,
+      "peak_rss_bytes": 0,
+      "per_agent_rss_bytes": 0.0
     }
   ],
   "scaling": [
@@ -122,67 +122,67 @@
       "agent_count": 1,
       "mode": "thread",
       "total_requests": 200,
-      "total_rps": 324.8365342942372,
-      "per_agent_rps": 324.8365342942372,
-      "per_agent_mean_latency_ms": 3.0509918922325596,
-      "p99_ms": 11.835279243532517,
-      "peak_rss_bytes": -9814016,
-      "per_agent_rss_bytes": -9814016.0
+      "total_rps": 510.5179459559008,
+      "per_agent_rps": 510.5179459559008,
+      "per_agent_mean_latency_ms": 1.9404204448801465,
+      "p99_ms": 4.314278978854332,
+      "peak_rss_bytes": 1523712,
+      "per_agent_rss_bytes": 1523712.0
     },
     {
       "agent_count": 5,
       "mode": "thread",
       "total_requests": 1000,
-      "total_rps": 1560.0167702498616,
-      "per_agent_rps": 312.0033540499723,
-      "per_agent_mean_latency_ms": 3.1363877133117057,
-      "p99_ms": 4.825046703335829,
-      "peak_rss_bytes": 229376,
-      "per_agent_rss_bytes": 45875.2
+      "total_rps": 1591.8666211687091,
+      "per_agent_rps": 318.3733242337418,
+      "per_agent_mean_latency_ms": 3.063112006173469,
+      "p99_ms": 4.959610014921054,
+      "peak_rss_bytes": 278528,
+      "per_agent_rss_bytes": 55705.6
     },
     {
       "agent_count": 10,
       "mode": "thread",
       "total_requests": 2000,
-      "total_rps": 1645.8303394057612,
-      "per_agent_rps": 164.58303394057612,
-      "per_agent_mean_latency_ms": 5.921354177291505,
-      "p99_ms": 9.318367058876902,
-      "peak_rss_bytes": -3244032,
-      "per_agent_rss_bytes": -324403.2
+      "total_rps": 1657.4740737923491,
+      "per_agent_rps": 165.74740737923491,
+      "per_agent_mean_latency_ms": 5.905777501524426,
+      "p99_ms": 9.197089112130925,
+      "peak_rss_bytes": 491520,
+      "per_agent_rss_bytes": 49152.0
     },
     {
       "agent_count": 25,
       "mode": "thread",
       "total_requests": 5000,
-      "total_rps": 1655.1599713816038,
-      "per_agent_rps": 66.20639885526415,
-      "per_agent_mean_latency_ms": 14.6885211669025,
-      "p99_ms": 24.532077888725336,
-      "peak_rss_bytes": -720896,
-      "per_agent_rss_bytes": -28835.84
+      "total_rps": 1653.0224813760149,
+      "per_agent_rps": 66.1208992550406,
+      "per_agent_mean_latency_ms": 14.753121052437928,
+      "p99_ms": 24.73879500932527,
+      "peak_rss_bytes": 622592,
+      "per_agent_rss_bytes": 24903.68
     },
     {
       "agent_count": 50,
       "mode": "thread",
       "total_requests": 10000,
-      "total_rps": 1234.3852707380104,
-      "per_agent_rps": 24.687705414760206,
-      "per_agent_mean_latency_ms": 39.39963424822781,
-      "p99_ms": 72.72011058696081,
-      "peak_rss_bytes": 11599872,
-      "per_agent_rss_bytes": 231997.44
+      "total_rps": 1471.8342349606107,
+      "per_agent_rps": 29.436684699212215,
+      "per_agent_mean_latency_ms": 32.672972630918956,
+      "p99_ms": 59.66251542675309,
+      "peak_rss_bytes": 1949696,
+      "per_agent_rss_bytes": 38993.92
     },
     {
       "agent_count": 100,
       "mode": "thread",
       "total_requests": 20000,
-      "total_rps": 927.8228744404339,
-      "per_agent_rps": 9.27822874440434,
-      "per_agent_mean_latency_ms": 105.91936260227521,
-      "p99_ms": 207.57458325009753,
-      "peak_rss_bytes": -52150272,
-      "per_agent_rss_bytes": -521502.72
+      "total_rps": 890.8348797541372,
+      "per_agent_rps": 8.908348797541372,
+      "per_agent_mean_latency_ms": 109.38726281093258,
+      "p99_ms": 170.26893073052634,
+      "peak_rss_bytes": -376832,
+      "per_agent_rss_bytes": -3768.32
     }
   ],
   "components": [

@@ -1,45 +1,17 @@
 # EXP-11 multi-agent scalability
 
-## Throughput scaling (thread + process)
-| Agents | Total_RPS | Per_agent_RPS | P99_ms | Mode |
-| ------ | --------- | ------------- | ------ | ---- |
-| 1 | 1004.8 | 1004.8 | 1.90 | thread |
-| 5 | 2365.4 | 473.1 | 3.25 | thread |
-| 10 | 2144.9 | 214.5 | 12.27 | thread |
-| 25 | 2150.2 | 86.0 | 40.71 | thread |
-| 50 | 2038.4 | 40.8 | 60.06 | thread |
-| 100 | 1963.5 | 19.6 | 102.78 | thread |
-| 1 | 573.9 | 573.9 | 1.08 | process |
-| 5 | 2237.2 | 447.4 | 2.12 | process |
-| 10 | 2969.4 | 296.9 | 4.19 | process |
-| 25 | 4011.5 | 160.5 | 4.45 | process |
+*Generated: 2026-08-28T21:40:28.683488+00:00*
 
-
-## Per-agent resource growth
-| Agents | Mode | Peak_RSS_MB | Per_agent_RSS_KB |
-| ------ | ---- | ----------- | ---------------- |
-| 1 | thread | 0.05 | 48.00 |
-| 5 | thread | 0.13 | 25.60 |
-| 10 | thread | 2.05 | 209.60 |
-| 25 | thread | 0.05 | 1.92 |
-| 50 | thread | 0.03 | 0.64 |
-| 100 | thread | 0.84 | 8.64 |
-| 1 | process | 0.11 | 112.00 |
-| 5 | process | 0.00 | 0.00 |
-| 10 | process | -0.27 | -27.20 |
-| 25 | process | 0.00 | 0.00 |
-
-## Amortised vs. per-agent components
-| Component | Growth_model | Notes |
-| --------- | ------------ | ----- |
-| OPA process | amortised/shared | single shared policy engine (thread); isolated per worker (process) |
-| APL validator instance | amortised/shared | single instance reused across agents (thread); per-worker (process) |
-| CMF enricher | amortised/shared | conceptually shared service, not separately exercised here |
-| rate_limits dict entry | O(N_agents) | ~200 bytes per principal |
-| per-principal history | O(N_agents * H) | H = rate_limits update count |
-
-## Paper §5 gap disclosures
-- Thread mode: agents share OPA client and Python GIL — RSS isolation approximate; throughput is GIL-limited above ~10 agents.
-- Process mode: true OS process isolation (ProcessPoolExecutor); each worker has independent OPA HTTP client and APLValidator instance. Run with MP_AGENT_COUNTS env var to control which counts are tested (default: 1,5,10,25).
-- Per-principal history H is the rate_limits dict; full sequence_state (sidecar_optimized.py) not exercised in this benchmark.
-- Process mode exceeds thread mode at 25 agents in all runs, confirming GIL as the thread-mode bottleneck.
+## EXP-11: Multi-agent scalability (live OPA).
+| Agents | Total RPS | Per-agent RPS | P99\,(ms) | Mode |
+| ------ | --------- | ------------- | --------- | ---- |
+| 1 | 511 | 511 | 4.3 | thread |
+| 5 | 1{,}592 | 318 | 5.0 | thread |
+| 10 | 1{,}657 | 166 | 9.2 | thread |
+| 25 | 1{,}653 | 66 | 24.7 | thread |
+| 50 | 1{,}472 | 29 | 59.7 | thread |
+| 100 | 891 | 9 | 170.3 | thread |
+| 1 | 339 | 339 | 4.0 | process |
+| 5 | 1{,}421 | 284 | 6.6 | process |
+| 10 | 1{,}939 | 194 | 12.1 | process |
+| 25 | 2{,}244 | 90 | 13.7 | process |

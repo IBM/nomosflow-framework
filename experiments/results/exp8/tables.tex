@@ -1,18 +1,19 @@
 % Auto-generated LaTeX for EXP-8  Policy scale + hot-reload correctness
+% 2026-08-28T21:40:28.682511+00:00
 
 \begin{table}[t]
   \centering
   \caption{EXP-8: Policy scale latency vs.\ rule count (live OPA, $N$=200 requests each).
     Latency is sub-linear in rule count due to OPA's Rego indexing.}
   \label{tab:exp8_0}
-  \begin{tabular}{rrrl}
+  \begin{tabular}{lrrr}
     \toprule
     \textbf{Rule count} & \textbf{Mean\,(ms)} & \textbf{P99\,(ms)} & \textbf{Live?} \\
     \midrule
-    10    & 2.19 & 3.50 & \checkmark \\
-    100   & 2.75 & 5.40 & \checkmark \\
-    1{,}000  & 2.74 & 7.89 & \checkmark \\
-    5{,}000  & 1.96 & 3.60 & \checkmark \\
+    10 & 1.47 & 2.40 & \checkmark \\
+    100 & 1.30 & 2.14 & \checkmark \\
+    1{,}000 & 1.61 & 2.18 & \checkmark \\
+    5{,}000 & 1.63 & 3.17 & \checkmark \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -29,13 +30,13 @@
     \toprule
     \textbf{Metric} & \textbf{Value} \\
     \midrule
-    OPA live              & True  \\
-    Reload OK             & True  \\
-    Reload latency (ms)   & 4.11  \\
-    Propagation (ms)      & 0.05  \\
-    Stale-ALLOW count     & 0     \\
-    Post-reload requests  & 317   \\
-    JUNIOR READ denied    & 141   \\
+    OPA live & True \\
+    Reload OK & True \\
+    Reload latency (ms) & 5.82 \\
+    Propagation (ms) & 0.06 \\
+    Stale-ALLOW count & 0 \\
+    Post-reload requests & 334 \\
+    JUNIOR READ denied & 147 \\
     \bottomrule
   \end{tabular}
 \end{table}

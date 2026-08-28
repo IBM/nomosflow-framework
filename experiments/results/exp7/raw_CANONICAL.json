@@ -1,8 +1,8 @@
 {
   "exp_id": "exp7",
-  "repo_root": "/workspace/nomosflow-framework",
-  "script": "experiments/exp7_baselines/run.py",
-  "runtime_ms": 256.16483303019777,
+  "repo_root": "/Users/rsinha/agentic-dataops/compliance-mvp/event-driven-compliance-sidecar-podman-sandbox",
+  "script": "paper_experiments/exp7_baselines/run.py",
+  "runtime_ms": 284.8729170509614,
   "corpus_size": 80,
   "violation_subset": 40,
   "benign_subset": 40,
@@ -11,19 +11,19 @@
       "baseline": "NOMOSFLOW",
       "coverage": 1.0,
       "fpr": 0.0,
-      "mean_latency_ms": 1.4098109410912731,
-      "overhead_vs_no_enforcement": 1.3898109410912731
+      "mean_latency_ms": 1.5800224383047317,
+      "overhead_vs_no_enforcement": 1.5600224383047316
     },
     {
       "baseline": "OPA_GATEWAY",
-      "coverage": 0.95,
+      "coverage": 0.9,
       "fpr": 0.0,
-      "mean_latency_ms": 1.7867145885247737,
-      "overhead_vs_no_enforcement": 1.7667145885247737
+      "mean_latency_ms": 1.9778291141847149,
+      "overhead_vs_no_enforcement": 1.9578291141847148
     },
     {
       "baseline": "APP_LEVEL",
-      "coverage": 0.55,
+      "coverage": 0.525,
       "fpr": 0.0,
       "mean_latency_ms": 0.08,
       "overhead_vs_no_enforcement": 0.06
@@ -40,13 +40,13 @@
     "baseline": "ENVOY_OPA_GATEWAY",
     "coverage": null,
     "fpr": null,
-    "mean_latency_ms": 1.964,
-    "opa_p50_ms": 1.565,
+    "mean_latency_ms": 2.472,
+    "opa_p50_ms": 2.044,
     "envoy_hop_overhead_ms": 0.4,
-    "overhead_vs_no_enforcement": 1.944,
+    "overhead_vs_no_enforcement": 2.452,
     "opa_live": true,
     "n_samples": 50,
-    "note": "LIVE: OPA P50=1.57 ms + 0.4 ms Envoy overhead."
+    "note": "LIVE: OPA P50=2.04 ms + 0.4 ms Envoy overhead."
   },
   "envoy_baseline_note": "Envoy ext_authz + OPA gateway baseline: see deploy/envoy/envoy.yaml.\nENVOY_OPA_GATEWAY latency = OPA decision latency + 0.4 ms estimated Envoy hop overhead (2 x localhost RTT).\n\n**LIVE_OPA rows** are per-scale OPA P50 latency measured with opa_live=true from benchmarks/tier_benchmark_20260710_021432.json.",
   "live_benchmark_source": "benchmarks/tier_benchmark_20260710_021432.json"

@@ -1,9 +1,10 @@
 % Auto-generated LaTeX for EXP-7 baseline coverage comparison
+% 2026-08-28T21:40:28.681907+00:00
 
 \begin{table}[t]
   \centering
   \caption{EXP-7: Coverage-vs-overhead comparison across enforcement baselines (live OPA).
-    NomosFlow achieves full coverage (100\%) at 1.39\,ms mean overhead.
+    NomosFlow achieves full coverage (100\%) at 1.56\,ms mean overhead.
     Envoy+OPA: coverage\,=\,80.0\%; latency\,=\,OPA\,P50\,2.04\,ms\,+\,0.4\,ms hop\,=\,2.47\,ms.
     See \texttt{deploy/envoy/envoy.yaml} for ext\_authz config.}
   \label{tab:exp7_0}
@@ -11,16 +12,15 @@
     \toprule
     \textbf{Baseline} & \textbf{Coverage} & \textbf{FPR} & \textbf{Mean\,(ms)} & \textbf{Overhead\,(ms)} \\
     \midrule
-    NomosFlow          & 100.0\% & 0.0\% & 1.41 & 1.39 \\
-    OPA gateway        &  95.0\% & 0.0\% & 1.79 & 1.77 \\
-    Envoy+OPA gateway  &  80.0\% & 0.0\% & 2.47 & 2.45 \\
-    App-level          &  55.0\% & 0.0\% & 0.08 & 0.06 \\
-    No enforcement     &   0.0\% & 0.0\% & 0.02 & 0.00 \\
-    \midrule
+    NomosFlow & 100.0\% & 0.0\% & 1.58 & 1.56 \\
+    OPA gateway & 90.0\% & 0.0\% & 1.98 & 1.96 \\
+    App-level & 52.5\% & 0.0\% & 0.08 & 0.06 \\
+    No enforcement & 0.0\% & 0.0\% & 0.02 & 0.00 \\
+    Envoy+OPA gateway & 80.0\% & 0.0\% & 2.47 & 2.45 \\
     \multicolumn{5}{l}{\textit{Live OPA P50 latency (opa\_live=true, 2026-07-10 benchmark)}} \\
-    $n$\,=\,100     & --- & --- & 2.17 & --- \\
-    $n$\,=\,1{,}000   & --- & --- & 4.84 & --- \\
-    $n$\,=\,10{,}000  & --- & --- & 4.93 & --- \\
+    $n$\,=\,100 & --- & --- & 2.17 & --- \\
+    $n$\,=\,1{,}000 & --- & --- & 4.84 & --- \\
+    $n$\,=\,10{,}000 & --- & --- & 4.93 & --- \\
     $n$\,=\,100{,}000 & --- & --- & 4.91 & --- \\
     \bottomrule
   \end{tabular}

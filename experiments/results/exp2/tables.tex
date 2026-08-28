@@ -1,4 +1,5 @@
 % Auto-generated LaTeX for EXP-2: Resolution Distribution (NomosFlow)
+% 2026-08-28T21:40:28.680134+00:00
 
 \begin{table}[t]
   \centering
@@ -10,50 +11,12 @@
     \toprule
     \textbf{Tier} & \textbf{Count} & \textbf{Fraction} & \textbf{$p_i$} & \textbf{$c_i$\,(ms)} \\
     \midrule
-    T3\,(CMF)        &   0 & 0.000 & 0.686 & 0.02 \\
-    T4\,(APL)        & 629 & 0.315 & 1.000 & 0.00 \\
-    T5\,(OPA)        & 813 & 0.406 & 0.686 & 2.90 \\
-    T6\,(rate-limit) &   0 & 0.000 & 0.279 & 0.05 \\
-    T7\,(LLM)        &   1 & 0.001 & 0.003 & 92.82 \\
-    APPROVED         & 557 & 0.279 & ---   & ---   \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\begin{table}[t]
-  \centering
-  \caption{EXP-2: Survival probabilities and per-tier latency (live OPA).}
-  \label{tab:exp2_1}
-  \begin{tabular}{lrr}
-    \toprule
-    \textbf{Tier} & \textbf{$p_i$ (reach prob)} & \textbf{$c_i$ (mean ms)} \\
-    \midrule
-    T3\,(CMF)        & 0.686 & 0.02 \\
-    T4\,(APL)        & 1.000 & 0.00 \\
-    T5\,(OPA)        & 0.686 & 2.90 \\
-    T6\,(rate-limit) & 0.279 & 0.05 \\
-    T7\,(LLM)        & 0.003 & 92.82 \\
-    APPROVED         & 0.279 & ---  \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\begin{table}[t]
-  \centering
-  \caption{EXP-2: Tier ordering --- deployed vs.\ optimal (Prop.\,3).
-    T4\,(APL) has $p_i=1.0$ (mandatory, always reached) and is excluded from
-    the Prop.\,3 cost-optimal ordering domain.}
-  \label{tab:exp2_2}
-  \begin{tabular}{lrrr}
-    \toprule
-    \textbf{Deployed\_rank} & \textbf{Optimal\_rank} & \textbf{Tier} & \textbf{$c_i/(1-p_i)$} \\
-    \midrule
-    1 & 6 & T4\,(APL)        & $\infty$ \\
-    2 & 1 & T4\,(APL-attest) & 0.00 \\
-    3 & 2 & T3\,(CMF)        & 0.08 \\
-    4 & 4 & T5\,(OPA)        & 9.23 \\
-    5 & 3 & T6\,(rate-limit) & 0.07 \\
-    6 & 5 & T7\,(LLM)        & 93.05 \\
+    T4\,(APL) & 629 & 0.315 & 1.000 & 0.00 \\
+    T3\,(CMF) & 0 & 0.000 & 0.685 & 0.02 \\
+    T5\,(OPA) & 813 & 0.406 & 0.685 & 1.96 \\
+    T6\,(rate-limit) & 0 & 0.000 & 0.279 & 0.05 \\
+    T7\,(LLM) & 1 & 0.001 & 0.003 & 92.82 \\
+    APPROVED & 557 & 0.279 & --- & --- \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -63,13 +26,13 @@
   \caption{EXP-2: Short-circuit ablation (live OPA).
     Ladder mode stops at first DENY; forced-pipeline runs all tiers regardless.
     T7\,(LLM) excluded from both arms.}
-  \label{tab:exp2_3}
+  \label{tab:exp2_1}
   \begin{tabular}{lrr}
     \toprule
     \textbf{Mode} & \textbf{Mean total (ms)} & \textbf{Saving} \\
     \midrule
-    Ladder (deployed)  & 2.26 & ---   \\
-    Forced pipeline    & 3.53 & 36.0\% \\
+    Ladder (deployed) & 1.60 & --- \\
+    Forced pipeline & 3.56 & 55.0\% \\
     \bottomrule
   \end{tabular}
 \end{table}

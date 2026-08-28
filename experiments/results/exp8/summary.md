@@ -1,25 +1,22 @@
 # EXP-8  Policy scale + hot-reload correctness
 
-## Latency vs. rule count
-| Rule_count | Mean_ms | P99_ms | Simulated |
-| ---------- | ------- | ------ | --------- |
-| 10 | 2.19 | 3.50 | no |
-| 100 | 2.75 | 5.40 | no |
-| 1000 | 2.74 | 7.89 | no |
-| 5000 | 1.96 | 3.60 | no |
+*Generated: 2026-08-28T21:40:28.682511+00:00*
 
-## Hot-reload correctness
+## EXP-8: Policy scale latency vs.\ rule count (live OPA, $N$=200 requests each).
+| Rule count | Mean\,(ms) | P99\,(ms) | Live? |
+| ---------- | ---------- | --------- | ----- |
+| 10 | 1.47 | 2.40 | \checkmark |
+| 100 | 1.30 | 2.14 | \checkmark |
+| 1{,}000 | 1.61 | 2.18 | \checkmark |
+| 5{,}000 | 1.63 | 3.17 | \checkmark |
+
+## EXP-8: Hot-reload correctness (live OPA, in-place update).
 | Metric | Value |
 | ------ | ----- |
-| OPA_live | True |
-| reload_ok | True |
-| reload_latency_ms | 4.11 |
-| propagation_latency_ms | 0.05 |
-| stale_allow_count | 0 |
-| post_requests | 317 |
-| post_junior_read_denied | 141 |
-
-## Paper §5 gap disclosures
-- OPA 5-min decision cache (now//300) creates stale-ALLOW window; stale_allow_count=0 confirmed (cache_clear() called on reload)
-- Policy scale uses synthetic rules; real policy complexity may have different coefficients
-- Latency is sub-linear in rule count and correctness claims (stale_allow_count=0, reload_ok=True) hold across runs
+| OPA live | True |
+| Reload OK | True |
+| Reload latency (ms) | 5.82 |
+| Propagation (ms) | 0.06 |
+| Stale-ALLOW count | 0 |
+| Post-reload requests | 334 |
+| JUNIOR READ denied | 147 |
