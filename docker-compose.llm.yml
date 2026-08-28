@@ -1,0 +1,29 @@
+# docker-compose.llm.yml — Cloud-LLM override for NomosFlow
+#
+# Use this file together with the base docker-compose.yml to route the
+# T7 LLM tier to a cloud model instead of the default local Ollama service:
+#
+#   podman compose -f docker-compose.yml -f docker-compose.llm.yml up -d
+#   # or:
+#   docker compose -f docker-compose.yml -f docker-compose.llm.yml up -d
+#
+# Supply credentials via environment variables or a .env.local file —
+# never hardcode API keys here.  Copy .env.local.example and set:
+#   LITELLM_BASE_URL=https://api.openai.com/v1
+#   LLM_API_KEY=<your-key>
+#   LLM_MODEL=gpt-4o
+#
+# GAP-35 requirement: REDACT_FOR_LLM=true is preserved in this override
+# so that PII is always stripped from event payloads before any model call,
+# regardless of whether a local or cloud model is used.
+
+version: '3.8'
+
+services:
+  sidecar:
+    environment:
+      - LLM_VALIDATION_ENABLED=true
+      - LITELLM_BASE_URL=${LITELLM_BASE_URL}
+      - LLM_API_KEY=${LLM_API_KEY}
+      - LLM_MODEL=${LLM_MODEL:-gpt-4o}
+      - REDACT_FOR_LLM=true
