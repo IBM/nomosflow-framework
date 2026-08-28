@@ -304,6 +304,13 @@ def register_all(c: Checker) -> None:
     c.chk("GAP-35  5/5 redaction test cases", len(d35["redaction_cases"]), r"5/5")
     c.chk("GAP-35  4 call sites instrumented", d35["call_sites_total"],    r"\b4\b.*call|call.*\b4\b")
 
+    # ── GAP-13: interceptor hook inventory ────────────────────────────────
+    # GAP-13 is a static narrative table (3/3 hook surfaces pass) with no
+    # standalone numeric canonical file; it is covered by the hook-inventory
+    # table in paper_results.tex and the static audit in exp_gap13/.
+    # No numeric claims are registered here; structural checks live in
+    # compare_results.py via the gap13 invariant block.
+
 
 # ── entry point ───────────────────────────────────────────────────────────
 

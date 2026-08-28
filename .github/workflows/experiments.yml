@@ -35,6 +35,9 @@ jobs:
       - name: Check paper invariants
         run: python experiments/compare_results.py
 
+      - name: Verify paper claims against canonical files
+        run: python experiments/verify_paper_claims.py
+
       - name: Upload experiment results artifact
         uses: actions/upload-artifact@v4
         if: always()

@@ -32,8 +32,18 @@ python experiments/compare_results.py
 
 # Strict canonical comparison (same hardware):
 python experiments/compare_results.py --compare-canonical
+
+# Verify every numeric paper claim against the checked-in canonical files:
+python experiments/verify_paper_claims.py        # table view
+python experiments/verify_paper_claims.py -v     # + matched text snippet per row
 ```
 
+> **`verify_paper_claims.py`:** checks all 65 numeric claims in
+> `results/paper_results.tex` against `raw_CANONICAL.json` files.
+> No services, no re-running. `p.tex` is optional — if absent all p.tex
+> checks are silently skipped and the script still exits 0 on full alignment.
+> This is also run in CI on every push/PR.
+>
 > **`compare_results.py` modes:**
 > - *Default* (no flags): checks structural invariants (counts, verdict
 >   distributions, zero false-ALLOWs) against the most-recently-written
