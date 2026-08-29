@@ -23,6 +23,7 @@ REPO          = Path(__file__).resolve().parent.parent
 RESULTS       = REPO / "experiments" / "results"
 PAPER_RESULTS = RESULTS / "paper_results.tex"
 PTEX          = REPO / "p.tex"
+STEX          = REPO / "supplement.tex"
 
 # column widths
 _W_LABEL  = 46
@@ -76,7 +77,10 @@ class Checker:
         self.verbose = verbose
         self.rows: list[Row] = []
         self._pr = _strip_latex(PAPER_RESULTS.read_text())
-        self._pt = _strip_latex(PTEX.read_text()) if PTEX.exists() else None
+        # Combine p.tex + supplement.tex so in_pt checks span both files.
+        # Either or both may be absent (reviewer scenario).
+        parts = [_strip_latex(f.read_text()) for f in (PTEX, STEX) if f.exists()]
+        self._pt = "\n".join(parts) if parts else None
 
     def _search(self, text: str, pattern: str) -> re.Match | None:
         return re.search(pattern, text, re.IGNORECASE)
@@ -325,11 +329,13 @@ def main() -> int:
         print(f"ERROR: {PAPER_RESULTS} not found. Run from the repo root.", file=sys.stderr)
         return 1
 
-    pt_status = "present" if PTEX.exists() else "NOT FOUND — p.tex checks skipped"
+    pt_files   = [f for f in (PTEX, STEX) if f.exists()]
+    pt_names   = " + ".join(f.name for f in pt_files) if pt_files else None
+    pt_status  = pt_names if pt_names else "NOT FOUND — p.tex/supplement.tex checks skipped"
     print("NomosFlow paper-claim verification")
     print(f"  Checking : {PAPER_RESULTS.relative_to(REPO)}")
     print(f"  p.tex    : {pt_status}")
-    print(f"  Columns  : 'paper_results' = paper_results.tex  |  'p.tex' = p.tex (when present)")
+    print(f"  Columns  : 'paper_results' = paper_results.tex  |  'p.tex' = p.tex + supplement.tex (when present)")
     print(f"             ✓ = pattern found   ✗ = not found   — = not checked for this file")
     print()
 
