@@ -3,9 +3,6 @@
 [![CI](https://github.com/IBM/nomosflow-framework/actions/workflows/experiments.yml/badge.svg)](https://github.com/IBM/nomosflow-framework/actions/workflows/experiments.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
-> **Supplementary material:** [`supplement.pdf`](supplement.pdf) — proofs, pre-registration protocol, artifact audits, and full result tables.
-> `p.tex` (main paper file) and `supplement.tex` are the LaTeX source and are read by `verify_paper_claims.py` when present.
-
 **NomosFlow** is an event-driven compliance sidecar for AI agents. It intercepts every data-access event and passes it through a five-tier validation pipeline before allowing it to proceed:
 
 | Tier | Component | Latency | Purpose |
